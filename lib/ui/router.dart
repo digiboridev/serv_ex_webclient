@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/login_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     RedirectRoute(path: '/', redirectTo: '/login'),
-    AutoRoute(path: '/login', page: LoginScreen, name: 'login'),
+    AutoRoute(path: '/login', page: AuthScreen, name: 'login'),
     AutoRoute(
       path: '/home',
       page: Home,

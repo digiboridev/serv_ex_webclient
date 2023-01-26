@@ -15,7 +15,7 @@ import 'package:auto_route/auto_route.dart' as _i3;
 import 'package:flutter/material.dart' as _i4;
 
 import 'router.dart' as _i2;
-import 'screens/auth/login_screen.dart' as _i1;
+import 'screens/auth/auth_screen.dart' as _i1;
 
 class AppRouter extends _i3.RootStackRouter {
   AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
@@ -26,7 +26,7 @@ class AppRouter extends _i3.RootStackRouter {
     Login.name: (routeData) {
       return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.LoginScreen(),
+        child: const _i1.AuthScreen(),
       );
     },
     Home.name: (routeData) {
@@ -103,7 +103,7 @@ class AppRouter extends _i3.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.LoginScreen]
+/// [_i1.AuthScreen]
 class Login extends _i3.PageRouteInfo<void> {
   const Login()
       : super(

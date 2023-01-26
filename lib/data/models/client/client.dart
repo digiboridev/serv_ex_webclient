@@ -12,16 +12,18 @@ class Client extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final List<ClientContact> contacts;
-  const Client({
+  Client({
     required this.id,
     required this.firstName,
     required this.lastName,
     required this.phone,
     required this.email,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.contacts,
-  });
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    List<ClientContact>? contacts,
+  })  : createdAt = createdAt ?? DateTime.now(),
+        updatedAt = updatedAt ?? DateTime.now(),
+        contacts = contacts ?? [];
 
   Client copyWith({
     String? id,
@@ -67,11 +69,7 @@ class Client extends Equatable {
       email: map['email'] as String,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
-      contacts: List<ClientContact>.from(
-        (map['contacts'] as List<int>).map<ClientContact>(
-          (x) => ClientContact.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      contacts: List<ClientContact>.from(map['contacts'].map((x) => ClientContact.fromMap(x as Map<String, dynamic>))),
     );
   }
 
