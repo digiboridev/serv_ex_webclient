@@ -10,7 +10,21 @@ class FireAuthService {
 
   User? get user => _auth.currentUser;
   Stream<User?> get userStream => _auth.userChanges().asBroadcastStream();
+
+  /// Returns true if user is authorized
   bool get authorized => _auth.currentUser != null;
+
+  /// Returns current user id or null if user is not authorized
+  String? get uid => _auth.currentUser?.uid;
+
+  /// Returns current user email or null if user is not authorized
+  String? get email => _auth.currentUser?.email;
+
+  /// Returns current user phone number or null if user is not authorized
+  String? get phoneNumber => _auth.currentUser?.phoneNumber;
+
+  /// Returns current user display name or null if user is not authorized
+  String? get displayName => _auth.currentUser?.displayName;
 
   // Uses by phone sign in for web
   ConfirmationResult? _phoneConfirmationResult;
