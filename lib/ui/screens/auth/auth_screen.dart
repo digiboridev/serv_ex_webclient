@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
+import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_controller.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_state.dart';
@@ -20,7 +21,9 @@ final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScree
 });
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({this.returnUrl, super.key});
+
+  final String? returnUrl;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
@@ -54,7 +57,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       }
       // Handle auth complete
       if (n is ASSAuthorized) {
-        context.router.replaceNamed('/home2/b');
+        context.router.markUrlStateForReplace();
+        context.router.replaceNamed(widget.returnUrl ?? '/b');
       }
     });
 

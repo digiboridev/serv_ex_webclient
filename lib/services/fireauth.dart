@@ -1,15 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final fireAuthServiceProvider = Provider<FireAuthService>((ref) {
-  return FireAuthService();
-});
 
 class FireAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  User? get user => _auth.currentUser;
-  Stream<User?> get userStream => _auth.userChanges().asBroadcastStream();
+  // User? get user => _auth.currentUser;
+  // Stream<User?> get userStream => _auth.userChanges().asBroadcastStream();
 
   /// Returns true if user is authorized
   bool get authorized => _auth.currentUser != null;

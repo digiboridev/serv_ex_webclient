@@ -11,91 +11,88 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:flutter/material.dart' as _i4;
+import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:flutter/material.dart' as _i5;
 
-import 'router.dart' as _i2;
+import 'app_wrapper.dart' as _i2;
+import 'router.dart' as _i3;
 import 'screens/auth/auth_screen.dart' as _i1;
 
-class AppRouter extends _i3.RootStackRouter {
-  AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+class AppRouter extends _i4.RootStackRouter {
+  AppRouter({
+    _i5.GlobalKey<_i5.NavigatorState>? navigatorKey,
+    required this.authGuard,
+    required this.appGuard,
+    required this.testGuard,
+  }) : super(navigatorKey);
+
+  final _i3.AuthGuard authGuard;
+
+  final _i3.AppGuard appGuard;
+
+  final _i3.TestGuard testGuard;
 
   @override
-  final Map<String, _i3.PageFactory> pagesMap = {
-    Login.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
+  final Map<String, _i4.PageFactory> pagesMap = {
+    Auth.name: (routeData) {
+      final args = routeData.argsAs<AuthArgs>(orElse: () => const AuthArgs());
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.AuthScreen(),
+        child: _i1.AuthScreen(
+          returnUrl: args.returnUrl,
+          key: args.key,
+        ),
       );
     },
-    Home.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
+    App.name: (routeData) {
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.Home(),
-      );
-    },
-    Home2.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i2.Home(),
+        child: const _i2.AppWrapper(),
       );
     },
     SA.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.SA(),
+        child: const _i3.SA(),
       );
     },
     SB.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
+      return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.SB(),
+        child: const _i3.SB(),
       );
     },
   };
 
   @override
-  List<_i3.RouteConfig> get routes => [
-        _i3.RouteConfig(
-          '/#redirect',
+  List<_i4.RouteConfig> get routes => [
+        _i4.RouteConfig(
+          Auth.name,
+          path: '/auth',
+          guards: [authGuard],
+        ),
+        _i4.RouteConfig(
+          App.name,
           path: '/',
-          redirectTo: '/login',
-          fullMatch: true,
-        ),
-        _i3.RouteConfig(
-          Login.name,
-          path: '/login',
-        ),
-        _i3.RouteConfig(
-          Home.name,
-          path: '/home',
+          guards: [appGuard],
           children: [
-            _i3.RouteConfig(
+            _i4.RouteConfig(
+              '#redirect',
+              path: '',
+              parent: App.name,
+              redirectTo: 'a',
+              fullMatch: true,
+            ),
+            _i4.RouteConfig(
               SA.name,
               path: 'a',
-              parent: Home.name,
+              parent: App.name,
+              guards: [testGuard],
             ),
-            _i3.RouteConfig(
+            _i4.RouteConfig(
               SB.name,
               path: 'b',
-              parent: Home.name,
-            ),
-          ],
-        ),
-        _i3.RouteConfig(
-          Home2.name,
-          path: '/home2',
-          children: [
-            _i3.RouteConfig(
-              SA.name,
-              path: 'a',
-              parent: Home2.name,
-            ),
-            _i3.RouteConfig(
-              SB.name,
-              path: 'b',
-              parent: Home2.name,
+              parent: App.name,
             ),
           ],
         ),
@@ -104,45 +101,54 @@ class AppRouter extends _i3.RootStackRouter {
 
 /// generated route for
 /// [_i1.AuthScreen]
-class Login extends _i3.PageRouteInfo<void> {
-  const Login()
-      : super(
-          Login.name,
-          path: '/login',
+class Auth extends _i4.PageRouteInfo<AuthArgs> {
+  Auth({
+    String? returnUrl,
+    _i5.Key? key,
+  }) : super(
+          Auth.name,
+          path: '/auth',
+          args: AuthArgs(
+            returnUrl: returnUrl,
+            key: key,
+          ),
         );
 
-  static const String name = 'Login';
+  static const String name = 'Auth';
+}
+
+class AuthArgs {
+  const AuthArgs({
+    this.returnUrl,
+    this.key,
+  });
+
+  final String? returnUrl;
+
+  final _i5.Key? key;
+
+  @override
+  String toString() {
+    return 'AuthArgs{returnUrl: $returnUrl, key: $key}';
+  }
 }
 
 /// generated route for
-/// [_i2.Home]
-class Home extends _i3.PageRouteInfo<void> {
-  const Home({List<_i3.PageRouteInfo>? children})
+/// [_i2.AppWrapper]
+class App extends _i4.PageRouteInfo<void> {
+  const App({List<_i4.PageRouteInfo>? children})
       : super(
-          Home.name,
-          path: '/home',
+          App.name,
+          path: '/',
           initialChildren: children,
         );
 
-  static const String name = 'Home';
+  static const String name = 'App';
 }
 
 /// generated route for
-/// [_i2.Home]
-class Home2 extends _i3.PageRouteInfo<void> {
-  const Home2({List<_i3.PageRouteInfo>? children})
-      : super(
-          Home2.name,
-          path: '/home2',
-          initialChildren: children,
-        );
-
-  static const String name = 'Home2';
-}
-
-/// generated route for
-/// [_i2.SA]
-class SA extends _i3.PageRouteInfo<void> {
+/// [_i3.SA]
+class SA extends _i4.PageRouteInfo<void> {
   const SA()
       : super(
           SA.name,
@@ -153,8 +159,8 @@ class SA extends _i3.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.SB]
-class SB extends _i3.PageRouteInfo<void> {
+/// [_i3.SB]
+class SB extends _i4.PageRouteInfo<void> {
   const SB()
       : super(
           SB.name,

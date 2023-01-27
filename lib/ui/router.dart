@@ -1,27 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/data/models/client/client.dart';
+import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/ui/router.gr.dart';
+import 'package:serv_expert_webclient/ui/app_wrapper.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    RedirectRoute(path: '/', redirectTo: '/login'),
-    AutoRoute(path: '/login', page: AuthScreen, name: 'login'),
     AutoRoute(
-      path: '/home',
-      page: Home,
-      name: 'home',
-      children: [
-        AutoRoute(path: 'a', page: SA),
-        AutoRoute(path: 'b', page: SB),
-      ],
+      name: 'auth',
+      path: '/auth',
+      page: AuthScreen,
+      guards: [AuthGuard],
     ),
     AutoRoute(
-      path: '/home2',
-      name: 'home2',
-      page: Home,
+      name: 'app',
+      path: '/',
+      page: AppWrapper,
+      guards: [AppGuard],
       children: [
-        AutoRoute(path: 'a', page: SA),
+        RedirectRoute(path: '', redirectTo: 'a'),
+        AutoRoute(guards: [TestGuard], path: 'a', page: SA),
         AutoRoute(path: 'b', page: SB),
       ],
     ),
@@ -29,26 +32,6 @@ import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 )
 // extend the generated private router
 class $AppRouter {}
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          GestureDetector(
-              onTap: () {
-                context.router.navigateNamed('/home2/b');
-              },
-              child: const Text('Home')),
-          const Expanded(child: AutoRouter()),
-        ],
-      ),
-    );
-  }
-}
 
 class SA extends StatelessWidget {
   const SA({super.key});
@@ -73,5 +56,56 @@ class SB extends StatelessWidget {
         child: Text('SB'),
       ),
     );
+  }
+}
+
+class AppGuard extends AutoRouteGuard {
+  WidgetRef ref;
+  AppGuard({
+    required this.ref,
+  });
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    bool isUserAuthorized = ref.read(fireAuthServiceProvider).authorized;
+    if (isUserAuthorized) {
+      resolver.next(true);
+    } else {
+      resolver.next(false);
+      router.markUrlStateForReplace();
+      router.replaceAll([Auth(returnUrl: router.currentPath)]);
+    }
+  }
+}
+
+class AuthGuard extends AutoRouteGuard {
+  WidgetRef ref;
+  AuthGuard({
+    required this.ref,
+  });
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    bool isUserAuthorized = ref.read(fireAuthServiceProvider).authorized;
+    if (isUserAuthorized) {
+      resolver.next(false);
+    } else {
+      resolver.next(true);
+    }
+  }
+}
+
+class TestGuard extends AutoRouteGuard {
+  WidgetRef ref;
+  TestGuard({
+    required this.ref,
+  });
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    // Make sure that the current client is loaded in app wrapper
+    Client client = ref.watch(currentClientProvider).value!;
+    print(client);
+    resolver.next(true);
   }
 }
