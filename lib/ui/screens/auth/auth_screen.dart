@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_controller.dart';
@@ -11,13 +12,15 @@ import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_state.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/auth.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/client_contacts.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/client_details.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_registration.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/sms_sent.dart';
 
 final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScreenController, AuthScreenState>((ref) {
   FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);
   ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
+  CompaniesRepository companiesRepository = ref.read(companiesRepositoryProvider);
 
-  return AuthScreenController(fireAuthService: fireAuthService, clientsRepository: clientsRepository);
+  return AuthScreenController(fireAuthService: fireAuthService, clientsRepository: clientsRepository, companiesRepository: companiesRepository);
 });
 
 class AuthScreen extends ConsumerStatefulWidget {
@@ -123,6 +126,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
     if (loginState is ASSClientContacts) {
       return const ClientContactsSubpage();
+    }
+
+    if (loginState is ASSCompanyRegistration) {
+      return const CompanyRegistrationSubpage();
     }
 
     return const SizedBox();

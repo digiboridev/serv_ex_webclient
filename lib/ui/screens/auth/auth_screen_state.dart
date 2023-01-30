@@ -120,6 +120,23 @@ class ASSClientContacts extends AuthScreenState {
   }
 }
 
+class ASSCompanyRegistration extends AuthScreenState {
+  const ASSCompanyRegistration({
+    super.busy,
+    super.error,
+  });
+
+  ASSCompanyRegistration copyWith({
+    bool? busy,
+    String? error,
+  }) {
+    return ASSCompanyRegistration(
+      busy: busy ?? this.busy,
+      error: error ?? this.error,
+    );
+  }
+}
+
 /// This state is used when all authorization is done and client can use the app
 class ASSAuthorized extends AuthScreenState {
   const ASSAuthorized({

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/firebase_options.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/ui/router.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
@@ -32,7 +33,6 @@ class _TheAppState extends ConsumerState<TheApp> {
     _appRouter = AppRouter(
       appGuard: AppGuard(ref: ref),
       authGuard: AuthGuard(ref: ref),
-      testGuard: TestGuard(ref: ref),
     );
   }
 
@@ -48,6 +48,9 @@ class _TheAppState extends ConsumerState<TheApp> {
 // Global providers
 final clientsRepositoryProvider = Provider<ClientsRepository>((ref) {
   return ClientsRepository();
+});
+final companiesRepositoryProvider = Provider<CompaniesRepository>((ref) {
+  return CompaniesRepository();
 });
 
 final fireAuthServiceProvider = Provider<FireAuthService>((ref) {

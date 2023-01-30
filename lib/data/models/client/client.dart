@@ -9,8 +9,6 @@ class Client extends Equatable {
   final String lastName;
   final String phone;
   final String email;
-  final DateTime createdAt;
-  final DateTime updatedAt;
   final List<ClientContact> contacts;
   Client({
     required this.id,
@@ -18,12 +16,8 @@ class Client extends Equatable {
     required this.lastName,
     required this.phone,
     required this.email,
-    DateTime? createdAt,
-    DateTime? updatedAt,
     List<ClientContact>? contacts,
-  })  : createdAt = createdAt ?? DateTime.now(),
-        updatedAt = updatedAt ?? DateTime.now(),
-        contacts = contacts ?? [];
+  }) : contacts = contacts ?? [];
 
   Client copyWith({
     String? id,
@@ -31,8 +25,6 @@ class Client extends Equatable {
     String? lastName,
     String? phone,
     String? email,
-    DateTime? createdAt,
-    DateTime? updatedAt,
     List<ClientContact>? contacts,
   }) {
     return Client(
@@ -41,8 +33,6 @@ class Client extends Equatable {
       lastName: lastName ?? this.lastName,
       phone: phone ?? this.phone,
       email: email ?? this.email,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
       contacts: contacts ?? this.contacts,
     );
   }
@@ -54,8 +44,6 @@ class Client extends Equatable {
       'lastName': lastName,
       'phone': phone,
       'email': email,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
       'contacts': contacts.map((x) => x.toMap()).toList(),
     };
   }
@@ -67,8 +55,6 @@ class Client extends Equatable {
       lastName: map['lastName'] as String,
       phone: map['phone'] as String,
       email: map['email'] as String,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
       contacts: List<ClientContact>.from(map['contacts'].map((x) => ClientContact.fromMap(x as Map<String, dynamic>))),
     );
   }
@@ -88,8 +74,6 @@ class Client extends Equatable {
       lastName,
       phone,
       email,
-      createdAt,
-      updatedAt,
       contacts,
     ];
   }

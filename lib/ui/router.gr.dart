@@ -23,14 +23,11 @@ class AppRouter extends _i4.RootStackRouter {
     _i5.GlobalKey<_i5.NavigatorState>? navigatorKey,
     required this.authGuard,
     required this.appGuard,
-    required this.testGuard,
   }) : super(navigatorKey);
 
   final _i3.AuthGuard authGuard;
 
   final _i3.AppGuard appGuard;
-
-  final _i3.TestGuard testGuard;
 
   @override
   final Map<String, _i4.PageFactory> pagesMap = {
@@ -87,7 +84,6 @@ class AppRouter extends _i4.RootStackRouter {
               SA.name,
               path: 'a',
               parent: App.name,
-              guards: [testGuard],
             ),
             _i4.RouteConfig(
               SB.name,

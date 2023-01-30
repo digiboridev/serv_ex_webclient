@@ -34,7 +34,6 @@ class AppWrapper extends StatelessWidget {
           }
 
           if (client is AsyncData<Client>) {
-            print(client.value);
             return child!;
           }
 
@@ -50,6 +49,7 @@ class AppWrapper extends StatelessWidget {
                 // retry button
                 ElevatedButton(
                   onPressed: () {
+                    // ignore: unused_result
                     ref.refresh(currentClientProvider);
                   },
                   child: const Text('retry'),

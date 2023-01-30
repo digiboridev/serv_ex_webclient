@@ -2,7 +2,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
@@ -24,7 +23,7 @@ import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
       guards: [AppGuard],
       children: [
         RedirectRoute(path: '', redirectTo: 'a'),
-        AutoRoute(guards: [TestGuard], path: 'a', page: SA),
+        AutoRoute(path: 'a', page: SA),
         AutoRoute(path: 'b', page: SB),
       ],
     ),
@@ -63,8 +62,7 @@ class SB extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                await ref.read(fireAuthServiceProvider).signOut();
-                context.router.replaceNamed('/');
+                ref.read(fireAuthServiceProvider).signOut().then((value) => context.router.replaceNamed('/'));
               },
               child: const Text('Sign out'),
             ),
@@ -108,20 +106,5 @@ class AuthGuard extends AutoRouteGuard {
     } else {
       resolver.next(true);
     }
-  }
-}
-
-class TestGuard extends AutoRouteGuard {
-  WidgetRef ref;
-  TestGuard({
-    required this.ref,
-  });
-
-  @override
-  void onNavigation(NavigationResolver resolver, StackRouter router) {
-    // Make sure that the current client is loaded in app wrapper
-    Client client = ref.watch(currentClientProvider).value!;
-    print(client);
-    resolver.next(true);
   }
 }
