@@ -3,9 +3,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/main.dart';
-import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
+import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/sign_in.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/client_contacts.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/client_details.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_registration.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/data_error.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/confirm_phone.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -14,6 +21,15 @@ import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
       name: 'auth',
       path: '/auth',
       page: AuthScreen,
+      children: [
+        AutoRoute(name: 'signIn', path: 'signin', page: AuthSignIn, usesPathAsKey: true),
+        AutoRoute(name: 'asConfirmPhone', path: 'confirm_phone', page: AuthConfirmPhone, usesPathAsKey: true),
+        AutoRoute(name: 'asClientDetails', path: 'client_details', page: AuthClientDetails, usesPathAsKey: true),
+        AutoRoute(name: 'asClientContacts', path: 'client_contacts', page: ClientContactsSubpage, usesPathAsKey: true),
+        AutoRoute(name: 'asCompanyCreate', path: 'company_create', page: AuthCompanyCreate, usesPathAsKey: true),
+        AutoRoute(name: 'asDataError', path: 'data_error', page: AuthDataError, usesPathAsKey: true),
+        AutoRoute(name: 'asSuccess', path: 'succes', page: AuthSucces, usesPathAsKey: true),
+      ],
       guards: [AuthGuard],
     ),
     AutoRoute(
@@ -62,7 +78,7 @@ class SB extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                ref.read(fireAuthServiceProvider).signOut().then((value) => context.router.replaceNamed('/'));
+                ref.read(fireAuthServiceProvider).signOut().then((value) => context.router.navigateNamed('/'));
               },
               child: const Text('Sign out'),
             ),
@@ -85,9 +101,12 @@ class AppGuard extends AutoRouteGuard {
     if (isUserAuthorized) {
       resolver.next(true);
     } else {
-      resolver.next(false);
-      router.markUrlStateForReplace();
-      router.replaceAll([Auth(returnUrl: router.currentPath)]);
+      // resolver.next(false);
+      // router.markUrlStateForReplace();
+      // router.replaceAll([Auth(returnUrl: router.currentPath)]);
+      router.push(Auth(onAuthComplete: () {
+        resolver.next(true);
+      }));
     }
   }
 }
@@ -100,11 +119,13 @@ class AuthGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    bool isUserAuthorized = ref.read(fireAuthServiceProvider).authorized;
-    if (isUserAuthorized) {
-      resolver.next(false);
-    } else {
-      resolver.next(true);
-    }
+    resolver.next(true);
+
+    // bool isUserAuthorized = ref.read(fireAuthServiceProvider).authorized;
+    // if (isUserAuthorized) {
+    //   resolver.next(false);
+    // } else {
+    //   resolver.next(true);
+    // }
   }
 }

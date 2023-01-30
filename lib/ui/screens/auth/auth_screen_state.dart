@@ -25,8 +25,8 @@ class ASSLoading extends AuthScreenState {
 }
 
 /// This state is used when fatal exception is thrown during update state, and app asks to retry operation
-class ASSUpdateError extends AuthScreenState {
-  const ASSUpdateError();
+class ASSDataError extends AuthScreenState {
+  const ASSDataError();
 }
 
 /// This state is used when user is not authorized and client needs to choose how to authorize
@@ -120,17 +120,17 @@ class ASSClientContacts extends AuthScreenState {
   }
 }
 
-class ASSCompanyRegistration extends AuthScreenState {
-  const ASSCompanyRegistration({
+class ASSCompanyCreate extends AuthScreenState {
+  const ASSCompanyCreate({
     super.busy,
     super.error,
   });
 
-  ASSCompanyRegistration copyWith({
+  ASSCompanyCreate copyWith({
     bool? busy,
     String? error,
   }) {
-    return ASSCompanyRegistration(
+    return ASSCompanyCreate(
       busy: busy ?? this.busy,
       error: error ?? this.error,
     );

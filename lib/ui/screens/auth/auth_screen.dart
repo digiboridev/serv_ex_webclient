@@ -3,17 +3,21 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
+import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_controller.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_state.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/subpages/auth.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/sign_in.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/client_contacts.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/client_details.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_registration.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/subpages/sms_sent.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/data_error.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/confirm_phone.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
 
 final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScreenController, AuthScreenState>((ref) {
   FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);
@@ -24,9 +28,10 @@ final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScree
 });
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({this.returnUrl, super.key});
+  const AuthScreen({this.returnUrl, this.onAuthComplete, super.key});
 
   final String? returnUrl;
+  final VoidCallback? onAuthComplete;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
@@ -60,63 +65,88 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       }
       // Handle auth complete
       if (n is ASSAuthorized) {
-        context.router.markUrlStateForReplace();
-        context.router.replaceNamed(widget.returnUrl ?? '/b');
+        widget.onAuthComplete?.call();
       }
     });
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // content(loginState),
-          SizedBox.expand(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              switchInCurve: Curves.easeOutExpo,
-              switchOutCurve: Curves.easeInExpo,
-              transitionBuilder: (child, animation) => SlideTransition(
-                position: animation.drive(Tween(begin: const Offset(1, 0), end: const Offset(0, 0))),
-                child: child,
-              ),
-              child: content(loginState),
+    return WillPopScope(
+      onWillPop: () async {
+        log('object');
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            // SizedBox.expand(
+            //   child: AnimatedSwitcher(
+            //     duration: const Duration(milliseconds: 300),
+            //     switchInCurve: Curves.easeOutExpo,
+            //     switchOutCurve: Curves.easeInExpo,
+            //     transitionBuilder: (child, animation) => SlideTransition(
+            //       position: animation.drive(Tween(begin: const Offset(1, 0), end: const Offset(0, 0))),
+            //       child: child,
+            //     ),
+            //     child: content(loginState),
+            //   ),
+            // ),
+            SizedBox.expand(
+              child: AutoRouter.declarative(
+                  onPopRoute: (route, results) {
+                    log('asdasd');
+                  },
+                  routes: (_) => [
+                        const SignIn(),
+                        if (loginState is ASSsmsSent) AsConfirmPhone(phone: loginState.phone),
+                        if (loginState is ASSClientDetails)
+                          AsClientDetails(
+                            phone: loginState.phone,
+                            email: loginState.email,
+                            firstName: loginState.firstName,
+                            lastName: loginState.lastName,
+                          ),
+                        if (loginState is ASSClientContacts) const AsClientContacts(),
+                        if (loginState is ASSCompanyCreate) const AsCompanyCreate(),
+                        if (loginState is ASSDataError) AsDataError(error: loginState.error),
+                        if (loginState is ASSAuthorized) const AsSuccess(),
+                      ]),
             ),
-          ),
-          // Handle busy state
-          if (loginState.busy)
-            AbsorbPointer(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: const Center(
-                  child: CircularProgressIndicator(),
+            // Handle busy state
+            if (loginState.busy || loginState is ASSLoading)
+              AbsorbPointer(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget content(AuthScreenState loginState) {
-    if (loginState is ASSLoading) {
-      return const Center(child: CircularProgressIndicator());
+    if (loginState is ASSAuthorized) {
+      return const AuthSucces();
     }
-
-    if (loginState is ASSUpdateError) {
-      return ErrorSubpage(
+    if (loginState is ASSDataError) {
+      return AuthDataError(
         error: loginState.error,
       );
     }
 
     if (loginState is ASSUnauthorized) {
-      return const AuthSubpage();
+      return const AuthSignIn();
     }
 
     if (loginState is ASSsmsSent) {
-      return SmsSentSubpage(phone: loginState.phone);
+      return AuthConfirmPhone(phone: loginState.phone);
     }
 
     if (loginState is ASSClientDetails) {
-      return ClientDetailsSubpage(
+      return AuthClientDetails(
         phone: loginState.phone,
         email: loginState.email,
         firstName: loginState.firstName,
@@ -128,88 +158,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       return const ClientContactsSubpage();
     }
 
-    if (loginState is ASSCompanyRegistration) {
-      return const CompanyRegistrationSubpage();
+    if (loginState is ASSCompanyCreate) {
+      return const AuthCompanyCreate();
     }
 
     return const SizedBox();
-  }
-}
-
-class ErrorSubpage extends ConsumerStatefulWidget {
-  const ErrorSubpage({
-    Key? key,
-    required this.error,
-  }) : super(key: key);
-
-  final String error;
-
-  @override
-  ConsumerState<ErrorSubpage> createState() => _ErrorSubpageState();
-}
-
-class _ErrorSubpageState extends ConsumerState<ErrorSubpage> {
-  onRetry() {
-    ref.read(authScreenControllerProvider.notifier).updateState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text(
-            'Error',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-            widget.error,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 200,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                onRetry();
-              },
-              child: Ink(
-                // width: 600,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Retry',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

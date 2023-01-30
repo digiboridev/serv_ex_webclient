@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 
-class ClientDetailsSubpage extends ConsumerStatefulWidget {
-  const ClientDetailsSubpage({
+class AuthClientDetails extends ConsumerStatefulWidget {
+  const AuthClientDetails({
     Key? key,
     this.phone,
     this.firstName,
@@ -18,10 +18,10 @@ class ClientDetailsSubpage extends ConsumerStatefulWidget {
   final String? email;
 
   @override
-  ConsumerState<ClientDetailsSubpage> createState() => _ClientDetailsSubpageState();
+  ConsumerState<AuthClientDetails> createState() => _ClientDetailsSubpageState();
 }
 
-class _ClientDetailsSubpageState extends ConsumerState<ClientDetailsSubpage> {
+class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
   final formKey = GlobalKey<FormState>();
 
   String phoneValue = '';
@@ -67,69 +67,75 @@ class _ClientDetailsSubpageState extends ConsumerState<ClientDetailsSubpage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text(
-            'CLIENT DETAILS',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
+    return Container(
+      color: Colors.white,
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              'CLIENT DETAILS',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          firstnameField(),
-          const SizedBox(
-            height: 16,
-          ),
-          lastnameField(),
-          const SizedBox(
-            height: 16,
-          ),
-          phoneField(),
-          const SizedBox(
-            height: 16,
-          ),
-          emailField(),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 600,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  onContinue();
-                },
-                child: Ink(
-                  // width: 600,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple,
+            const SizedBox(
+              height: 32,
+            ),
+            firstnameField(),
+            const SizedBox(
+              height: 16,
+            ),
+            lastnameField(),
+            const SizedBox(
+              height: 16,
+            ),
+            phoneField(),
+            const SizedBox(
+              height: 16,
+            ),
+            emailField(),
+            const SizedBox(
+              height: 32,
+            ),
+            SizedBox(
+              width: 600,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Material(
+                  borderRadius: BorderRadius.circular(10),
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'CONTINUE',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
+                    onTap: () {
+                      onContinue();
+                    },
+                    child: Ink(
+                      // width: 600,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'CONTINUE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

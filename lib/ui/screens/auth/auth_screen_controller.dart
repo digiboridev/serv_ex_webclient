@@ -32,7 +32,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     if (!authorized) {
       state = const ASSUnauthorized();
     } else {
-      state = const ASSLoading();
+      // state = const ASSLoading();
       try {
         await _clientsRepository.clientById(id: _fireAuthService.uid!, forceNetwork: true);
         state = const ASSAuthorized();
@@ -45,7 +45,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
         );
       } catch (e) {
         log(e);
-        state = const ASSUpdateError();
+        state = const ASSDataError();
       }
     }
 
@@ -83,7 +83,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
       await _fireAuthService.confirmPhoneNumberWeb(smsCode);
       log('confirmSmsCode($smsCode) confirmed');
 
-      updateState();
+      await updateState();
     } catch (e) {
       log(e);
       state = currentState.copyWith(busy: false, error: e.toString());
@@ -124,25 +124,25 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
       await _clientsRepository.updateClientContacts(id: _fireAuthService.uid!, contacts: contacts);
       log('submitClientContacts($contacts) submitted');
 
-      state = const ASSCompanyRegistration();
+      state = const ASSCompanyCreate();
     } catch (e) {
       log(e);
       state = currentState.copyWith(busy: false, error: e.toString());
     }
   }
 
-  submitCompanyRegistration({required String publicId, required String companyName, required String companyEmail}) async {
+  submitCompanyCreate({required String publicId, required String companyName, required String companyEmail}) async {
     AuthScreenState currentState = state;
-    if (currentState is! ASSCompanyRegistration) throw Exception('Wrong state');
+    if (currentState is! ASSCompanyCreate) throw Exception('Wrong state');
     if (currentState.busy) throw Exception('Controller is busy');
 
-    log('submitCompanyRegistration($publicId, $companyName, $companyEmail)');
+    log('submitCompanyCreate($publicId, $companyName, $companyEmail)');
 
     state = currentState.copyWith(busy: true, error: '');
 
     try {
       await _companiesRepository.createCompany(publicId: publicId, companyName: companyName, companyEmail: companyEmail, memberId: _fireAuthService.uid!);
-      log('submitCompanyRegistration($publicId, $companyName, $companyEmail) submitted');
+      log('submitCompanyCreate($publicId, $companyName, $companyEmail) submitted');
       state = const ASSAuthorized();
     } catch (e) {
       log(e);
@@ -150,9 +150,9 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     }
   }
 
-  skipCompanyRegistration() async {
+  skipCompanyCreate() async {
     AuthScreenState currentState = state;
-    if (currentState is! ASSCompanyRegistration) throw Exception('Wrong state');
+    if (currentState is! ASSCompanyCreate) throw Exception('Wrong state');
     if (currentState.busy) throw Exception('Controller is busy');
 
     log('skipCompanyRegistration()');

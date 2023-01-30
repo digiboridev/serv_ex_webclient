@@ -46,49 +46,52 @@ class _ClientContactsSubpageState extends ConsumerState<ClientContactsSubpage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 32,
-            ),
-            const Text(
-              'ADD CONTACTS',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
+    return Container(
+      color: Colors.white,
+      child: Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 32,
               ),
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            Flexible(
-              child: SingleChildScrollView(
-                child: contactsList(),
+              const Text(
+                'ADD CONTACTS',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  editableContacts.add(ContactBuildDTO());
-                });
-              },
-              child: const Text('Add contact'),
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            continueButton(),
-            const SizedBox(
-              height: 32,
-            ),
-          ],
+              const SizedBox(
+                height: 32,
+              ),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: contactsList(),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    editableContacts.add(ContactBuildDTO());
+                  });
+                },
+                child: const Text('Add contact'),
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              continueButton(),
+              const SizedBox(
+                height: 32,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -157,25 +160,28 @@ class _ClientContactsSubpageState extends ConsumerState<ClientContactsSubpage> {
   Widget continueButton() {
     return SizedBox(
       width: 600,
-      child: InkWell(
+      child: Material(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          onContinue();
-        },
-        child: Ink(
-          // width: 600,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.deepPurple,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Center(
-            child: Text(
-              'CONTINUE',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {
+            onContinue();
+          },
+          child: Ink(
+            // width: 600,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.deepPurple,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(
+              child: Text(
+                'CONTINUE',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
