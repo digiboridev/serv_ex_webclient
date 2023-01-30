@@ -46,14 +46,30 @@ class SA extends StatelessWidget {
   }
 }
 
-class SB extends StatelessWidget {
+class SB extends ConsumerWidget {
   const SB({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('SB'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text('SB'),
+            const SizedBox(
+              height: 16,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await ref.read(fireAuthServiceProvider).signOut();
+                context.router.replaceNamed('/');
+              },
+              child: const Text('Sign out'),
+            ),
+          ],
+        ),
       ),
     );
   }
