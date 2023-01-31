@@ -23,7 +23,7 @@ import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart'
       path: '/auth',
       page: AuthScreen,
       children: [
-        AutoRoute(name: 'signIn', path: 'signin', page: AuthSignIn, usesPathAsKey: true),
+        AutoRoute(name: 'asSignIn', path: 'signin', page: AuthSignIn, usesPathAsKey: true),
         AutoRoute(name: 'asConfirmPhone', path: 'confirm_phone', page: AuthConfirmPhone, usesPathAsKey: true),
         AutoRoute(name: 'asClientDetails', path: 'client_details', page: AuthClientDetails, usesPathAsKey: true),
         AutoRoute(name: 'asClientContacts', path: 'client_contacts', page: ClientContactsSubpage, usesPathAsKey: true),
@@ -31,7 +31,6 @@ import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart'
         AutoRoute(name: 'asDataError', path: 'data_error', page: AuthDataError, usesPathAsKey: true),
         AutoRoute(name: 'asSuccess', path: 'succes', page: AuthSucces, usesPathAsKey: true),
       ],
-      guards: [AuthGuard],
     ),
     AutoRoute(
       name: 'app',
@@ -74,27 +73,14 @@ class SB extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('SB'),
+            const Text('B'),
             const SizedBox(
               height: 16,
             ),
             ElevatedButton(
               onPressed: () async {
                 ref.read(fireAuthServiceProvider).signOut();
-                context.router.replaceAll([Auth(returnUrl: context.router.currentPath)]);
-
-                // String currentPath = context.router.currentPath;
-
-                // await ref.read(fireAuthServiceProvider).signOut();
-
-                // // ignore: use_build_context_synchronously
-                // context.router.navigate(
-                //   Auth(
-                //     onAuthComplete: () {
-                //       context.router.navigateNamed(currentPath);
-                //     },
-                //   ),
-                // );
+                context.router.replaceAll([const Auth()]);
               },
               child: const Text('Sign out'),
             ),
@@ -118,31 +104,8 @@ class AppGuard extends AutoRouteGuard {
       resolver.next(true);
     } else {
       resolver.next(false);
-      router.replaceAll([Auth(returnUrl: router.currentPath)]);
-
-      // router.push(Auth(onAuthComplete: () {
-      //   resolver.next(true);
-      // }));
+      router.replaceAll([const Auth()]);
     }
-  }
-}
-
-class AuthGuard extends AutoRouteGuard {
-  WidgetRef ref;
-  AuthGuard({
-    required this.ref,
-  });
-
-  @override
-  void onNavigation(NavigationResolver resolver, StackRouter router) {
-    resolver.next(true);
-
-    // bool isUserAuthorized = ref.read(fireAuthServiceProvider).authorized;
-    // if (isUserAuthorized) {
-    //   resolver.next(false);
-    // } else {
-    //   resolver.next(true);
-    // }
   }
 }
 

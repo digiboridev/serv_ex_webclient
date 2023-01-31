@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site":"serv-expert-client",
+    "site":"servexpert",
     "public": "build/web",
     "ignore": [
       "firebase.json",

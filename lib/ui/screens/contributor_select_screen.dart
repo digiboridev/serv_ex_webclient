@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
@@ -39,6 +40,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                 if (clientData is AsyncData<Client>) {
                   return button('${clientData.value.firstName} ${clientData.value.lastName}', () {
                     ref.read(contributorProvider.notifier).state = CSAssignedAsClient(clientData.value);
+                    context.router.navigateNamed('/a');
                   });
                 } else {
                   return const SizedBox();
@@ -67,6 +69,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                           company.name,
                           () {
                             ref.read(contributorProvider.notifier).state = CSAssignedAsCompany(company);
+                            context.router.navigateNamed('/a');
                           },
                         ),
                     ],

@@ -41,6 +41,13 @@ class FireAuthService {
     }
   }
 
+  Future signInWithGoogle() async {
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+    googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+    return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+  }
+
   Future<void> reload() async {
     return await _auth.currentUser?.reload();
   }

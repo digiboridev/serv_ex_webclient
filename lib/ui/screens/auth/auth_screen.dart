@@ -7,7 +7,6 @@ import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
-import 'package:serv_expert_webclient/ui/app_wrapper.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_controller.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_state.dart';
@@ -21,10 +20,7 @@ final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScree
 });
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({this.returnUrl, this.onAuthComplete, super.key});
-
-  final String? returnUrl;
-  final VoidCallback? onAuthComplete;
+  const AuthScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
@@ -60,9 +56,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       if (n is ASSAuthorized) {
         context.router.markUrlStateForReplace();
         context.router.replaceAll([const App()]);
-
-        // context.router.popForced();
-        // widget.onAuthComplete?.call();
       }
     });
 
@@ -73,7 +66,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           SizedBox.expand(
             child: AutoRouter.declarative(
                 routes: (_) => [
-                      const SignIn(),
+                      const AsSignIn(),
                       if (loginState is ASSsmsSent) AsConfirmPhone(phone: loginState.phone),
                       if (loginState is ASSClientDetails)
                         AsClientDetails(

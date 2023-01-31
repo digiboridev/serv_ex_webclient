@@ -32,7 +32,6 @@ class _TheAppState extends ConsumerState<TheApp> {
     super.initState();
     _appRouter = AppRouter(
       appGuard: AppGuard(ref: ref),
-      authGuard: AuthGuard(ref: ref),
       contributorGuard: ContributorGuard(ref: ref),
     );
   }

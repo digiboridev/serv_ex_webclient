@@ -24,6 +24,10 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
     }
   }
 
+  onSignInWithGoogle() {
+    ref.read(authScreenControllerProvider.notifier).signInWithGoogle();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -119,6 +123,23 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
                       ),
                     ),
                   ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => onSignInWithGoogle(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.g_mobiledata,
+                      size: 64,
+                      color: Colors.blue,
+                    ),
+                    Text(
+                      'Sign in with Google',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(

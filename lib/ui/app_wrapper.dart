@@ -2,7 +2,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
@@ -58,6 +57,7 @@ class AppWrapper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<Client> client = ref.watch(currentClientStreamProvider);
     AsyncValue<List<Company>> companies = ref.watch(companiesStreamProvider);
+    // ignore: unused_local_variable
     ContributorState contributorState = ref.watch(contributorProvider);
 
     if (client is AsyncError) {

@@ -157,4 +157,22 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     log('skipCompanyRegistration()');
     state = const ASSAuthorized();
   }
+
+  signInWithGoogle() async {
+    AuthScreenState currentState = state;
+    if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
+    if (currentState.busy) throw Exception('Controller is busy');
+
+    log('signInWithGoogle()');
+
+    state = const ASSUnauthorized(busy: true);
+    try {
+      await _fireAuthService.signInWithGoogle();
+      log('signInWithGoogle() signed in');
+      await updateState();
+    } catch (e) {
+      log(e);
+      state = ASSUnauthorized(error: e.toString());
+    }
+  }
 }

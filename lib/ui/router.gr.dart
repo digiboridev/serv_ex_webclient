@@ -29,12 +29,9 @@ import 'screens/contributor_select_screen.dart' as _i10;
 class AppRouter extends _i12.RootStackRouter {
   AppRouter({
     _i13.GlobalKey<_i13.NavigatorState>? navigatorKey,
-    required this.authGuard,
     required this.appGuard,
     required this.contributorGuard,
   }) : super(navigatorKey);
-
-  final _i11.AuthGuard authGuard;
 
   final _i11.AppGuard appGuard;
 
@@ -43,14 +40,9 @@ class AppRouter extends _i12.RootStackRouter {
   @override
   final Map<String, _i12.PageFactory> pagesMap = {
     Auth.name: (routeData) {
-      final args = routeData.argsAs<AuthArgs>(orElse: () => const AuthArgs());
       return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i1.AuthScreen(
-          returnUrl: args.returnUrl,
-          onAuthComplete: args.onAuthComplete,
-          key: args.key,
-        ),
+        child: const _i1.AuthScreen(),
       );
     },
     App.name: (routeData) {
@@ -59,7 +51,7 @@ class AppRouter extends _i12.RootStackRouter {
         child: const _i2.AppWrapper(),
       );
     },
-    SignIn.name: (routeData) {
+    AsSignIn.name: (routeData) {
       return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.AuthSignIn(),
@@ -142,10 +134,9 @@ class AppRouter extends _i12.RootStackRouter {
         _i12.RouteConfig(
           Auth.name,
           path: '/auth',
-          guards: [authGuard],
           children: [
             _i12.RouteConfig(
-              SignIn.name,
+              AsSignIn.name,
               path: 'signin',
               parent: Auth.name,
               usesPathAsKey: true,
@@ -223,43 +214,15 @@ class AppRouter extends _i12.RootStackRouter {
 
 /// generated route for
 /// [_i1.AuthScreen]
-class Auth extends _i12.PageRouteInfo<AuthArgs> {
-  Auth({
-    String? returnUrl,
-    void Function()? onAuthComplete,
-    _i13.Key? key,
-    List<_i12.PageRouteInfo>? children,
-  }) : super(
+class Auth extends _i12.PageRouteInfo<void> {
+  const Auth({List<_i12.PageRouteInfo>? children})
+      : super(
           Auth.name,
           path: '/auth',
-          args: AuthArgs(
-            returnUrl: returnUrl,
-            onAuthComplete: onAuthComplete,
-            key: key,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'Auth';
-}
-
-class AuthArgs {
-  const AuthArgs({
-    this.returnUrl,
-    this.onAuthComplete,
-    this.key,
-  });
-
-  final String? returnUrl;
-
-  final void Function()? onAuthComplete;
-
-  final _i13.Key? key;
-
-  @override
-  String toString() {
-    return 'AuthArgs{returnUrl: $returnUrl, onAuthComplete: $onAuthComplete, key: $key}';
-  }
 }
 
 /// generated route for
@@ -277,14 +240,14 @@ class App extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.AuthSignIn]
-class SignIn extends _i12.PageRouteInfo<void> {
-  const SignIn()
+class AsSignIn extends _i12.PageRouteInfo<void> {
+  const AsSignIn()
       : super(
-          SignIn.name,
+          AsSignIn.name,
           path: 'signin',
         );
 
-  static const String name = 'SignIn';
+  static const String name = 'AsSignIn';
 }
 
 /// generated route for
