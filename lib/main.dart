@@ -39,6 +39,7 @@ class _TheAppState extends ConsumerState<TheApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      title: 'ServExpert',
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
