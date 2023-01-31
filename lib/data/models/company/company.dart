@@ -48,7 +48,7 @@ class Company extends Equatable {
       publicId: map['publicId'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      membersIds: List<String>.from((map['membersIds'] as List<String>)),
+      membersIds: List<String>.from((map['membersIds'])),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
+import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 
 class AuthClientDetails extends ConsumerStatefulWidget {
@@ -71,61 +72,66 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
       color: Colors.white,
       child: Form(
         key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'CLIENT DETAILS',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
+        child: FillableScrollableWrapper(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 32,
               ),
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            firstnameField(),
-            const SizedBox(
-              height: 16,
-            ),
-            lastnameField(),
-            const SizedBox(
-              height: 16,
-            ),
-            phoneField(),
-            const SizedBox(
-              height: 16,
-            ),
-            emailField(),
-            const SizedBox(
-              height: 32,
-            ),
-            SizedBox(
-              width: 600,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Material(
-                  borderRadius: BorderRadius.circular(10),
-                  child: InkWell(
+              const Text(
+                'CLIENT DETAILS',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              firstnameField(),
+              const SizedBox(
+                height: 16,
+              ),
+              lastnameField(),
+              const SizedBox(
+                height: 16,
+              ),
+              phoneField(),
+              const SizedBox(
+                height: 16,
+              ),
+              emailField(),
+              const SizedBox(
+                height: 32,
+              ),
+              SizedBox(
+                width: 600,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Material(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      onContinue();
-                    },
-                    child: Ink(
-                      // width: 600,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'CONTINUE',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        onContinue();
+                      },
+                      child: Ink(
+                        // width: 600,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'CONTINUE',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -133,8 +139,11 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 32,
+              ),
+            ],
+          ),
         ),
       ),
     );

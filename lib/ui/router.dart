@@ -13,6 +13,7 @@ import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_registrat
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/data_error.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/confirm_phone.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
+import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -39,7 +40,8 @@ import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
       guards: [AppGuard],
       children: [
         RedirectRoute(path: '', redirectTo: 'a'),
-        AutoRoute(path: 'a', page: SA),
+        AutoRoute(name: 'contributorSelect', path: 'contributor_select', page: ContributorSelectScreen),
+        AutoRoute(path: 'a', page: SA, guards: [ContributorGuard]),
         AutoRoute(path: 'b', page: SB),
       ],
     ),
@@ -78,7 +80,21 @@ class SB extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                ref.read(fireAuthServiceProvider).signOut().then((value) => context.router.navigateNamed('/'));
+                ref.read(fireAuthServiceProvider).signOut();
+                context.router.replaceAll([Auth(returnUrl: context.router.currentPath)]);
+
+                // String currentPath = context.router.currentPath;
+
+                // await ref.read(fireAuthServiceProvider).signOut();
+
+                // // ignore: use_build_context_synchronously
+                // context.router.navigate(
+                //   Auth(
+                //     onAuthComplete: () {
+                //       context.router.navigateNamed(currentPath);
+                //     },
+                //   ),
+                // );
               },
               child: const Text('Sign out'),
             ),
@@ -101,12 +117,12 @@ class AppGuard extends AutoRouteGuard {
     if (isUserAuthorized) {
       resolver.next(true);
     } else {
-      // resolver.next(false);
-      // router.markUrlStateForReplace();
-      // router.replaceAll([Auth(returnUrl: router.currentPath)]);
-      router.push(Auth(onAuthComplete: () {
-        resolver.next(true);
-      }));
+      resolver.next(false);
+      router.replaceAll([Auth(returnUrl: router.currentPath)]);
+
+      // router.push(Auth(onAuthComplete: () {
+      //   resolver.next(true);
+      // }));
     }
   }
 }
@@ -127,5 +143,23 @@ class AuthGuard extends AutoRouteGuard {
     // } else {
     //   resolver.next(true);
     // }
+  }
+}
+
+class ContributorGuard extends AutoRouteGuard {
+  WidgetRef ref;
+  ContributorGuard({
+    required this.ref,
+  });
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    ContributorState contributorState = ref.read(contributorProvider);
+    if (contributorState is CSUnassigned) {
+      resolver.next(false);
+      router.replaceNamed('contributor_select');
+    } else {
+      resolver.next(true);
+    }
   }
 }

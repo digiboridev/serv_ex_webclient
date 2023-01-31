@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
+import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 
 class AuthCompanyCreate extends ConsumerStatefulWidget {
@@ -46,57 +47,62 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
       color: Colors.white,
       child: Form(
         key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'COMPANY REGISTRATION',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
+        child: FillableScrollableWrapper(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 32,
               ),
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            publicIdField(),
-            const SizedBox(
-              height: 16,
-            ),
-            nameField(),
-            const SizedBox(
-              height: 16,
-            ),
-            emailField(),
-            const SizedBox(
-              height: 32,
-            ),
-            SizedBox(
-              width: 600,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Material(
-                  borderRadius: BorderRadius.circular(10),
-                  child: InkWell(
+              const Text(
+                'COMPANY REGISTRATION',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              publicIdField(),
+              const SizedBox(
+                height: 16,
+              ),
+              nameField(),
+              const SizedBox(
+                height: 16,
+              ),
+              emailField(),
+              const SizedBox(
+                height: 32,
+              ),
+              SizedBox(
+                width: 600,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Material(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      onContinue();
-                    },
-                    child: Ink(
-                      // width: 600,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'CONTINUE',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        onContinue();
+                      },
+                      child: Ink(
+                        // width: 600,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'CONTINUE',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -104,35 +110,35 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              width: 600,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Material(
-                  borderRadius: BorderRadius.circular(10),
-                  child: InkWell(
+              const SizedBox(
+                height: 16,
+              ),
+              SizedBox(
+                width: 600,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Material(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      onSkip();
-                    },
-                    child: Ink(
-                      // width: 600,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'SKIP',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        onSkip();
+                      },
+                      child: Ink(
+                        // width: 600,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'SKIP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -140,8 +146,11 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 32,
+              ),
+            ],
+          ),
         ),
       ),
     );

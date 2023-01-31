@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
+import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 
 class ContactBuildDTO {
@@ -50,8 +51,7 @@ class _ClientContactsSubpageState extends ConsumerState<ClientContactsSubpage> {
       color: Colors.white,
       child: Form(
         key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: FillableScrollableWrapper(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -70,11 +70,7 @@ class _ClientContactsSubpageState extends ConsumerState<ClientContactsSubpage> {
               const SizedBox(
                 height: 32,
               ),
-              Flexible(
-                child: SingleChildScrollView(
-                  child: contactsList(),
-                ),
-              ),
+              contactsList(),
               GestureDetector(
                 onTap: () {
                   setState(() {

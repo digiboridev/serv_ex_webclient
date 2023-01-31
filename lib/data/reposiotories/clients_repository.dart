@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
@@ -13,7 +14,7 @@ class ClientsRepository {
       if (e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
       } else {
-        rethrow;
+        throw UnknownException(e.toString());
       }
     }
   }
@@ -21,11 +22,11 @@ class ClientsRepository {
   Future updateClientContacts({required String id, required List<ClientContact> contacts}) async {
     try {
       await _ref.doc(id).update({'contacts': contacts.map((e) => e.toMap()).toList()});
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
       } else {
-        rethrow;
+        throw UnknownException(e.toString());
       }
     }
   }
@@ -39,12 +40,36 @@ class ClientsRepository {
       } else {
         throw UnexistedResource('Client with id $id does not exist');
       }
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
-      } else {
+      } else if (e is UnexistedResource) {
         rethrow;
+      } else {
+        throw UnknownException(e.toString());
       }
     }
+  }
+
+  Stream<Client> clientByIdStream({required String id}) {
+    return _ref.doc(id).snapshots().transform(
+          StreamTransformer<DocumentSnapshot<Map<String, dynamic>>, Client>.fromHandlers(
+            handleData: (snapshot, sink) {
+              if (snapshot.exists) {
+                sink.add(Client.fromMap(snapshot.data() as Map<String, dynamic>));
+              } else {
+                sink.addError(UnexistedResource('Client with id $id does not exist'));
+              }
+            },
+            handleError: (e, stackTrace, sink) {
+              if (e is FirebaseException && e.code == 'permission-denied') {
+                sink.addError(PermissionDenied(e.message!));
+              } else {
+                sink.addError(UnknownException(e.toString()));
+              }
+            },
+            handleDone: (sink) => sink.close(),
+          ),
+        );
   }
 }

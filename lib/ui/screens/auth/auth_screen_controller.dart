@@ -32,7 +32,6 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     if (!authorized) {
       state = const ASSUnauthorized();
     } else {
-      // state = const ASSLoading();
       try {
         await _clientsRepository.clientById(id: _fireAuthService.uid!, forceNetwork: true);
         state = const ASSAuthorized();

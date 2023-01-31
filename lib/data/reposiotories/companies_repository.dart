@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 
@@ -23,11 +25,11 @@ class CompaniesRepository {
 
     try {
       await _ref.doc(id).set(newCompany.toMap());
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
       } else {
-        rethrow;
+        throw UnknownException(e.toString());
       }
     }
   }
@@ -41,11 +43,11 @@ class CompaniesRepository {
       } else {
         throw UnexistedResource('Copmany with id $id does not exist');
       }
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
       } else {
-        rethrow;
+        throw UnknownException(e.toString());
       }
     }
   }
@@ -55,12 +57,32 @@ class CompaniesRepository {
       QuerySnapshot snapshot = await _ref.where('membersIds', arrayContains: memberId).get();
 
       return snapshot.docs.map((e) => Company.fromMap(e.data() as Map<String, dynamic>)).toList();
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
       } else {
-        rethrow;
+        throw UnknownException(e.toString());
       }
     }
+  }
+
+  Stream<List<Company>> companiesByMemberIdStream({required String memberId}) {
+    return _ref
+        .where('membersIds', arrayContains: memberId)
+        .snapshots()
+        .transform(StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Company>>.fromHandlers(
+          handleData: (snapshot, sink) async {
+            List<Company> c = await compute((docs) => docs.map((e) => Company.fromMap(e.data())).toList(), snapshot.docs);
+            sink.add(c);
+          },
+          handleError: (error, stackTrace, sink) {
+            if (error is FirebaseException && error.code == 'permission-denied') {
+              sink.addError(PermissionDenied(error.message!));
+            } else {
+              sink.addError(UnknownException(error.toString()));
+            }
+          },
+          handleDone: (sink) => sink.close(),
+        ));
   }
 }

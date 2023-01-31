@@ -24,3 +24,12 @@ class Unauthorized implements Exception {
   @override
   String toString() => 'Unauthorized: $message';
 }
+
+class UnknownException implements Exception {
+  final String message;
+
+  const UnknownException([this.message = '']);
+
+  @override
+  String toString() => 'UnknownException: $message';
+}
