@@ -137,6 +137,32 @@ class ASSCompanyCreate extends AuthScreenState {
   }
 }
 
+class ASSCompanyMembers extends AuthScreenState {
+  const ASSCompanyMembers({
+    super.busy,
+    super.error,
+    required this.membersIds,
+    required this.companyId,
+  });
+
+  final List<String> membersIds;
+  final String companyId;
+
+  ASSCompanyMembers copyWith({
+    bool? busy,
+    String? error,
+    List<String>? membersIds,
+    String? companyId,
+  }) {
+    return ASSCompanyMembers(
+      busy: busy ?? this.busy,
+      error: error ?? this.error,
+      membersIds: membersIds ?? this.membersIds,
+      companyId: companyId ?? this.companyId,
+    );
+  }
+}
+
 /// This state is used when all authorization is done and client can use the app
 class ASSAuthorized extends AuthScreenState {
   const ASSAuthorized({

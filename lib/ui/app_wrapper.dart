@@ -42,35 +42,45 @@ class AppWrapper extends ConsumerWidget {
     AsyncValue<List<Company>> companies = ref.watch(companiesStreamProvider);
     ContributorState contributorState = ref.watch(contributorControllerProvider);
 
-    if (client is AsyncError) {
-      return Column(
-        children: [
-          Text('${client.error}'),
-          ElevatedButton(
-            onPressed: () => ref.refresh(currentClientStreamProvider),
-            child: const Text('retry'),
-          ),
-        ],
-      );
-    }
-    if (companies is AsyncError) {
-      return Column(
-        children: [
-          Text('${companies.error}'),
-          ElevatedButton(
-            onPressed: () => ref.refresh(companiesStreamProvider),
-            child: const Text('retry'),
-          ),
-        ],
-      );
-    }
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Builder(builder: (_) {
+          if (client is AsyncError) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('${client.error}'),
+                ElevatedButton(
+                  onPressed: () => ref.refresh(currentClientStreamProvider),
+                  child: const Text('retry'),
+                ),
+              ],
+            );
+          }
+          if (companies is AsyncError) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('${companies.error}'),
+                ElevatedButton(
+                  onPressed: () => ref.refresh(companiesStreamProvider),
+                  child: const Text('retry'),
+                ),
+              ],
+            );
+          }
 
-    if (client is AsyncLoading || companies is AsyncLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+          if (client is AsyncLoading || companies is AsyncLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-    return const AutoRouter();
+          return const AutoRouter();
+        }),
+      ),
+    );
   }
 }

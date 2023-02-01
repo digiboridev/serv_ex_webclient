@@ -77,6 +77,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         ),
                       if (loginState is ASSClientContacts) const AsClientContacts(),
                       if (loginState is ASSCompanyCreate) const AsCompanyCreate(),
+                      if (loginState is ASSCompanyMembers) AsCompanyMembers(membersIds: loginState.membersIds),
                       if (loginState is ASSDataError) AsDataError(error: loginState.error),
                       if (loginState is ASSAuthorized) const AsSuccess(),
                     ]),

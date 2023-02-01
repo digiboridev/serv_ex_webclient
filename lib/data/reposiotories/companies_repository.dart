@@ -7,24 +7,38 @@ import 'package:serv_expert_webclient/data/models/company/company.dart';
 class CompaniesRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('companies');
 
-  Future createCompany({
+  Future<Company> createCompany({
     required String publicId,
     required String companyName,
     required String companyEmail,
     required String memberId,
   }) async {
-    String id = _ref.doc().id;
-
-    Company newCompany = Company(
-      id: id,
-      publicId: publicId,
-      name: companyName,
-      email: companyEmail,
-      membersIds: [memberId],
-    );
-
     try {
+      String id = _ref.doc().id;
+
+      Company newCompany = Company(
+        id: id,
+        publicId: publicId,
+        name: companyName,
+        email: companyEmail,
+        membersIds: [memberId],
+      );
+
       await _ref.doc(id).set(newCompany.toMap());
+
+      return newCompany;
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
+        throw PermissionDenied(e.message!);
+      } else {
+        throw UnknownException(e.toString());
+      }
+    }
+  }
+
+  Future updateCompanyMembers({required String companyId, required List<String> membersIds}) async {
+    try {
+      await _ref.doc(companyId).update({'membersIds': membersIds});
     } catch (e) {
       if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
@@ -52,9 +66,9 @@ class CompaniesRepository {
     }
   }
 
-  Future<List<Company>> companiesByMemberId({required String memberId}) async {
+  Future<List<Company>> companiesByMemberId({required String memberId, bool forceNetwork = false}) async {
     try {
-      QuerySnapshot snapshot = await _ref.where('membersIds', arrayContains: memberId).get();
+      QuerySnapshot snapshot = await _ref.where('membersIds', arrayContains: memberId).get(forceNetwork ? const GetOptions(source: Source.server) : null);
 
       return snapshot.docs.map((e) => Company.fromMap(e.data() as Map<String, dynamic>)).toList();
     } catch (e) {

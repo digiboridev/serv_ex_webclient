@@ -72,4 +72,27 @@ class ClientsRepository {
           ),
         );
   }
+
+  Future<Client> findClientByEmailOrPhone(String value) async {
+    try {
+      QuerySnapshot<Object?> emailSnapshot = await _ref.where('email', isEqualTo: value).get();
+      QuerySnapshot<Object?> phoneSnapshot = await _ref.where('phone', isEqualTo: value).get();
+
+      if (emailSnapshot.docs.isNotEmpty) {
+        return Client.fromMap(emailSnapshot.docs.first.data() as Map<String, dynamic>);
+      } else if (phoneSnapshot.docs.isNotEmpty) {
+        return Client.fromMap(phoneSnapshot.docs.first.data() as Map<String, dynamic>);
+      } else {
+        throw UnexistedResource('Client with email or phone $value does not exist');
+      }
+    } catch (e) {
+      if (e is FirebaseException && e.code == 'permission-denied') {
+        throw PermissionDenied(e.message!);
+      } else if (e is UnexistedResource) {
+        rethrow;
+      } else {
+        throw UnknownException(e.toString());
+      }
+    }
+  }
 }

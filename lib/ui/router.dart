@@ -15,6 +15,7 @@ import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_registrat
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/data_error.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/confirm_phone.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
+import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_members.dart';
 import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart';
 
 @MaterialAutoRouter(
@@ -28,8 +29,9 @@ import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart'
         AutoRoute(name: 'asSignIn', path: 'signin', page: AuthSignIn, usesPathAsKey: true),
         AutoRoute(name: 'asConfirmPhone', path: 'confirm_phone', page: AuthConfirmPhone, usesPathAsKey: true),
         AutoRoute(name: 'asClientDetails', path: 'client_details', page: AuthClientDetails, usesPathAsKey: true),
-        AutoRoute(name: 'asClientContacts', path: 'client_contacts', page: ClientContactsSubpage, usesPathAsKey: true),
+        AutoRoute(name: 'asClientContacts', path: 'client_contacts', page: AuthClientContacts, usesPathAsKey: true),
         AutoRoute(name: 'asCompanyCreate', path: 'company_create', page: AuthCompanyCreate, usesPathAsKey: true),
+        AutoRoute(name: 'asCompanyMembers', path: 'company_members', page: AuthCompanyMembers, usesPathAsKey: true),
         AutoRoute(name: 'asDataError', path: 'data_error', page: AuthDataError, usesPathAsKey: true),
         AutoRoute(name: 'asSuccess', path: 'succes', page: AuthSucces, usesPathAsKey: true),
       ],

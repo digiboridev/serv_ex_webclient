@@ -3,6 +3,7 @@ import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
+import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
@@ -64,6 +65,24 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
       log('signInWithPhone($phone) sent sms');
 
       state = ASSsmsSent(phone: phone);
+    } catch (e) {
+      log(e);
+      state = ASSUnauthorized(error: e.toString());
+    }
+  }
+
+  signInWithGoogle() async {
+    AuthScreenState currentState = state;
+    if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
+    if (currentState.busy) throw Exception('Controller is busy');
+
+    log('signInWithGoogle()');
+
+    state = const ASSUnauthorized(busy: true);
+    try {
+      await _fireAuthService.signInWithGoogle();
+      log('signInWithGoogle() signed in');
+      await updateState();
     } catch (e) {
       log(e);
       state = ASSUnauthorized(error: e.toString());
@@ -140,9 +159,10 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      await _companiesRepository.createCompany(publicId: publicId, companyName: companyName, companyEmail: companyEmail, memberId: _fireAuthService.uid!);
+      Company company =
+          await _companiesRepository.createCompany(publicId: publicId, companyName: companyName, companyEmail: companyEmail, memberId: _fireAuthService.uid!);
       log('submitCompanyCreate($publicId, $companyName, $companyEmail) submitted');
-      state = const ASSAuthorized();
+      state = ASSCompanyMembers(companyId: company.id, membersIds: company.membersIds);
     } catch (e) {
       log(e);
       state = currentState.copyWith(busy: false, error: e.toString());
@@ -158,21 +178,22 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = const ASSAuthorized();
   }
 
-  signInWithGoogle() async {
+  submitCompanyMembersIds({required List<String> membersIds}) async {
     AuthScreenState currentState = state;
-    if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
+    if (currentState is! ASSCompanyMembers) throw Exception('Wrong state');
     if (currentState.busy) throw Exception('Controller is busy');
 
-    log('signInWithGoogle()');
+    log('submitCompanyMembersIds($membersIds)');
 
-    state = const ASSUnauthorized(busy: true);
+    state = currentState.copyWith(busy: true, error: '');
+
     try {
-      await _fireAuthService.signInWithGoogle();
-      log('signInWithGoogle() signed in');
-      await updateState();
+      await _companiesRepository.updateCompanyMembers(companyId: currentState.companyId, membersIds: membersIds);
+      log('submitCompanyMembersIds($membersIds) submitted');
+      state = const ASSAuthorized();
     } catch (e) {
       log(e);
-      state = ASSUnauthorized(error: e.toString());
+      state = currentState.copyWith(busy: false, error: e.toString());
     }
   }
 }

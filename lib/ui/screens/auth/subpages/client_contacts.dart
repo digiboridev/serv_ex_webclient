@@ -17,16 +17,16 @@ class ContactBuildDTO {
   });
 }
 
-class ClientContactsSubpage extends ConsumerStatefulWidget {
-  const ClientContactsSubpage({
+class AuthClientContacts extends ConsumerStatefulWidget {
+  const AuthClientContacts({
     Key? key,
   }) : super(key: key);
 
   @override
-  ConsumerState<ClientContactsSubpage> createState() => _ClientContactsSubpageState();
+  ConsumerState<AuthClientContacts> createState() => _AuthClientContactsState();
 }
 
-class _ClientContactsSubpageState extends ConsumerState<ClientContactsSubpage> {
+class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
   final formKey = GlobalKey<FormState>();
   List<ContactBuildDTO> editableContacts = [];
 
