@@ -5,6 +5,7 @@ import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
 
 class ContributorSelectScreen extends ConsumerStatefulWidget {
   const ContributorSelectScreen({super.key});
@@ -16,8 +17,6 @@ class ContributorSelectScreen extends ConsumerStatefulWidget {
 class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScreen> {
   @override
   Widget build(BuildContext context) {
-    ContributorState contributorState = ref.watch(contributorProvider);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: FillableScrollableWrapper(
@@ -39,7 +38,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                 AsyncValue<Client> clientData = ref.watch(currentClientStreamProvider);
                 if (clientData is AsyncData<Client>) {
                   return button('${clientData.value.firstName} ${clientData.value.lastName}', () {
-                    ref.read(contributorProvider.notifier).state = CSAssignedAsClient(clientData.value);
+                    ref.read(contributorControllerProvider.notifier).setClientContributor(client: clientData.value);
                     context.router.navigateNamed('/a');
                   });
                 } else {
@@ -68,7 +67,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                         button(
                           company.name,
                           () {
-                            ref.read(contributorProvider.notifier).state = CSAssignedAsCompany(company);
+                            ref.read(contributorControllerProvider.notifier).setCompanyContributor(company: company);
                             context.router.navigateNamed('/a');
                           },
                         ),

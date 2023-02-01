@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
+import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/sign_in.dart';
@@ -49,14 +51,26 @@ import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart'
 // extend the generated private router
 class $AppRouter {}
 
-class SA extends StatelessWidget {
+class SA extends ConsumerWidget {
   const SA({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('SA'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    ContributorState contributorState = ref.watch(contributorControllerProvider);
+
+    return Scaffold(
+      body: FillableScrollableWrapper(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text('SA'),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(contributorState.toString()),
+          ],
+        ),
       ),
     );
   }
@@ -67,6 +81,8 @@ class SB extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ContributorState contributorState = ref.watch(contributorControllerProvider);
+
     return Scaffold(
       body: SizedBox.expand(
         child: Column(
@@ -74,6 +90,19 @@ class SB extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text('B'),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(contributorState.toString()),
+            const SizedBox(
+              height: 16,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                ref.read(contributorControllerProvider.notifier).clearContributor();
+              },
+              child: const Text('Unassign contributor'),
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -117,7 +146,7 @@ class ContributorGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    ContributorState contributorState = ref.read(contributorProvider);
+    ContributorState contributorState = ref.read(contributorControllerProvider);
     if (contributorState is CSUnassigned) {
       resolver.next(false);
       router.replaceNamed('contributor_select');

@@ -9,6 +9,7 @@ import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
+import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
 
 final currentClientStreamProvider = StreamProvider.autoDispose<Client>((ref) {
   FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);
@@ -32,24 +33,6 @@ final companiesStreamProvider = StreamProvider.autoDispose<List<Company>>((ref) 
   return companiesRepository.companiesByMemberIdStream(memberId: clientId);
 });
 
-abstract class ContributorState {}
-
-class CSUnassigned extends ContributorState {}
-
-class CSAssignedAsCompany extends ContributorState {
-  final Company company;
-  CSAssignedAsCompany(this.company);
-}
-
-class CSAssignedAsClient extends ContributorState {
-  final Client client;
-  CSAssignedAsClient(this.client);
-}
-
-final contributorProvider = StateProvider.autoDispose<ContributorState>((ref) {
-  return CSUnassigned();
-});
-
 class AppWrapper extends ConsumerWidget {
   const AppWrapper({super.key});
 
@@ -57,8 +40,7 @@ class AppWrapper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<Client> client = ref.watch(currentClientStreamProvider);
     AsyncValue<List<Company>> companies = ref.watch(companiesStreamProvider);
-    // ignore: unused_local_variable
-    ContributorState contributorState = ref.watch(contributorProvider);
+    ContributorState contributorState = ref.watch(contributorControllerProvider);
 
     if (client is AsyncError) {
       return Column(
