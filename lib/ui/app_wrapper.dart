@@ -40,6 +40,7 @@ class AppWrapper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<Client> client = ref.watch(currentClientStreamProvider);
     AsyncValue<List<Company>> companies = ref.watch(companiesStreamProvider);
+    // ignore: unused_local_variable
     ContributorState contributorState = ref.watch(contributorControllerProvider);
 
     return Scaffold(

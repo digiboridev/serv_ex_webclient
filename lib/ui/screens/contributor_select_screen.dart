@@ -6,6 +6,7 @@ import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
+import 'package:serv_expert_webclient/ui/router.gr.dart';
 
 class ContributorSelectScreen extends ConsumerStatefulWidget {
   const ContributorSelectScreen({super.key});
@@ -39,23 +40,18 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                 if (clientData is AsyncData<Client>) {
                   return button('${clientData.value.firstName} ${clientData.value.lastName}', () {
                     ref.read(contributorControllerProvider.notifier).setClientContributor(client: clientData.value);
-                    context.router.navigateNamed('/a');
+                    context.router.navigate(HomeScreenRoute());
                   });
                 } else {
                   return const SizedBox();
                 }
               },
             ),
-            const SizedBox(
-              height: 16,
-            ),
             Container(
               height: 1,
               width: 100,
               color: Colors.deepPurple,
-            ),
-            const SizedBox(
-              height: 16,
+              margin: const EdgeInsets.symmetric(vertical: 8),
             ),
             Consumer(
               builder: (context, ref, _) {
@@ -68,7 +64,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                           company.name,
                           () {
                             ref.read(contributorControllerProvider.notifier).setCompanyContributor(company: company);
-                            context.router.navigateNamed('/a');
+                            context.router.navigate(HomeScreenRoute());
                           },
                         ),
                     ],
@@ -85,7 +81,8 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
   }
 
   Widget button(String text, VoidCallback onTap) {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
       width: 400,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
@@ -17,12 +16,12 @@ import 'package:serv_expert_webclient/ui/screens/auth/subpages/confirm_phone.dar
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_members.dart';
 import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/home_screen.dart';
 
 @MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
+  replaceInRouteName: 'Page,Route,Screen',
   routes: <AutoRoute>[
     AutoRoute(
-      name: 'auth',
       path: '/auth',
       page: AuthScreen,
       children: [
@@ -42,9 +41,9 @@ import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart'
       page: AppWrapper,
       guards: [AppGuard],
       children: [
-        RedirectRoute(path: '', redirectTo: 'a'),
-        AutoRoute(name: 'contributorSelect', path: 'contributor_select', page: ContributorSelectScreen),
-        AutoRoute(path: 'a', page: SA, guards: [ContributorGuard]),
+        RedirectRoute(path: '', redirectTo: 'home'),
+        AutoRoute(path: 'contributor_select', page: ContributorSelectScreen),
+        AutoRoute(path: 'home', page: HomeScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'b', page: SB),
       ],
     ),
@@ -52,31 +51,6 @@ import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart'
 )
 // extend the generated private router
 class $AppRouter {}
-
-class SA extends ConsumerWidget {
-  const SA({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ContributorState contributorState = ref.watch(contributorControllerProvider);
-
-    return Scaffold(
-      body: FillableScrollableWrapper(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('SA'),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(contributorState.toString()),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class SB extends ConsumerWidget {
   const SB({super.key});
@@ -91,10 +65,12 @@ class SB extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('B'),
-            const SizedBox(
-              height: 16,
-            ),
+            const Text('V: 0.0.6'),
+            Text(context.router.root.stack.toString()),
+            Text('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
+            Text(ref.read(fireAuthServiceProvider).uid.toString()),
+            Text(ref.read(fireAuthServiceProvider).email.toString()),
+            Text(ref.read(fireAuthServiceProvider).phoneNumber.toString()),
             Text(contributorState.toString()),
             const SizedBox(
               height: 16,
@@ -111,7 +87,7 @@ class SB extends ConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 ref.read(fireAuthServiceProvider).signOut();
-                context.router.replaceAll([const Auth()]);
+                context.router.replaceAll([const AuthScreenRoute()]);
               },
               child: const Text('Sign out'),
             ),
@@ -135,7 +111,7 @@ class AppGuard extends AutoRouteGuard {
       resolver.next(true);
     } else {
       resolver.next(false);
-      router.replaceAll([const Auth()]);
+      router.replaceAll([const AuthScreenRoute()]);
     }
   }
 }
@@ -151,7 +127,7 @@ class ContributorGuard extends AutoRouteGuard {
     ContributorState contributorState = ref.read(contributorControllerProvider);
     if (contributorState is CSUnassigned) {
       resolver.next(false);
-      router.replaceNamed('contributor_select');
+      router.replace(ContributorSelectScreenRoute());
     } else {
       resolver.next(true);
     }

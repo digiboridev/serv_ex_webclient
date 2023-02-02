@@ -13,7 +13,11 @@ class CSUnassigned extends ContributorState {
   String toString() => 'CSUnassigned';
 }
 
-class CSAssignedAsCompany extends ContributorState with EquatableMixin {
+abstract class CSAssigned extends ContributorState {
+  String get name;
+}
+
+class CSAssignedAsCompany extends CSAssigned with EquatableMixin {
   final Company company;
   CSAssignedAsCompany(this.company);
 
@@ -22,9 +26,12 @@ class CSAssignedAsCompany extends ContributorState with EquatableMixin {
 
   @override
   bool get stringify => true;
+
+  @override
+  String get name => company.name;
 }
 
-class CSAssignedAsClient extends ContributorState with EquatableMixin {
+class CSAssignedAsClient extends CSAssigned with EquatableMixin {
   final Client client;
   CSAssignedAsClient(this.client);
 
@@ -33,6 +40,9 @@ class CSAssignedAsClient extends ContributorState with EquatableMixin {
 
   @override
   bool get stringify => true;
+
+  @override
+  String get name => '${client.firstName} ${client.lastName}';
 }
 
 class ContributorController extends StateNotifier<ContributorState> {

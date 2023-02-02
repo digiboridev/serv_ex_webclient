@@ -11,11 +11,11 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:flutter/material.dart' as _i14;
+import 'package:auto_route/auto_route.dart' as _i14;
+import 'package:flutter/material.dart' as _i15;
 
 import 'app_wrapper.dart' as _i2;
-import 'router.dart' as _i12;
+import 'router.dart' as _i13;
 import 'screens/auth/auth_screen.dart' as _i1;
 import 'screens/auth/subpages/client_contacts.dart' as _i6;
 import 'screens/auth/subpages/client_details.dart' as _i5;
@@ -26,41 +26,42 @@ import 'screens/auth/subpages/data_error.dart' as _i9;
 import 'screens/auth/subpages/sign_in.dart' as _i3;
 import 'screens/auth/subpages/success.dart' as _i10;
 import 'screens/contributor_select_screen.dart' as _i11;
+import 'screens/home_screen.dart' as _i12;
 
-class AppRouter extends _i13.RootStackRouter {
+class AppRouter extends _i14.RootStackRouter {
   AppRouter({
-    _i14.GlobalKey<_i14.NavigatorState>? navigatorKey,
+    _i15.GlobalKey<_i15.NavigatorState>? navigatorKey,
     required this.appGuard,
     required this.contributorGuard,
   }) : super(navigatorKey);
 
-  final _i12.AppGuard appGuard;
+  final _i13.AppGuard appGuard;
 
-  final _i12.ContributorGuard contributorGuard;
+  final _i13.ContributorGuard contributorGuard;
 
   @override
-  final Map<String, _i13.PageFactory> pagesMap = {
-    Auth.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+  final Map<String, _i14.PageFactory> pagesMap = {
+    AuthScreenRoute.name: (routeData) {
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.AuthScreen(),
       );
     },
     App.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.AppWrapper(),
       );
     },
     AsSignIn.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.AuthSignIn(),
       );
     },
     AsConfirmPhone.name: (routeData) {
       final args = routeData.argsAs<AsConfirmPhoneArgs>();
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i4.AuthConfirmPhone(
           key: args.key,
@@ -71,7 +72,7 @@ class AppRouter extends _i13.RootStackRouter {
     AsClientDetails.name: (routeData) {
       final args = routeData.argsAs<AsClientDetailsArgs>(
           orElse: () => const AsClientDetailsArgs());
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.AuthClientDetails(
           key: args.key,
@@ -83,20 +84,20 @@ class AppRouter extends _i13.RootStackRouter {
       );
     },
     AsClientContacts.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i6.AuthClientContacts(),
       );
     },
     AsCompanyCreate.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i7.AuthCompanyCreate(),
       );
     },
     AsCompanyMembers.name: (routeData) {
       final args = routeData.argsAs<AsCompanyMembersArgs>();
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i8.AuthCompanyMembers(
           key: args.key,
@@ -106,7 +107,7 @@ class AppRouter extends _i13.RootStackRouter {
     },
     AsDataError.name: (routeData) {
       final args = routeData.argsAs<AsDataErrorArgs>();
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i9.AuthDataError(
           key: args.key,
@@ -115,112 +116,112 @@ class AppRouter extends _i13.RootStackRouter {
       );
     },
     AsSuccess.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i10.AuthSucces(),
       );
     },
-    ContributorSelect.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+    ContributorSelectScreenRoute.name: (routeData) {
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i11.ContributorSelectScreen(),
       );
     },
-    SA.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+    HomeScreenRoute.name: (routeData) {
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i12.SA(),
+        child: const _i12.HomeScreen(),
       );
     },
-    SB.name: (routeData) {
-      return _i13.MaterialPageX<dynamic>(
+    SBRoute.name: (routeData) {
+      return _i14.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i12.SB(),
+        child: const _i13.SB(),
       );
     },
   };
 
   @override
-  List<_i13.RouteConfig> get routes => [
-        _i13.RouteConfig(
-          Auth.name,
+  List<_i14.RouteConfig> get routes => [
+        _i14.RouteConfig(
+          AuthScreenRoute.name,
           path: '/auth',
           children: [
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsSignIn.name,
               path: 'signin',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsConfirmPhone.name,
               path: 'confirm_phone',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsClientDetails.name,
               path: 'client_details',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsClientContacts.name,
               path: 'client_contacts',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsCompanyCreate.name,
               path: 'company_create',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsCompanyMembers.name,
               path: 'company_members',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsDataError.name,
               path: 'data_error',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               AsSuccess.name,
               path: 'succes',
-              parent: Auth.name,
+              parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
           ],
         ),
-        _i13.RouteConfig(
+        _i14.RouteConfig(
           App.name,
           path: '/',
           guards: [appGuard],
           children: [
-            _i13.RouteConfig(
+            _i14.RouteConfig(
               '#redirect',
               path: '',
               parent: App.name,
-              redirectTo: 'a',
+              redirectTo: 'home',
               fullMatch: true,
             ),
-            _i13.RouteConfig(
-              ContributorSelect.name,
+            _i14.RouteConfig(
+              ContributorSelectScreenRoute.name,
               path: 'contributor_select',
               parent: App.name,
             ),
-            _i13.RouteConfig(
-              SA.name,
-              path: 'a',
+            _i14.RouteConfig(
+              HomeScreenRoute.name,
+              path: 'home',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i13.RouteConfig(
-              SB.name,
+            _i14.RouteConfig(
+              SBRoute.name,
               path: 'b',
               parent: App.name,
             ),
@@ -231,21 +232,21 @@ class AppRouter extends _i13.RootStackRouter {
 
 /// generated route for
 /// [_i1.AuthScreen]
-class Auth extends _i13.PageRouteInfo<void> {
-  const Auth({List<_i13.PageRouteInfo>? children})
+class AuthScreenRoute extends _i14.PageRouteInfo<void> {
+  const AuthScreenRoute({List<_i14.PageRouteInfo>? children})
       : super(
-          Auth.name,
+          AuthScreenRoute.name,
           path: '/auth',
           initialChildren: children,
         );
 
-  static const String name = 'Auth';
+  static const String name = 'AuthScreenRoute';
 }
 
 /// generated route for
 /// [_i2.AppWrapper]
-class App extends _i13.PageRouteInfo<void> {
-  const App({List<_i13.PageRouteInfo>? children})
+class App extends _i14.PageRouteInfo<void> {
+  const App({List<_i14.PageRouteInfo>? children})
       : super(
           App.name,
           path: '/',
@@ -257,7 +258,7 @@ class App extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.AuthSignIn]
-class AsSignIn extends _i13.PageRouteInfo<void> {
+class AsSignIn extends _i14.PageRouteInfo<void> {
   const AsSignIn()
       : super(
           AsSignIn.name,
@@ -269,9 +270,9 @@ class AsSignIn extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.AuthConfirmPhone]
-class AsConfirmPhone extends _i13.PageRouteInfo<AsConfirmPhoneArgs> {
+class AsConfirmPhone extends _i14.PageRouteInfo<AsConfirmPhoneArgs> {
   AsConfirmPhone({
-    _i14.Key? key,
+    _i15.Key? key,
     required String phone,
   }) : super(
           AsConfirmPhone.name,
@@ -291,7 +292,7 @@ class AsConfirmPhoneArgs {
     required this.phone,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String phone;
 
@@ -303,9 +304,9 @@ class AsConfirmPhoneArgs {
 
 /// generated route for
 /// [_i5.AuthClientDetails]
-class AsClientDetails extends _i13.PageRouteInfo<AsClientDetailsArgs> {
+class AsClientDetails extends _i14.PageRouteInfo<AsClientDetailsArgs> {
   AsClientDetails({
-    _i14.Key? key,
+    _i15.Key? key,
     String? phone,
     String? firstName,
     String? lastName,
@@ -334,7 +335,7 @@ class AsClientDetailsArgs {
     this.email,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String? phone;
 
@@ -352,7 +353,7 @@ class AsClientDetailsArgs {
 
 /// generated route for
 /// [_i6.AuthClientContacts]
-class AsClientContacts extends _i13.PageRouteInfo<void> {
+class AsClientContacts extends _i14.PageRouteInfo<void> {
   const AsClientContacts()
       : super(
           AsClientContacts.name,
@@ -364,7 +365,7 @@ class AsClientContacts extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.AuthCompanyCreate]
-class AsCompanyCreate extends _i13.PageRouteInfo<void> {
+class AsCompanyCreate extends _i14.PageRouteInfo<void> {
   const AsCompanyCreate()
       : super(
           AsCompanyCreate.name,
@@ -376,9 +377,9 @@ class AsCompanyCreate extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.AuthCompanyMembers]
-class AsCompanyMembers extends _i13.PageRouteInfo<AsCompanyMembersArgs> {
+class AsCompanyMembers extends _i14.PageRouteInfo<AsCompanyMembersArgs> {
   AsCompanyMembers({
-    _i14.Key? key,
+    _i15.Key? key,
     required List<String> membersIds,
   }) : super(
           AsCompanyMembers.name,
@@ -398,7 +399,7 @@ class AsCompanyMembersArgs {
     required this.membersIds,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final List<String> membersIds;
 
@@ -410,9 +411,9 @@ class AsCompanyMembersArgs {
 
 /// generated route for
 /// [_i9.AuthDataError]
-class AsDataError extends _i13.PageRouteInfo<AsDataErrorArgs> {
+class AsDataError extends _i14.PageRouteInfo<AsDataErrorArgs> {
   AsDataError({
-    _i14.Key? key,
+    _i15.Key? key,
     required String error,
   }) : super(
           AsDataError.name,
@@ -432,7 +433,7 @@ class AsDataErrorArgs {
     required this.error,
   });
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String error;
 
@@ -444,7 +445,7 @@ class AsDataErrorArgs {
 
 /// generated route for
 /// [_i10.AuthSucces]
-class AsSuccess extends _i13.PageRouteInfo<void> {
+class AsSuccess extends _i14.PageRouteInfo<void> {
   const AsSuccess()
       : super(
           AsSuccess.name,
@@ -456,36 +457,36 @@ class AsSuccess extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.ContributorSelectScreen]
-class ContributorSelect extends _i13.PageRouteInfo<void> {
-  const ContributorSelect()
+class ContributorSelectScreenRoute extends _i14.PageRouteInfo<void> {
+  const ContributorSelectScreenRoute()
       : super(
-          ContributorSelect.name,
+          ContributorSelectScreenRoute.name,
           path: 'contributor_select',
         );
 
-  static const String name = 'ContributorSelect';
+  static const String name = 'ContributorSelectScreenRoute';
 }
 
 /// generated route for
-/// [_i12.SA]
-class SA extends _i13.PageRouteInfo<void> {
-  const SA()
+/// [_i12.HomeScreen]
+class HomeScreenRoute extends _i14.PageRouteInfo<void> {
+  const HomeScreenRoute()
       : super(
-          SA.name,
-          path: 'a',
+          HomeScreenRoute.name,
+          path: 'home',
         );
 
-  static const String name = 'SA';
+  static const String name = 'HomeScreenRoute';
 }
 
 /// generated route for
-/// [_i12.SB]
-class SB extends _i13.PageRouteInfo<void> {
-  const SB()
+/// [_i13.SB]
+class SBRoute extends _i14.PageRouteInfo<void> {
+  const SBRoute()
       : super(
-          SB.name,
+          SBRoute.name,
           path: 'b',
         );
 
-  static const String name = 'SB';
+  static const String name = 'SBRoute';
 }
