@@ -78,14 +78,15 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
                       phone = value;
                     },
                     decoration: InputDecoration(
-                        counter: const SizedBox(),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        filled: true,
-                        hintStyle: TextStyle(color: Colors.grey[800]),
-                        labelText: "Phone number",
-                        fillColor: Colors.white70),
+                      counter: const SizedBox(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      filled: true,
+                      hintStyle: TextStyle(color: Colors.grey[800]),
+                      labelText: 'Phone number',
+                      fillColor: Colors.white70,
+                    ),
                   ),
                 ),
               ),

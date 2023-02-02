@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
@@ -37,14 +35,15 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
 
   onAddMemeber() async {
     var result = await showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            child: AddMemberDialog(
-              membersIds: editableMembersIds,
-            ),
-          );
-        });
+      context: context,
+      builder: (_) {
+        return Dialog(
+          child: AddMemberDialog(
+            membersIds: editableMembersIds,
+          ),
+        );
+      },
+    );
     if (result is Client) {
       setState(() => editableMembersIds.add(result.id));
     }
@@ -166,44 +165,52 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
                     const SizedBox(
                       width: 8,
                     ),
-                    Text(client.email,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        )),
+                    Text(
+                      client.email,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                     const SizedBox(
                       width: 8,
                     ),
-                    Text(client.phone,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        )),
+                    Text(
+                      client.phone,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
               );
             },
             loading: () {
-              return const Text('Loading...',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    overflow: TextOverflow.ellipsis,
-                  ));
+              return const Text(
+                'Loading...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
             },
             error: (error, stackTrace) {
-              return const Text('Error',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    overflow: TextOverflow.ellipsis,
-                  ));
+              return const Text(
+                'Error',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
             },
           );
         },
@@ -367,14 +374,15 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
           });
         },
         decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: "Email or phone",
-            fillColor: Colors.white70),
+          counter: const SizedBox(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          labelText: 'Email or phone',
+          fillColor: Colors.white70,
+        ),
       ),
     );
   }

@@ -175,14 +175,15 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             firstNameValue = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "First name",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'First name',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );
@@ -214,14 +215,15 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             lastNameValue = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "Last name",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'Last name',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );
@@ -254,14 +256,15 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             emailValue = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "Email",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'Email',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );
@@ -294,14 +297,15 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             phoneValue = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "Phone",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'Phone',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );

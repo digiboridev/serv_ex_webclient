@@ -50,8 +50,8 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
           ),
           Row(
             children: [
-              Text('Name:'),
-              SizedBox(
+              const Text('Name:'),
+              const SizedBox(
                 width: 4,
               ),
               Text('${client.firstName} ${client.lastName}'),
@@ -59,8 +59,8 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
           ),
           Row(
             children: [
-              Text('Email:'),
-              SizedBox(
+              const Text('Email:'),
+              const SizedBox(
                 width: 4,
               ),
               Text(client.email),
@@ -68,8 +68,8 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
           ),
           Row(
             children: [
-              Text('Phone:'),
-              SizedBox(
+              const Text('Phone:'),
+              const SizedBox(
                 width: 4,
               ),
               Text(client.phone),

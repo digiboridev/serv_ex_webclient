@@ -24,7 +24,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Row(
                 children: [
                   IconButton(
@@ -33,10 +33,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       color: Colors.deepPurple,
                     ),
                     onPressed: () {
-                      context.router.navigate(HomeScreenRoute());
+                      context.router.navigate(const HomeScreenRoute());
                     },
                   ),
-                  Spacer(),
+                  const Spacer(),
                   SubmenuButton(
                     onClose: () {
                       FocusScope.of(context).unfocus();
@@ -45,12 +45,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       InkWell(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          context.router.navigate(ContributorSelectScreenRoute());
+                          context.router.navigate(const ContributorSelectScreenRoute());
                         },
                         child: Container(
                           width: 150,
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: const Text(
                             'Switch contributor',
                             style: TextStyle(
                               color: Colors.deepPurple,
@@ -63,12 +63,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       InkWell(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          context.router.navigate(ProfileScreenRoute());
+                          context.router.navigate(const ProfileScreenRoute());
                         },
                         child: Container(
                           width: 150,
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: const Text(
                             'Profile',
                             style: TextStyle(
                               color: Colors.deepPurple,
@@ -86,8 +86,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         },
                         child: Container(
                           width: 150,
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: const Text(
                             'Logout',
                             style: TextStyle(
                               color: Colors.deepPurple,
@@ -100,12 +100,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       InkWell(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          context.router.navigate(SBRoute());
+                          context.router.navigate(const SBRoute());
                         },
                         child: Container(
                           width: 150,
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: const Text(
                             'Debug',
                             style: TextStyle(
                               color: Colors.deepPurple,
@@ -121,16 +121,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         if (contributorState is CSAssigned)
                           Text(
                             contributorState.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.deepPurple,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                        SizedBox(
+                        const SizedBox(
                           width: 4,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.person,
                           color: Colors.deepPurple,
                         ),
@@ -140,9 +140,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ],
               ),
             ),
-            Spacer(),
-            Text('HomeScreen'),
-            Spacer(),
+            const Spacer(),
+            const Text('HomeScreen'),
+            const Spacer(),
           ],
         ),
       ),

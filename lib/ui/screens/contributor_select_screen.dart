@@ -40,7 +40,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                 if (clientData is AsyncData<Client>) {
                   return button('${clientData.value.firstName} ${clientData.value.lastName}', () {
                     ref.read(contributorControllerProvider.notifier).setClientContributor(client: clientData.value);
-                    context.router.navigate(HomeScreenRoute());
+                    context.router.navigate(const HomeScreenRoute());
                   });
                 } else {
                   return const SizedBox();
@@ -64,7 +64,7 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
                           company.name,
                           () {
                             ref.read(contributorControllerProvider.notifier).setCompanyContributor(company: company);
-                            context.router.navigate(HomeScreenRoute());
+                            context.router.navigate(const HomeScreenRoute());
                           },
                         ),
                     ],

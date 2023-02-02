@@ -24,7 +24,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           menu(context),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               clipBehavior: Clip.hardEdge,
@@ -55,7 +55,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Material(
@@ -86,7 +86,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Material(
@@ -117,7 +117,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -125,13 +125,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     borderRadius: BorderRadius.circular(8),
                     clipBehavior: Clip.hardEdge,
                     child: IconButton(
-                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                       icon: const Icon(
                         Icons.home,
                         color: Colors.black,
                       ),
                       onPressed: () {
-                        context.router.navigate(HomeScreenRoute());
+                        context.router.navigate(const HomeScreenRoute());
                       },
                     ),
                   ),
@@ -145,8 +145,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         context.router.replaceAll([const AuthScreenRoute()]);
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: Text(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        child: const Text(
                           'Logout',
                           style: TextStyle(
                             color: Colors.deepPurple,
@@ -159,7 +159,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
             ],

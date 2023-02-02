@@ -34,11 +34,13 @@ class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
     bool? valid = formKey.currentState?.validate();
     if (valid == true) {
       List<ClientContact> clientContacts = editableContacts
-          .map((e) => ClientContact(
-                firstName: e.firstName,
-                lastName: e.lastName,
-                phone: e.phone,
-              ))
+          .map(
+            (e) => ClientContact(
+              firstName: e.firstName,
+              lastName: e.lastName,
+              phone: e.phone,
+            ),
+          )
           .toList();
 
       ref.read(authScreenControllerProvider.notifier).submitClientContacts(contacts: clientContacts);
@@ -105,12 +107,13 @@ class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
                 children: [
                   Text('Contact ${editableContacts.indexOf(e) + 1}'),
                   GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          editableContacts.remove(e);
-                        });
-                      },
-                      child: const Icon(Icons.delete_sweep_outlined)),
+                    onTap: () {
+                      setState(() {
+                        editableContacts.remove(e);
+                      });
+                    },
+                    child: const Icon(Icons.delete_sweep_outlined),
+                  ),
                 ],
               ),
             ),
@@ -208,14 +211,15 @@ class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
         },
         onChanged: onChanged,
         decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: label,
-            fillColor: Colors.white70),
+          counter: const SizedBox(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          labelText: label,
+          fillColor: Colors.white70,
+        ),
       ),
     );
   }
@@ -242,14 +246,15 @@ class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
         },
         onChanged: onChanged,
         decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: label,
-            fillColor: Colors.white70),
+          counter: const SizedBox(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          labelText: label,
+          fillColor: Colors.white70,
+        ),
       ),
     );
   }

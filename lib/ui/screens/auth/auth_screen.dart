@@ -65,22 +65,23 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         children: [
           SizedBox.expand(
             child: AutoRouter.declarative(
-                routes: (_) => [
-                      const AsSignIn(),
-                      if (loginState is ASSsmsSent) AsConfirmPhone(phone: loginState.phone),
-                      if (loginState is ASSClientDetails)
-                        AsClientDetails(
-                          phone: loginState.phone,
-                          email: loginState.email,
-                          firstName: loginState.firstName,
-                          lastName: loginState.lastName,
-                        ),
-                      if (loginState is ASSClientContacts) const AsClientContacts(),
-                      if (loginState is ASSCompanyCreate) const AsCompanyCreate(),
-                      if (loginState is ASSCompanyMembers) AsCompanyMembers(membersIds: loginState.membersIds),
-                      if (loginState is ASSDataError) AsDataError(error: loginState.error),
-                      if (loginState is ASSAuthorized) const AsSuccess(),
-                    ]),
+              routes: (_) => [
+                const AsSignIn(),
+                if (loginState is ASSsmsSent) AsConfirmPhone(phone: loginState.phone),
+                if (loginState is ASSClientDetails)
+                  AsClientDetails(
+                    phone: loginState.phone,
+                    email: loginState.email,
+                    firstName: loginState.firstName,
+                    lastName: loginState.lastName,
+                  ),
+                if (loginState is ASSClientContacts) const AsClientContacts(),
+                if (loginState is ASSCompanyCreate) const AsCompanyCreate(),
+                if (loginState is ASSCompanyMembers) AsCompanyMembers(membersIds: loginState.membersIds),
+                if (loginState is ASSDataError) AsDataError(error: loginState.error),
+                if (loginState is ASSAuthorized) const AsSuccess(),
+              ],
+            ),
           ),
           // Handle busy state
           if (loginState.busy || loginState is ASSLoading)

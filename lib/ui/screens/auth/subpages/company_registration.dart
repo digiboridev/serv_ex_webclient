@@ -179,14 +179,15 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             publicId = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "ID",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'ID',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );
@@ -217,14 +218,15 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             companyName = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "Company name",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'Company name',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );
@@ -255,14 +257,15 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             companyEmail = value;
           },
           decoration: InputDecoration(
-              counter: const SizedBox(),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              filled: true,
-              hintStyle: TextStyle(color: Colors.grey[800]),
-              labelText: "Email",
-              fillColor: Colors.white70),
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'Email',
+            fillColor: Colors.white70,
+          ),
         ),
       ),
     );

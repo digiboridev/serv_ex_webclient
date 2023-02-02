@@ -81,22 +81,21 @@ class CompaniesRepository {
   }
 
   Stream<List<Company>> companiesByMemberIdStream({required String memberId}) {
-    return _ref
-        .where('membersIds', arrayContains: memberId)
-        .snapshots()
-        .transform(StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Company>>.fromHandlers(
-          handleData: (snapshot, sink) async {
-            List<Company> c = await compute((docs) => docs.map((e) => Company.fromMap(e.data())).toList(), snapshot.docs);
-            sink.add(c);
-          },
-          handleError: (error, stackTrace, sink) {
-            if (error is FirebaseException && error.code == 'permission-denied') {
-              sink.addError(PermissionDenied(error.message!));
-            } else {
-              sink.addError(UnknownException(error.toString()));
-            }
-          },
-          handleDone: (sink) => sink.close(),
-        ));
+    return _ref.where('membersIds', arrayContains: memberId).snapshots().transform(
+          StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Company>>.fromHandlers(
+            handleData: (snapshot, sink) async {
+              List<Company> c = await compute((docs) => docs.map((e) => Company.fromMap(e.data())).toList(), snapshot.docs);
+              sink.add(c);
+            },
+            handleError: (error, stackTrace, sink) {
+              if (error is FirebaseException && error.code == 'permission-denied') {
+                sink.addError(PermissionDenied(error.message!));
+              } else {
+                sink.addError(UnknownException(error.toString()));
+              }
+            },
+            handleDone: (sink) => sink.close(),
+          ),
+        );
   }
 }

@@ -50,8 +50,8 @@ class _CompaniesInfoPageState extends ConsumerState<CompaniesInfoPage> {
           ),
           Row(
             children: [
-              Text('Name:'),
-              SizedBox(
+              const Text('Name:'),
+              const SizedBox(
                 width: 4,
               ),
               Text(company.name),
@@ -59,8 +59,8 @@ class _CompaniesInfoPageState extends ConsumerState<CompaniesInfoPage> {
           ),
           Row(
             children: [
-              Text('Email:'),
-              SizedBox(
+              const Text('Email:'),
+              const SizedBox(
                 width: 4,
               ),
               Text(company.email),
@@ -68,8 +68,8 @@ class _CompaniesInfoPageState extends ConsumerState<CompaniesInfoPage> {
           ),
           Row(
             children: [
-              Text('Id:'),
-              SizedBox(
+              const Text('Id:'),
+              const SizedBox(
                 width: 4,
               ),
               Text(company.id),
@@ -79,8 +79,8 @@ class _CompaniesInfoPageState extends ConsumerState<CompaniesInfoPage> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Members:'),
-              SizedBox(
+              const Text('Members:'),
+              const SizedBox(
                 width: 4,
               ),
               company.membersIds.isNotEmpty
@@ -88,7 +88,7 @@ class _CompaniesInfoPageState extends ConsumerState<CompaniesInfoPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: company.membersIds.map((member) => Text(member)).toList(),
                     )
-                  : Text('No members'),
+                  : const Text('No members'),
             ],
           ),
         ],

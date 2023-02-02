@@ -140,7 +140,7 @@ class ContributorGuard extends AutoRouteGuard {
     ContributorState contributorState = ref.read(contributorControllerProvider);
     if (contributorState is CSUnassigned) {
       resolver.next(false);
-      router.replace(ContributorSelectScreenRoute());
+      router.replace(const ContributorSelectScreenRoute());
     } else {
       resolver.next(true);
     }
