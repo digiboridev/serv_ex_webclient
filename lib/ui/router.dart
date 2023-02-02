@@ -17,6 +17,9 @@ import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_members.dart';
 import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/home_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/profile/profile_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/profile/subpages/client_info.dart';
+import 'package:serv_expert_webclient/ui/screens/profile/subpages/companies_info.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route,Screen',
@@ -44,6 +47,16 @@ import 'package:serv_expert_webclient/ui/screens/home_screen.dart';
         RedirectRoute(path: '', redirectTo: 'home'),
         AutoRoute(path: 'contributor_select', page: ContributorSelectScreen),
         AutoRoute(path: 'home', page: HomeScreen, guards: [ContributorGuard]),
+        AutoRoute(
+          path: 'profile',
+          page: ProfileScreen,
+          guards: [ContributorGuard],
+          children: [
+            RedirectRoute(path: '', redirectTo: 'client_info'),
+            AutoRoute(path: 'client_info', page: ClientInfoPage),
+            AutoRoute(path: 'companies_info', page: CompaniesInfoPage),
+          ],
+        ),
         AutoRoute(path: 'b', page: SB),
       ],
     ),

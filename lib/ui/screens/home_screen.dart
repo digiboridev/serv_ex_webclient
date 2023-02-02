@@ -63,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       InkWell(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          // context.router.navigate(ProfileScreenRoute());
+                          context.router.navigate(ProfileScreenRoute());
                         },
                         child: Container(
                           width: 150,
