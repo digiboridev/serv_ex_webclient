@@ -6,6 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:serv_expert_webclient/core/firebase_options.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/vendors_repository.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/ui/router.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
@@ -54,6 +56,14 @@ final clientsRepositoryProvider = Provider<ClientsRepository>((ref) {
 });
 final companiesRepositoryProvider = Provider<CompaniesRepository>((ref) {
   return CompaniesRepository();
+});
+
+final repairServiceVendorsRepositoryProvider = Provider<RepairServiceVendorsRepository>((ref) {
+  return RepairServiceVendorsRepository();
+});
+
+final repairServiceCategoriesRepositoryProvider = Provider<RepairServiceCategoriesRepository>((ref) {
+  return RepairServiceCategoriesRepository();
 });
 
 final fireAuthServiceProvider = Provider<FireAuthService>((ref) {

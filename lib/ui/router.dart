@@ -16,10 +16,14 @@ import 'package:serv_expert_webclient/ui/screens/auth/subpages/confirm_phone.dar
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/success.dart';
 import 'package:serv_expert_webclient/ui/screens/auth/subpages/company_members.dart';
 import 'package:serv_expert_webclient/ui/screens/contributor_select_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/debug_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/home_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/profile_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/subpages/client_info.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/subpages/companies_info.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_categories_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_subcategories_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/vendors_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route,Screen',
@@ -47,6 +51,9 @@ import 'package:serv_expert_webclient/ui/screens/profile/subpages/companies_info
         RedirectRoute(path: '', redirectTo: 'home'),
         AutoRoute(path: 'contributor_select', page: ContributorSelectScreen),
         AutoRoute(path: 'home', page: HomeScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'repair_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'vendor_cat', page: RSVendorCategoriesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'vendor_subcat', page: RSVendorSubCategoriesScreen, guards: [ContributorGuard]),
         AutoRoute(
           path: 'profile',
           page: ProfileScreen,
@@ -64,52 +71,6 @@ import 'package:serv_expert_webclient/ui/screens/profile/subpages/companies_info
 )
 // extend the generated private router
 class $AppRouter {}
-
-class SB extends ConsumerWidget {
-  const SB({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ContributorState contributorState = ref.watch(contributorControllerProvider);
-
-    return Scaffold(
-      body: SizedBox.expand(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('V: 0.0.6'),
-            Text(context.router.root.stack.toString()),
-            Text('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
-            Text(ref.read(fireAuthServiceProvider).uid.toString()),
-            Text(ref.read(fireAuthServiceProvider).email.toString()),
-            Text(ref.read(fireAuthServiceProvider).phoneNumber.toString()),
-            Text(contributorState.toString()),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                ref.read(contributorControllerProvider.notifier).clearContributor();
-              },
-              child: const Text('Unassign contributor'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                ref.read(fireAuthServiceProvider).signOut();
-                context.router.replaceAll([const AuthScreenRoute()]);
-              },
-              child: const Text('Sign out'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class AppGuard extends AutoRouteGuard {
   WidgetRef ref;

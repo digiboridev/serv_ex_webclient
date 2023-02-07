@@ -347,8 +347,7 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
     return SizedBox(
       width: 600,
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        maxLength: 20,
+        keyboardType: TextInputType.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           if (value == null || value.isEmpty) {

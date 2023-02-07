@@ -38,7 +38,7 @@ class ClientsRepository {
       if (snapshot.exists) {
         return Client.fromMap(snapshot.data() as Map<String, dynamic>);
       } else {
-        throw UnexistedResource('Client with id $id does not exist');
+        throw UnexistedResource('Client $id does not exist');
       }
     } catch (e) {
       if (e is FirebaseException && e.code == 'permission-denied') {
@@ -58,7 +58,7 @@ class ClientsRepository {
               if (snapshot.exists) {
                 sink.add(Client.fromMap(snapshot.data() as Map<String, dynamic>));
               } else {
-                sink.addError(UnexistedResource('Client with id $id does not exist'));
+                sink.addError(UnexistedResource('Client $id does not exist'));
               }
             },
             handleError: (e, stackTrace, sink) {

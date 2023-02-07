@@ -11,11 +11,11 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i17;
-import 'package:flutter/material.dart' as _i18;
+import 'package:auto_route/auto_route.dart' as _i20;
+import 'package:flutter/material.dart' as _i21;
 
 import 'app_wrapper.dart' as _i2;
-import 'router.dart' as _i14;
+import 'router.dart' as _i22;
 import 'screens/auth/auth_screen.dart' as _i1;
 import 'screens/auth/subpages/client_contacts.dart' as _i6;
 import 'screens/auth/subpages/client_details.dart' as _i5;
@@ -26,45 +26,49 @@ import 'screens/auth/subpages/data_error.dart' as _i9;
 import 'screens/auth/subpages/sign_in.dart' as _i3;
 import 'screens/auth/subpages/success.dart' as _i10;
 import 'screens/contributor_select_screen.dart' as _i11;
+import 'screens/debug_screen.dart' as _i17;
 import 'screens/home_screen.dart' as _i12;
-import 'screens/profile/profile_screen.dart' as _i13;
-import 'screens/profile/subpages/client_info.dart' as _i15;
-import 'screens/profile/subpages/companies_info.dart' as _i16;
+import 'screens/profile/profile_screen.dart' as _i16;
+import 'screens/profile/subpages/client_info.dart' as _i18;
+import 'screens/profile/subpages/companies_info.dart' as _i19;
+import 'screens/repair_service/vendor_categories_screen.dart' as _i14;
+import 'screens/repair_service/vendor_subcategories_screen.dart' as _i15;
+import 'screens/repair_service/vendors_screen.dart' as _i13;
 
-class AppRouter extends _i17.RootStackRouter {
+class AppRouter extends _i20.RootStackRouter {
   AppRouter({
-    _i18.GlobalKey<_i18.NavigatorState>? navigatorKey,
+    _i21.GlobalKey<_i21.NavigatorState>? navigatorKey,
     required this.appGuard,
     required this.contributorGuard,
   }) : super(navigatorKey);
 
-  final _i14.AppGuard appGuard;
+  final _i22.AppGuard appGuard;
 
-  final _i14.ContributorGuard contributorGuard;
+  final _i22.ContributorGuard contributorGuard;
 
   @override
-  final Map<String, _i17.PageFactory> pagesMap = {
+  final Map<String, _i20.PageFactory> pagesMap = {
     AuthScreenRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.AuthScreen(),
       );
     },
     App.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.AppWrapper(),
       );
     },
     AsSignIn.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.AuthSignIn(),
       );
     },
     AsConfirmPhone.name: (routeData) {
       final args = routeData.argsAs<AsConfirmPhoneArgs>();
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i4.AuthConfirmPhone(
           key: args.key,
@@ -75,7 +79,7 @@ class AppRouter extends _i17.RootStackRouter {
     AsClientDetails.name: (routeData) {
       final args = routeData.argsAs<AsClientDetailsArgs>(
           orElse: () => const AsClientDetailsArgs());
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.AuthClientDetails(
           key: args.key,
@@ -87,20 +91,20 @@ class AppRouter extends _i17.RootStackRouter {
       );
     },
     AsClientContacts.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i6.AuthClientContacts(),
       );
     },
     AsCompanyCreate.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i7.AuthCompanyCreate(),
       );
     },
     AsCompanyMembers.name: (routeData) {
       final args = routeData.argsAs<AsCompanyMembersArgs>();
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i8.AuthCompanyMembers(
           key: args.key,
@@ -110,7 +114,7 @@ class AppRouter extends _i17.RootStackRouter {
     },
     AsDataError.name: (routeData) {
       final args = routeData.argsAs<AsDataErrorArgs>();
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i9.AuthDataError(
           key: args.key,
@@ -119,98 +123,133 @@ class AppRouter extends _i17.RootStackRouter {
       );
     },
     AsSuccess.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i10.AuthSucces(),
       );
     },
     ContributorSelectScreenRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i11.ContributorSelectScreen(),
       );
     },
     HomeScreenRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i12.HomeScreen(),
       );
     },
-    ProfileScreenRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+    RepairServiceVendorsScreenRoute.name: (routeData) {
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i13.ProfileScreen(),
+        child: const _i13.RepairServiceVendorsScreen(),
+      );
+    },
+    RSVendorCategoriesScreenRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<RSVendorCategoriesScreenRouteArgs>(
+          orElse: () => RSVendorCategoriesScreenRouteArgs(
+              vendorId: queryParams.optString('vendorId')));
+      return _i20.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i14.RSVendorCategoriesScreen(
+          key: args.key,
+          vendorId: args.vendorId,
+        ),
+      );
+    },
+    RSVendorSubCategoriesScreenRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<RSVendorSubCategoriesScreenRouteArgs>(
+          orElse: () => RSVendorSubCategoriesScreenRouteArgs(
+                vendorId: queryParams.optString('vendorId'),
+                categoryId: queryParams.optString('categoryId'),
+              ));
+      return _i20.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i15.RSVendorSubCategoriesScreen(
+          key: args.key,
+          vendorId: args.vendorId,
+          categoryId: args.categoryId,
+        ),
+      );
+    },
+    ProfileScreenRoute.name: (routeData) {
+      return _i20.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i16.ProfileScreen(),
       );
     },
     SBRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i14.SB(),
+        child: const _i17.SB(),
       );
     },
     ClientInfoPageRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i15.ClientInfoPage(),
+        child: const _i18.ClientInfoPage(),
       );
     },
     CompaniesInfoPageRoute.name: (routeData) {
-      return _i17.MaterialPageX<dynamic>(
+      return _i20.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i16.CompaniesInfoPage(),
+        child: const _i19.CompaniesInfoPage(),
       );
     },
   };
 
   @override
-  List<_i17.RouteConfig> get routes => [
-        _i17.RouteConfig(
+  List<_i20.RouteConfig> get routes => [
+        _i20.RouteConfig(
           AuthScreenRoute.name,
           path: '/auth',
           children: [
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsSignIn.name,
               path: 'signin',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsConfirmPhone.name,
               path: 'confirm_phone',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsClientDetails.name,
               path: 'client_details',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsClientContacts.name,
               path: 'client_contacts',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsCompanyCreate.name,
               path: 'company_create',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsCompanyMembers.name,
               path: 'company_members',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsDataError.name,
               path: 'data_error',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               AsSuccess.name,
               path: 'succes',
               parent: AuthScreenRoute.name,
@@ -218,55 +257,73 @@ class AppRouter extends _i17.RootStackRouter {
             ),
           ],
         ),
-        _i17.RouteConfig(
+        _i20.RouteConfig(
           App.name,
           path: '/',
           guards: [appGuard],
           children: [
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               '#redirect',
               path: '',
               parent: App.name,
               redirectTo: 'home',
               fullMatch: true,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               ContributorSelectScreenRoute.name,
               path: 'contributor_select',
               parent: App.name,
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               HomeScreenRoute.name,
               path: 'home',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
+              RepairServiceVendorsScreenRoute.name,
+              path: 'repair_vendors',
+              parent: App.name,
+              guards: [contributorGuard],
+            ),
+            _i20.RouteConfig(
+              RSVendorCategoriesScreenRoute.name,
+              path: 'vendor_cat',
+              parent: App.name,
+              guards: [contributorGuard],
+            ),
+            _i20.RouteConfig(
+              RSVendorSubCategoriesScreenRoute.name,
+              path: 'vendor_subcat',
+              parent: App.name,
+              guards: [contributorGuard],
+            ),
+            _i20.RouteConfig(
               ProfileScreenRoute.name,
               path: 'profile',
               parent: App.name,
               guards: [contributorGuard],
               children: [
-                _i17.RouteConfig(
+                _i20.RouteConfig(
                   '#redirect',
                   path: '',
                   parent: ProfileScreenRoute.name,
                   redirectTo: 'client_info',
                   fullMatch: true,
                 ),
-                _i17.RouteConfig(
+                _i20.RouteConfig(
                   ClientInfoPageRoute.name,
                   path: 'client_info',
                   parent: ProfileScreenRoute.name,
                 ),
-                _i17.RouteConfig(
+                _i20.RouteConfig(
                   CompaniesInfoPageRoute.name,
                   path: 'companies_info',
                   parent: ProfileScreenRoute.name,
                 ),
               ],
             ),
-            _i17.RouteConfig(
+            _i20.RouteConfig(
               SBRoute.name,
               path: 'b',
               parent: App.name,
@@ -278,8 +335,8 @@ class AppRouter extends _i17.RootStackRouter {
 
 /// generated route for
 /// [_i1.AuthScreen]
-class AuthScreenRoute extends _i17.PageRouteInfo<void> {
-  const AuthScreenRoute({List<_i17.PageRouteInfo>? children})
+class AuthScreenRoute extends _i20.PageRouteInfo<void> {
+  const AuthScreenRoute({List<_i20.PageRouteInfo>? children})
       : super(
           AuthScreenRoute.name,
           path: '/auth',
@@ -291,8 +348,8 @@ class AuthScreenRoute extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.AppWrapper]
-class App extends _i17.PageRouteInfo<void> {
-  const App({List<_i17.PageRouteInfo>? children})
+class App extends _i20.PageRouteInfo<void> {
+  const App({List<_i20.PageRouteInfo>? children})
       : super(
           App.name,
           path: '/',
@@ -304,7 +361,7 @@ class App extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.AuthSignIn]
-class AsSignIn extends _i17.PageRouteInfo<void> {
+class AsSignIn extends _i20.PageRouteInfo<void> {
   const AsSignIn()
       : super(
           AsSignIn.name,
@@ -316,9 +373,9 @@ class AsSignIn extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.AuthConfirmPhone]
-class AsConfirmPhone extends _i17.PageRouteInfo<AsConfirmPhoneArgs> {
+class AsConfirmPhone extends _i20.PageRouteInfo<AsConfirmPhoneArgs> {
   AsConfirmPhone({
-    _i18.Key? key,
+    _i21.Key? key,
     required String phone,
   }) : super(
           AsConfirmPhone.name,
@@ -338,7 +395,7 @@ class AsConfirmPhoneArgs {
     required this.phone,
   });
 
-  final _i18.Key? key;
+  final _i21.Key? key;
 
   final String phone;
 
@@ -350,9 +407,9 @@ class AsConfirmPhoneArgs {
 
 /// generated route for
 /// [_i5.AuthClientDetails]
-class AsClientDetails extends _i17.PageRouteInfo<AsClientDetailsArgs> {
+class AsClientDetails extends _i20.PageRouteInfo<AsClientDetailsArgs> {
   AsClientDetails({
-    _i18.Key? key,
+    _i21.Key? key,
     String? phone,
     String? firstName,
     String? lastName,
@@ -381,7 +438,7 @@ class AsClientDetailsArgs {
     this.email,
   });
 
-  final _i18.Key? key;
+  final _i21.Key? key;
 
   final String? phone;
 
@@ -399,7 +456,7 @@ class AsClientDetailsArgs {
 
 /// generated route for
 /// [_i6.AuthClientContacts]
-class AsClientContacts extends _i17.PageRouteInfo<void> {
+class AsClientContacts extends _i20.PageRouteInfo<void> {
   const AsClientContacts()
       : super(
           AsClientContacts.name,
@@ -411,7 +468,7 @@ class AsClientContacts extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.AuthCompanyCreate]
-class AsCompanyCreate extends _i17.PageRouteInfo<void> {
+class AsCompanyCreate extends _i20.PageRouteInfo<void> {
   const AsCompanyCreate()
       : super(
           AsCompanyCreate.name,
@@ -423,9 +480,9 @@ class AsCompanyCreate extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.AuthCompanyMembers]
-class AsCompanyMembers extends _i17.PageRouteInfo<AsCompanyMembersArgs> {
+class AsCompanyMembers extends _i20.PageRouteInfo<AsCompanyMembersArgs> {
   AsCompanyMembers({
-    _i18.Key? key,
+    _i21.Key? key,
     required List<String> membersIds,
   }) : super(
           AsCompanyMembers.name,
@@ -445,7 +502,7 @@ class AsCompanyMembersArgs {
     required this.membersIds,
   });
 
-  final _i18.Key? key;
+  final _i21.Key? key;
 
   final List<String> membersIds;
 
@@ -457,9 +514,9 @@ class AsCompanyMembersArgs {
 
 /// generated route for
 /// [_i9.AuthDataError]
-class AsDataError extends _i17.PageRouteInfo<AsDataErrorArgs> {
+class AsDataError extends _i20.PageRouteInfo<AsDataErrorArgs> {
   AsDataError({
-    _i18.Key? key,
+    _i21.Key? key,
     required String error,
   }) : super(
           AsDataError.name,
@@ -479,7 +536,7 @@ class AsDataErrorArgs {
     required this.error,
   });
 
-  final _i18.Key? key;
+  final _i21.Key? key;
 
   final String error;
 
@@ -491,7 +548,7 @@ class AsDataErrorArgs {
 
 /// generated route for
 /// [_i10.AuthSucces]
-class AsSuccess extends _i17.PageRouteInfo<void> {
+class AsSuccess extends _i20.PageRouteInfo<void> {
   const AsSuccess()
       : super(
           AsSuccess.name,
@@ -503,7 +560,7 @@ class AsSuccess extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.ContributorSelectScreen]
-class ContributorSelectScreenRoute extends _i17.PageRouteInfo<void> {
+class ContributorSelectScreenRoute extends _i20.PageRouteInfo<void> {
   const ContributorSelectScreenRoute()
       : super(
           ContributorSelectScreenRoute.name,
@@ -515,7 +572,7 @@ class ContributorSelectScreenRoute extends _i17.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i12.HomeScreen]
-class HomeScreenRoute extends _i17.PageRouteInfo<void> {
+class HomeScreenRoute extends _i20.PageRouteInfo<void> {
   const HomeScreenRoute()
       : super(
           HomeScreenRoute.name,
@@ -526,9 +583,101 @@ class HomeScreenRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.ProfileScreen]
-class ProfileScreenRoute extends _i17.PageRouteInfo<void> {
-  const ProfileScreenRoute({List<_i17.PageRouteInfo>? children})
+/// [_i13.RepairServiceVendorsScreen]
+class RepairServiceVendorsScreenRoute extends _i20.PageRouteInfo<void> {
+  const RepairServiceVendorsScreenRoute()
+      : super(
+          RepairServiceVendorsScreenRoute.name,
+          path: 'repair_vendors',
+        );
+
+  static const String name = 'RepairServiceVendorsScreenRoute';
+}
+
+/// generated route for
+/// [_i14.RSVendorCategoriesScreen]
+class RSVendorCategoriesScreenRoute
+    extends _i20.PageRouteInfo<RSVendorCategoriesScreenRouteArgs> {
+  RSVendorCategoriesScreenRoute({
+    _i21.Key? key,
+    required String? vendorId,
+  }) : super(
+          RSVendorCategoriesScreenRoute.name,
+          path: 'vendor_cat',
+          args: RSVendorCategoriesScreenRouteArgs(
+            key: key,
+            vendorId: vendorId,
+          ),
+          rawQueryParams: {'vendorId': vendorId},
+        );
+
+  static const String name = 'RSVendorCategoriesScreenRoute';
+}
+
+class RSVendorCategoriesScreenRouteArgs {
+  const RSVendorCategoriesScreenRouteArgs({
+    this.key,
+    required this.vendorId,
+  });
+
+  final _i21.Key? key;
+
+  final String? vendorId;
+
+  @override
+  String toString() {
+    return 'RSVendorCategoriesScreenRouteArgs{key: $key, vendorId: $vendorId}';
+  }
+}
+
+/// generated route for
+/// [_i15.RSVendorSubCategoriesScreen]
+class RSVendorSubCategoriesScreenRoute
+    extends _i20.PageRouteInfo<RSVendorSubCategoriesScreenRouteArgs> {
+  RSVendorSubCategoriesScreenRoute({
+    _i21.Key? key,
+    required String? vendorId,
+    required String? categoryId,
+  }) : super(
+          RSVendorSubCategoriesScreenRoute.name,
+          path: 'vendor_subcat',
+          args: RSVendorSubCategoriesScreenRouteArgs(
+            key: key,
+            vendorId: vendorId,
+            categoryId: categoryId,
+          ),
+          rawQueryParams: {
+            'vendorId': vendorId,
+            'categoryId': categoryId,
+          },
+        );
+
+  static const String name = 'RSVendorSubCategoriesScreenRoute';
+}
+
+class RSVendorSubCategoriesScreenRouteArgs {
+  const RSVendorSubCategoriesScreenRouteArgs({
+    this.key,
+    required this.vendorId,
+    required this.categoryId,
+  });
+
+  final _i21.Key? key;
+
+  final String? vendorId;
+
+  final String? categoryId;
+
+  @override
+  String toString() {
+    return 'RSVendorSubCategoriesScreenRouteArgs{key: $key, vendorId: $vendorId, categoryId: $categoryId}';
+  }
+}
+
+/// generated route for
+/// [_i16.ProfileScreen]
+class ProfileScreenRoute extends _i20.PageRouteInfo<void> {
+  const ProfileScreenRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ProfileScreenRoute.name,
           path: 'profile',
@@ -539,8 +688,8 @@ class ProfileScreenRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.SB]
-class SBRoute extends _i17.PageRouteInfo<void> {
+/// [_i17.SB]
+class SBRoute extends _i20.PageRouteInfo<void> {
   const SBRoute()
       : super(
           SBRoute.name,
@@ -551,8 +700,8 @@ class SBRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.ClientInfoPage]
-class ClientInfoPageRoute extends _i17.PageRouteInfo<void> {
+/// [_i18.ClientInfoPage]
+class ClientInfoPageRoute extends _i20.PageRouteInfo<void> {
   const ClientInfoPageRoute()
       : super(
           ClientInfoPageRoute.name,
@@ -563,8 +712,8 @@ class ClientInfoPageRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i16.CompaniesInfoPage]
-class CompaniesInfoPageRoute extends _i17.PageRouteInfo<void> {
+/// [_i19.CompaniesInfoPage]
+class CompaniesInfoPageRoute extends _i20.PageRouteInfo<void> {
   const CompaniesInfoPageRoute()
       : super(
           CompaniesInfoPageRoute.name,
