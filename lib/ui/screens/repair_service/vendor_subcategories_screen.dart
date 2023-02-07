@@ -20,9 +20,9 @@ class SubcatParams extends Equatable {
   List<Object> get props => [vendorId, categoryId];
 }
 
-final subcategoriesByVendorProvider = FutureProvider.autoDispose.family<List<RepairServiceCategory>, SubcatParams>((ref, params) async {
-  RepairServiceCategoriesRepository repository = ref.read(repairServiceCategoriesRepositoryProvider);
-  return repository.vendorCategories(params.vendorId, parentId: params.categoryId, type: RSCType.subcategory);
+final subcategoriesByVendorProvider = FutureProvider.autoDispose.family<List<RSCategory>, SubcatParams>((ref, params) async {
+  RSCategoriesRepository repository = ref.read(rsCategoriesRepositoryProvider);
+  return repository.vendorCategories(params.vendorId, parentId: params.categoryId);
 });
 
 class RSVendorSubCategoriesScreen extends ConsumerStatefulWidget {
@@ -37,7 +37,7 @@ class RSVendorSubCategoriesScreen extends ConsumerStatefulWidget {
 class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<RepairServiceCategory>> categories = ref.watch(subcategoriesByVendorProvider(SubcatParams(widget.vendorId!, widget.categoryId!)));
+    AsyncValue<List<RSCategory>> categories = ref.watch(subcategoriesByVendorProvider(SubcatParams(widget.vendorId!, widget.categoryId!)));
 
     return FillableScrollableWrapper(
       child: Container(
@@ -60,7 +60,7 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
     );
   }
 
-  Widget content(List<RepairServiceCategory> categories) {
+  Widget content(List<RSCategory> categories) {
     return Column(
       children: [
         const SizedBox(
@@ -91,7 +91,7 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
     );
   }
 
-  Widget categoryTile(RepairServiceCategory category) {
+  Widget categoryTile(RSCategory category) {
     return Container(
       width: 360,
       height: 280,

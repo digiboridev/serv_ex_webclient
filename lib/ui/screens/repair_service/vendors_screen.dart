@@ -7,8 +7,8 @@ import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.
 import 'package:serv_expert_webclient/ui/components/header.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
 
-final vendorsStreamProvider = StreamProvider.autoDispose<List<RepairServiceVendor>>((ref) {
-  final vendorsRepository = ref.watch(repairServiceVendorsRepositoryProvider);
+final vendorsStreamProvider = StreamProvider.autoDispose<List<RSVendor>>((ref) {
+  final vendorsRepository = ref.watch(rsVendorsRepositoryProvider);
   return vendorsRepository.vendorsStream();
 });
 
@@ -22,7 +22,7 @@ class RepairServiceVendorsScreen extends ConsumerStatefulWidget {
 class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendorsScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<RepairServiceVendor>> vendorsValue = ref.watch(vendorsStreamProvider);
+    AsyncValue<List<RSVendor>> vendorsValue = ref.watch(vendorsStreamProvider);
 
     return Container(
       color: Colors.white,
@@ -45,7 +45,7 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
     );
   }
 
-  Widget content(List<RepairServiceVendor> vendors) {
+  Widget content(List<RSVendor> vendors) {
     return Column(
       children: [
         Spacer(),
@@ -67,7 +67,7 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
     );
   }
 
-  Widget vendorTile(RepairServiceVendor vendor) {
+  Widget vendorTile(RSVendor vendor) {
     return Container(
       width: 300,
       height: 100,

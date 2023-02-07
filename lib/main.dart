@@ -58,12 +58,12 @@ final companiesRepositoryProvider = Provider<CompaniesRepository>((ref) {
   return CompaniesRepository();
 });
 
-final repairServiceVendorsRepositoryProvider = Provider<RepairServiceVendorsRepository>((ref) {
-  return RepairServiceVendorsRepository();
+final rsVendorsRepositoryProvider = Provider<RSVendorsRepository>((ref) {
+  return RSVendorsRepository();
 });
 
-final repairServiceCategoriesRepositoryProvider = Provider<RepairServiceCategoriesRepository>((ref) {
-  return RepairServiceCategoriesRepository();
+final rsCategoriesRepositoryProvider = Provider<RSCategoriesRepository>((ref) {
+  return RSCategoriesRepository();
 });
 
 final fireAuthServiceProvider = Provider<FireAuthService>((ref) {

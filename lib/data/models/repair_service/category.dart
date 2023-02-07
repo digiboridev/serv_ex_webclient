@@ -1,38 +1,26 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
-enum RSCType {
-  category,
-  subcategory,
-  option,
-}
-
-class RepairServiceCategory extends Equatable {
+class RSCategory extends Equatable {
   final String id;
   final String name;
-  final bool global;
-  final RSCType type;
+
+  /// If null, then this is a top-level category else it is a subcategory of the parent category
   final String? parentId;
-  const RepairServiceCategory({
+  const RSCategory({
     required this.id,
     required this.name,
-    required this.global,
-    required this.type,
     this.parentId,
   });
 
-  RepairServiceCategory copyWith({
+  RSCategory copyWith({
     String? id,
     String? name,
-    bool? global,
-    RSCType? type,
     String? parentId,
   }) {
-    return RepairServiceCategory(
+    return RSCategory(
       id: id ?? this.id,
       name: name ?? this.name,
-      global: global ?? this.global,
-      type: type ?? this.type,
       parentId: parentId ?? this.parentId,
     );
   }
@@ -41,37 +29,25 @@ class RepairServiceCategory extends Equatable {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'global': global,
-      'type': type.name,
       'parentId': parentId,
     };
   }
 
-  factory RepairServiceCategory.fromMap(Map<String, dynamic> map) {
-    return RepairServiceCategory(
+  factory RSCategory.fromMap(Map<String, dynamic> map) {
+    return RSCategory(
       id: map['id'] as String,
       name: map['name'] as String,
-      global: map['global'] as bool,
-      type: RSCType.values.byName(map['type'] as String),
       parentId: map['parentId'] != null ? map['parentId'] as String : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory RepairServiceCategory.fromJson(String source) => RepairServiceCategory.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RSCategory.fromJson(String source) => RSCategory.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props {
-    return [
-      id,
-      name,
-      global,
-      type,
-      parentId ?? 0,
-    ];
-  }
+  List<Object> get props => [id, name, parentId ?? 0];
 }

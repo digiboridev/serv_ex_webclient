@@ -8,9 +8,9 @@ import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.
 import 'package:serv_expert_webclient/ui/components/header.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
 
-final categoriesByVendorProvider = FutureProvider.autoDispose.family<List<RepairServiceCategory>, String>((ref, vendorId) async {
-  RepairServiceCategoriesRepository repository = ref.read(repairServiceCategoriesRepositoryProvider);
-  return repository.vendorCategories(vendorId, type: RSCType.category);
+final categoriesByVendorProvider = FutureProvider.autoDispose.family<List<RSCategory>, String>((ref, vendorId) async {
+  RSCategoriesRepository repository = ref.read(rsCategoriesRepositoryProvider);
+  return repository.vendorCategories(vendorId);
 });
 
 class RSVendorCategoriesScreen extends ConsumerStatefulWidget {
@@ -23,7 +23,7 @@ class RSVendorCategoriesScreen extends ConsumerStatefulWidget {
 class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<RepairServiceCategory>> categories = ref.watch(categoriesByVendorProvider(widget.vendorId!));
+    AsyncValue<List<RSCategory>> categories = ref.watch(categoriesByVendorProvider(widget.vendorId!));
 
     return FillableScrollableWrapper(
       child: Container(
@@ -46,7 +46,7 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
     );
   }
 
-  Widget content(List<RepairServiceCategory> categories) {
+  Widget content(List<RSCategory> categories) {
     return Column(
       children: [
         const SizedBox(
@@ -77,7 +77,7 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
     );
   }
 
-  Widget categoryTile(RepairServiceCategory category) {
+  Widget categoryTile(RSCategory category) {
     return Container(
       width: 360,
       height: 280,
