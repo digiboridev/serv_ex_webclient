@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
@@ -22,32 +23,11 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
         color: Colors.white,
         child: Column(
           children: [
-            Header(context: context),
+            Header(),
             const SizedBox(
               height: 32,
             ),
-            Consumer(
-              builder: (context, ref, child) {
-                AsyncValue<RSCategory> selectedCategoryData = ref.watch(
-                  vendorCategoryProvider(
-                    VCParams(vendorId: vendorId!, categoryId: categoryId!),
-                  ),
-                );
-                return Text(
-                  selectedCategoryData.when(
-                    data: (category) {
-                      return category.name;
-                    },
-                    loading: () => 'loading...',
-                    error: (error, stackTrace) => 'Error',
-                  ),
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                  ),
-                );
-              },
-            ),
+            categoryName(),
             const SizedBox(
               height: 32,
             ),
@@ -57,8 +37,10 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
                   AsyncValue<List<RSBreakingType>> breakingTypes = ref.watch(vendorBreakingTypesProvider(VBTParams(vendorId!, categoryId!)));
                   return breakingTypes.when(
                     data: (breakingTypes) {
-                      return BreakingTypeSelection(
-                        breakingTypes: breakingTypes,
+                      return FadeIn(
+                        child: BreakingTypeSelection(
+                          breakingTypes: breakingTypes,
+                        ),
                       );
                     },
                     loading: () => Center(child: const CircularProgressIndicator()),
@@ -73,6 +55,34 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Consumer categoryName() {
+    return Consumer(
+      builder: (context, ref, child) {
+        AsyncValue<RSCategory> selectedCategoryData = ref.watch(
+          vendorCategoryProvider(
+            VCParams(vendorId: vendorId!, categoryId: categoryId!),
+          ),
+        );
+
+        return FadeIn(
+          child: Text(
+            selectedCategoryData.when(
+              data: (category) {
+                return category.name;
+              },
+              loading: () => '',
+              error: (error, stackTrace) => 'Error',
+            ),
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+      },
     );
   }
 }

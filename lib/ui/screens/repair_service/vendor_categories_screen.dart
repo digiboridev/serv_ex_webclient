@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
@@ -24,15 +25,31 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
         color: Colors.white,
         child: Column(
           children: [
-            Header(context: context),
+            Header(),
+            const SizedBox(
+              height: 32,
+            ),
+            const Text(
+              'CATEGORY',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
             Expanded(
               child: categories.when(
                 data: (categories) {
-                  return content(categories);
+                  return FadeIn(child: content(categories));
                 },
                 loading: () => Center(child: const CircularProgressIndicator()),
                 error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
+            ),
+            const SizedBox(
+              height: 32,
             ),
           ],
         ),
@@ -43,19 +60,6 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
   Widget content(List<RSCategory> categories) {
     return Column(
       children: [
-        const SizedBox(
-          height: 32,
-        ),
-        const Text(
-          'CATEGORY',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(
-          height: 32,
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Wrap(
@@ -63,9 +67,6 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
             runSpacing: 16,
             children: categories.map((category) => categoryTile(category)).toList(),
           ),
-        ),
-        const SizedBox(
-          height: 32,
         ),
       ],
     );

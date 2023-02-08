@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/vendor.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
@@ -24,15 +25,28 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
       child: FillableScrollableWrapper(
         child: Column(
           children: [
-            Header(context: context),
+            const Header(),
+            SizedBox(
+              height: 32,
+            ),
+            const Text(
+              'VENDORS',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             Expanded(
               child: vendorsData.when(
                 data: (vendors) {
-                  return content(vendors);
+                  return FadeIn(child: content(vendors));
                 },
                 loading: () => Center(child: const CircularProgressIndicator()),
                 error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
+            ),
+            SizedBox(
+              height: 32,
             ),
           ],
         ),
@@ -44,16 +58,6 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
     return Column(
       children: [
         Spacer(),
-        const Text(
-          'VENDORS',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
         Column(
           children: vendors.map((vendor) => vendorTile(vendor)).toList(),
         ),

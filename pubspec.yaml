@@ -46,6 +46,7 @@ dependencies:
   pinput: ^2.2.23
   get_storage: ^2.0.3
 
+  flutter_fadein: ^2.0.0
 
 
 dev_dependencies:

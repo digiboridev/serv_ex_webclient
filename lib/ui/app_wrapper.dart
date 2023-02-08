@@ -94,7 +94,7 @@ class AppWrapper extends ConsumerWidget {
               );
             }
 
-            return const AutoRouter();
+            return HeroControllerScope(controller: HeroController(), child: const AutoRouter());
           },
         ),
       ),

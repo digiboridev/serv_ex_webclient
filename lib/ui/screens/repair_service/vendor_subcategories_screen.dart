@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
@@ -28,15 +29,25 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
         color: Colors.white,
         child: Column(
           children: [
-            Header(context: context),
+            Header(),
+            const SizedBox(
+              height: 32,
+            ),
+            cetegoryName(),
+            const SizedBox(
+              height: 32,
+            ),
             Expanded(
               child: categories.when(
                 data: (categories) {
-                  return content(categories);
+                  return FadeIn(child: content(categories));
                 },
                 loading: () => Center(child: const CircularProgressIndicator()),
                 error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
+            ),
+            const SizedBox(
+              height: 32,
             ),
           ],
         ),
@@ -44,38 +55,37 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
     );
   }
 
+  Widget cetegoryName() {
+    return Consumer(
+      builder: (context, ref, child) {
+        AsyncValue<RSCategory> selectedCategoryData = ref.watch(
+          vendorCategoryProvider(
+            VCParams(vendorId: widget.vendorId!, categoryId: widget.categoryId!),
+          ),
+        );
+
+        return FadeIn(
+          child: Text(
+            selectedCategoryData.when(
+              data: (category) {
+                return category.name;
+              },
+              loading: () => '',
+              error: (error, stackTrace) => 'Error',
+            ),
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget content(List<RSCategory> categories) {
     return Column(
       children: [
-        const SizedBox(
-          height: 32,
-        ),
-        Consumer(
-          builder: (context, ref, child) {
-            AsyncValue<RSCategory> selectedCategoryData = ref.watch(
-              vendorCategoryProvider(
-                VCParams(vendorId: widget.vendorId!, categoryId: widget.categoryId!),
-              ),
-            );
-
-            return Text(
-              selectedCategoryData.when(
-                data: (category) {
-                  return category.name;
-                },
-                loading: () => 'loading...',
-                error: (error, stackTrace) => 'Error',
-              ),
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),
-            );
-          },
-        ),
-        const SizedBox(
-          height: 32,
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Wrap(
@@ -83,9 +93,6 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
             runSpacing: 16,
             children: categories.map((category) => categoryTile(category)).toList(),
           ),
-        ),
-        const SizedBox(
-          height: 32,
         ),
       ],
     );

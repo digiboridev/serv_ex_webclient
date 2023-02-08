@@ -20,8 +20,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: FillableScrollableWrapper(
         child: Column(
           children: [
-            Header(context: context),
-            const Spacer(),
+            const Header(),
+            const SizedBox(height: 32),
             const Text(
               'HOME',
               style: TextStyle(
@@ -29,9 +29,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            const Spacer(),
+            Wrap(
+              spacing: 16,
+              runSpacing: 16,
               children: [
                 serviceTile(),
                 ordersTile(),
@@ -61,7 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             context.router.navigate(const RepairServiceVendorsScreenRoute());
           },
           child: Center(
-            child: Text('SERVICE', style: const TextStyle(color: Colors.white, fontSize: 24)),
+            child: Text('SERVICES', style: const TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),
@@ -81,9 +82,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Orders screen is not implemented yet'),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          },
           child: Center(
-            child: Text('ERTAX', style: const TextStyle(color: Colors.white, fontSize: 24)),
+            child: Text('TOVARS', style: const TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),
