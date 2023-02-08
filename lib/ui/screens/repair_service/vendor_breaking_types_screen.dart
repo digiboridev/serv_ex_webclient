@@ -1,28 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/header.dart';
 import 'package:serv_expert_webclient/ui/components/min_spacer.dart';
-
-class BrTypesParams extends Equatable {
-  final String vendorId;
-  final String categoryId;
-
-  const BrTypesParams(this.vendorId, this.categoryId);
-
-  @override
-  List<Object> get props => [vendorId, categoryId];
-}
-
-final breakingTypesProvider = FutureProvider.autoDispose.family<List<RSBreakingType>, BrTypesParams>((ref, params) async {
-  RSBreakingTypesRepository repository = ref.read(rsBreakingTypesRepositoryProvider);
-  return repository.vendorBreakingTypes(params.vendorId, categoryId: params.categoryId);
-});
+import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendor_category_provider.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendor_breaking_types_provider.dart';
 
 class RSVendorBreakingTypesScreen extends ConsumerWidget {
   const RSVendorBreakingTypesScreen({super.key, @queryParam required this.vendorId, @queryParam required this.categoryId});
@@ -32,24 +17,58 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<List<RSBreakingType>> breakingTypes = ref.watch(breakingTypesProvider(BrTypesParams(vendorId!, categoryId!)));
-
     return FillableScrollableWrapper(
       child: Container(
         color: Colors.white,
         child: Column(
           children: [
             Header(context: context),
+            const SizedBox(
+              height: 32,
+            ),
+            Consumer(
+              builder: (context, ref, child) {
+                AsyncValue<RSCategory> selectedCategoryData = ref.watch(
+                  vendorCategoryProvider(
+                    VCParams(vendorId: vendorId!, categoryId: categoryId!),
+                  ),
+                );
+                return Text(
+                  selectedCategoryData.when(
+                    data: (category) {
+                      return category.name;
+                    },
+                    loading: () => 'loading...',
+                    error: (error, stackTrace) => 'Error',
+                  ),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 32,
+            ),
             Expanded(
-              child: breakingTypes.when(
-                data: (breakingTypes) {
-                  return BreakingTypeSelection(
-                    breakingTypes: breakingTypes,
+              child: Consumer(
+                builder: (context, ref, child) {
+                  AsyncValue<List<RSBreakingType>> breakingTypes = ref.watch(vendorBreakingTypesProvider(VBTParams(vendorId!, categoryId!)));
+                  return breakingTypes.when(
+                    data: (breakingTypes) {
+                      return BreakingTypeSelection(
+                        breakingTypes: breakingTypes,
+                      );
+                    },
+                    loading: () => Center(child: const CircularProgressIndicator()),
+                    error: (error, stackTrace) => Center(child: Text(error.toString())),
                   );
                 },
-                loading: () => Center(child: const CircularProgressIndicator()),
-                error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
+            ),
+            const SizedBox(
+              height: 32,
             ),
           ],
         ),
@@ -80,27 +99,11 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 32,
-        ),
-        const Text(
-          'BREAKING TYPES',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const MinSpacer(
-          minHeight: 32,
-        ),
         Column(children: breakingTypes.map((breakingType) => breakingTile(breakingType)).toList()),
         const MinSpacer(
           minHeight: 32,
         ),
         ElevatedButton(onPressed: () {}, child: Text('Next')),
-        const SizedBox(
-          height: 32,
-        ),
       ],
     );
   }

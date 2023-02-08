@@ -2,16 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/header.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
-
-final categoriesByVendorProvider = FutureProvider.autoDispose.family<List<RSCategory>, String>((ref, vendorId) async {
-  RSCategoriesRepository repository = ref.read(rsCategoriesRepositoryProvider);
-  return repository.vendorCategories(vendorId);
-});
+import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendor_categories_provider.dart';
 
 class RSVendorCategoriesScreen extends ConsumerStatefulWidget {
   const RSVendorCategoriesScreen({super.key, @queryParam required this.vendorId});
@@ -23,7 +17,7 @@ class RSVendorCategoriesScreen extends ConsumerStatefulWidget {
 class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<RSCategory>> categories = ref.watch(categoriesByVendorProvider(widget.vendorId!));
+    AsyncValue<List<RSCategory>> categories = ref.watch(vendorCategoriesProvider(widget.vendorId!));
 
     return FillableScrollableWrapper(
       child: Container(

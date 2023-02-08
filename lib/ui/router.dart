@@ -20,7 +20,7 @@ import 'package:serv_expert_webclient/ui/screens/home_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/profile_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/subpages/client_info.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/subpages/companies_info.dart';
-import 'package:serv_expert_webclient/ui/screens/repair_service/breaking_selection_screen/vendor_breaking_types_screen.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_breaking_types_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_categories_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_subcategories_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/vendors_screen.dart';

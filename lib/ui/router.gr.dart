@@ -31,8 +31,7 @@ import 'screens/home_screen.dart' as _i12;
 import 'screens/profile/profile_screen.dart' as _i17;
 import 'screens/profile/subpages/client_info.dart' as _i19;
 import 'screens/profile/subpages/companies_info.dart' as _i20;
-import 'screens/repair_service/breaking_selection_screen/vendor_breaking_types_screen.dart'
-    as _i16;
+import 'screens/repair_service/vendor_breaking_types_screen.dart' as _i16;
 import 'screens/repair_service/vendor_categories_screen.dart' as _i14;
 import 'screens/repair_service/vendor_subcategories_screen.dart' as _i15;
 import 'screens/repair_service/vendors_screen.dart' as _i13;

@@ -69,6 +69,7 @@ class SB extends ConsumerWidget {
 
     // log(cats.map((e) => e.id));
 
+    // ios device breakings
     // List<RSBreakingType> asd = [
     //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
     //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
@@ -79,6 +80,58 @@ class SB extends ConsumerWidget {
     //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: '3.5mm jack is missing', categoryId: '9xQZLlZWjMhHdgHzePsq'),
     //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
     //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    // ];
+
+    // asd.forEach((element) async {
+    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // });
+
+    // android device breakings
+    // List<RSBreakingType> asd = [
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    // ];
+
+    // asd.forEach((element) async {
+    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // });
+
+    // ereader device breakings
+    // List<RSBreakingType> asd = [
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    // ];
+
+    // asd.forEach((element) async {
+    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // });
+
+    // drawing device breakings
+    // List<RSBreakingType> asd = [
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Sensor isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Stylus dont recogrizing', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    // ];
+
+    // asd.forEach((element) async {
+    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // });
+
+    // other phone tablet device breakings
+    // List<RSBreakingType> asd = [
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Hardware problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
     // ];
 
     // asd.forEach((element) async {

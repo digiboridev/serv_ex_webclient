@@ -18,6 +18,19 @@ class RSCategoriesRepository {
     }
   }
 
+  Future<RSCategory> vendorCategory({required String vendorId, required String categoryId}) async {
+    try {
+      DocumentSnapshot snapshot = await _vendorCatRef(vendorId).doc(categoryId).get();
+      return RSCategory.fromMap(snapshot.data() as Map<String, dynamic>);
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        throw PermissionDenied(e.message!);
+      } else {
+        throw UnknownException(e.toString());
+      }
+    }
+  }
+
   Future<List<RSCategory>> vendorCategories(String vendorId, {String? parentId}) async {
     try {
       Query query = _vendorCatRef(vendorId);

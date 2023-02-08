@@ -1,30 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/header.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
-
-class SubcatParams extends Equatable {
-  final String vendorId;
-  final String categoryId;
-
-  const SubcatParams(this.vendorId, this.categoryId);
-
-  @override
-  List<Object> get props => [vendorId, categoryId];
-}
-
-final subcategoriesByVendorProvider = FutureProvider.autoDispose.family<List<RSCategory>, SubcatParams>((ref, params) async {
-  RSCategoriesRepository repository = ref.read(rsCategoriesRepositoryProvider);
-  return repository.vendorCategories(params.vendorId, parentId: params.categoryId);
-});
+import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendor_category_provider.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendor_subcategories_provider.dart';
 
 class RSVendorSubCategoriesScreen extends ConsumerStatefulWidget {
   const RSVendorSubCategoriesScreen({super.key, @queryParam required this.vendorId, @queryParam required this.categoryId});
@@ -38,7 +21,7 @@ class RSVendorSubCategoriesScreen extends ConsumerStatefulWidget {
 class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<RSCategory>> categories = ref.watch(subcategoriesByVendorProvider(SubcatParams(widget.vendorId!, widget.categoryId!)));
+    AsyncValue<List<RSCategory>> categories = ref.watch(vendorSubcategoriesProvider(VSCParams(widget.vendorId!, widget.categoryId!)));
 
     return FillableScrollableWrapper(
       child: Container(
@@ -67,12 +50,28 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
         const SizedBox(
           height: 32,
         ),
-        const Text(
-          'SUBCATEGORY',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-          ),
+        Consumer(
+          builder: (context, ref, child) {
+            AsyncValue<RSCategory> selectedCategoryData = ref.watch(
+              vendorCategoryProvider(
+                VCParams(vendorId: widget.vendorId!, categoryId: widget.categoryId!),
+              ),
+            );
+
+            return Text(
+              selectedCategoryData.when(
+                data: (category) {
+                  return category.name;
+                },
+                loading: () => 'loading...',
+                error: (error, stackTrace) => 'Error',
+              ),
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
+            );
+          },
         ),
         const SizedBox(
           height: 32,

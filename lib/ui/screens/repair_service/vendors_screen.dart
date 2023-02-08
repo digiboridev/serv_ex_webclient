@@ -2,15 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/vendor.dart';
-import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/header.dart';
 import 'package:serv_expert_webclient/ui/router.gr.dart';
-
-final vendorsStreamProvider = StreamProvider.autoDispose<List<RSVendor>>((ref) {
-  final vendorsRepository = ref.watch(rsVendorsRepositoryProvider);
-  return vendorsRepository.vendorsStream();
-});
+import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendors_provider.dart';
 
 class RepairServiceVendorsScreen extends ConsumerStatefulWidget {
   const RepairServiceVendorsScreen({super.key});
@@ -22,7 +17,7 @@ class RepairServiceVendorsScreen extends ConsumerStatefulWidget {
 class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendorsScreen> {
   @override
   Widget build(BuildContext context) {
-    AsyncValue<List<RSVendor>> vendorsValue = ref.watch(vendorsStreamProvider);
+    AsyncValue<List<RSVendor>> vendorsData = ref.watch(vendorsProvider);
 
     return Container(
       color: Colors.white,
@@ -31,7 +26,7 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
           children: [
             Header(context: context),
             Expanded(
-              child: vendorsValue.when(
+              child: vendorsData.when(
                 data: (vendors) {
                   return content(vendors);
                 },
