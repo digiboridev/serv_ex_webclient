@@ -17,7 +17,7 @@ final currentClientStreamProvider = StreamProvider.autoDispose<Client>((ref) {
   ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
 
   if (!fireAuthService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
-  // throw const Unauthorized('You have to be authorized to get this resource');
+
   String clientId = fireAuthService.uid!;
 
   return clientsRepository.clientByIdStream(id: clientId);
@@ -61,7 +61,7 @@ class AppWrapper extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('${client.error}'),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   ElevatedButton(
@@ -77,7 +77,7 @@ class AppWrapper extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('${companies.error}'),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   ElevatedButton(

@@ -26,7 +26,7 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
         child: Column(
           children: [
             const Header(),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             const Text(
@@ -41,11 +41,11 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
                 data: (vendors) {
                   return FadeIn(child: content(vendors));
                 },
-                loading: () => Center(child: const CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
           ],
@@ -57,11 +57,11 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
   Widget content(List<RSVendor> vendors) {
     return Column(
       children: [
-        Spacer(),
+        const Spacer(),
         Column(
           children: vendors.map((vendor) => vendorTile(vendor)).toList(),
         ),
-        Spacer()
+        const Spacer()
       ],
     );
   }

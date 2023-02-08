@@ -61,8 +61,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onTap: () {
             context.router.navigate(const RepairServiceVendorsScreenRoute());
           },
-          child: Center(
-            child: Text('SERVICES', style: const TextStyle(color: Colors.white, fontSize: 24)),
+          child: const Center(
+            child: Text('SERVICES', style: TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),
@@ -84,14 +84,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: InkWell(
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Orders screen is not implemented yet'),
-                duration: const Duration(seconds: 2),
+              const SnackBar(
+                content: Text('Orders screen is not implemented yet'),
+                duration: Duration(seconds: 2),
               ),
             );
           },
-          child: Center(
-            child: Text('TOVARS', style: const TextStyle(color: Colors.white, fontSize: 24)),
+          child: const Center(
+            child: Text('TOVARS', style: TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),

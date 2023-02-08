@@ -23,7 +23,7 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
         color: Colors.white,
         child: Column(
           children: [
-            Header(),
+            const Header(),
             const SizedBox(
               height: 32,
             ),
@@ -43,7 +43,7 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
                         ),
                       );
                     },
-                    loading: () => Center(child: const CircularProgressIndicator()),
+                    loading: () => const Center(child: CircularProgressIndicator()),
                     error: (error, stackTrace) => Center(child: Text(error.toString())),
                   );
                 },
@@ -113,7 +113,7 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
         const MinSpacer(
           minHeight: 32,
         ),
-        ElevatedButton(onPressed: () {}, child: Text('Next')),
+        ElevatedButton(onPressed: () {}, child: const Text('Next')),
       ],
     );
   }

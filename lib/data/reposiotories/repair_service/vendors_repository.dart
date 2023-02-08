@@ -35,7 +35,7 @@ class RSVendorsRepository {
     return _ref.snapshots().transform(
           StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<RSVendor>>.fromHandlers(
             handleData: (snapshot, sink) {
-              sink.add(snapshot.docs.map((e) => RSVendor.fromMap(e.data() as Map<String, dynamic>)).toList());
+              sink.add(snapshot.docs.map((e) => RSVendor.fromMap(e.data())).toList());
             },
             handleError: (e, stackTrace, sink) {
               if (e is FirebaseException && e.code == 'permission-denied') {

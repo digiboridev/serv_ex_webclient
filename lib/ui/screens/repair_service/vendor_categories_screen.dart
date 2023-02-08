@@ -25,7 +25,7 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
         color: Colors.white,
         child: Column(
           children: [
-            Header(),
+            const Header(),
             const SizedBox(
               height: 32,
             ),
@@ -44,7 +44,7 @@ class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScr
                 data: (categories) {
                   return FadeIn(child: content(categories));
                 },
-                loading: () => Center(child: const CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
             ),
