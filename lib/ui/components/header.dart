@@ -2,8 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/main.dart';
-import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
-import 'package:serv_expert_webclient/ui/router.gr.dart';
+import 'package:serv_expert_webclient/ui/app_providers.dart';
+import 'package:serv_expert_webclient/ui/contributor_controller.dart';
+import 'package:serv_expert_webclient/router.gr.dart';
 
 class Header extends StatelessWidget {
   const Header({

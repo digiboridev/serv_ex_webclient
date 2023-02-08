@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/vendor.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/header.dart';
-import 'package:serv_expert_webclient/ui/router.gr.dart';
+import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendors_provider.dart';
 
 class RepairServiceVendorsScreen extends ConsumerStatefulWidget {

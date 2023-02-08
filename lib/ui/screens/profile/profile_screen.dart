@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/ui/router.gr.dart';
+import 'package:serv_expert_webclient/router.gr.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});

@@ -14,27 +14,27 @@
 import 'package:auto_route/auto_route.dart' as _i21;
 import 'package:flutter/material.dart' as _i22;
 
-import 'app_wrapper.dart' as _i2;
+import 'ui/app_wrapper.dart' as _i2;
 import 'router.dart' as _i23;
-import 'screens/auth/auth_screen.dart' as _i1;
-import 'screens/auth/subpages/client_contacts.dart' as _i6;
-import 'screens/auth/subpages/client_details.dart' as _i5;
-import 'screens/auth/subpages/company_members.dart' as _i8;
-import 'screens/auth/subpages/company_registration.dart' as _i7;
-import 'screens/auth/subpages/confirm_phone.dart' as _i4;
-import 'screens/auth/subpages/data_error.dart' as _i9;
-import 'screens/auth/subpages/sign_in.dart' as _i3;
-import 'screens/auth/subpages/success.dart' as _i10;
-import 'screens/contributor_select_screen.dart' as _i11;
-import 'screens/debug_screen.dart' as _i18;
-import 'screens/home_screen.dart' as _i12;
-import 'screens/profile/profile_screen.dart' as _i17;
-import 'screens/profile/subpages/client_info.dart' as _i19;
-import 'screens/profile/subpages/companies_info.dart' as _i20;
-import 'screens/repair_service/vendor_breaking_types_screen.dart' as _i16;
-import 'screens/repair_service/vendor_categories_screen.dart' as _i14;
-import 'screens/repair_service/vendor_subcategories_screen.dart' as _i15;
-import 'screens/repair_service/vendors_screen.dart' as _i13;
+import 'ui/screens/auth/auth_screen.dart' as _i1;
+import 'ui/screens/auth/subpages/client_contacts.dart' as _i6;
+import 'ui/screens/auth/subpages/client_details.dart' as _i5;
+import 'ui/screens/auth/subpages/company_members.dart' as _i8;
+import 'ui/screens/auth/subpages/company_registration.dart' as _i7;
+import 'ui/screens/auth/subpages/confirm_phone.dart' as _i4;
+import 'ui/screens/auth/subpages/data_error.dart' as _i9;
+import 'ui/screens/auth/subpages/sign_in.dart' as _i3;
+import 'ui/screens/auth/subpages/success.dart' as _i10;
+import 'ui/screens/contributor_select_screen.dart' as _i11;
+import 'ui/screens/debug_screen.dart' as _i18;
+import 'ui/screens/home_screen.dart' as _i12;
+import 'ui/screens/profile/profile_screen.dart' as _i17;
+import 'ui/screens/profile/subpages/client_info.dart' as _i19;
+import 'ui/screens/profile/subpages/companies_info.dart' as _i20;
+import 'ui/screens/repair_service/vendor_breaking_types_screen.dart' as _i16;
+import 'ui/screens/repair_service/vendor_categories_screen.dart' as _i14;
+import 'ui/screens/repair_service/vendor_subcategories_screen.dart' as _i15;
+import 'ui/screens/repair_service/vendors_screen.dart' as _i13;
 
 class AppRouter extends _i21.RootStackRouter {
   AppRouter({
@@ -78,8 +78,7 @@ class AppRouter extends _i21.RootStackRouter {
       );
     },
     AsClientDetails.name: (routeData) {
-      final args = routeData.argsAs<AsClientDetailsArgs>(
-          orElse: () => const AsClientDetailsArgs());
+      final args = routeData.argsAs<AsClientDetailsArgs>(orElse: () => const AsClientDetailsArgs());
       return _i21.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.AuthClientDetails(
@@ -149,9 +148,8 @@ class AppRouter extends _i21.RootStackRouter {
     },
     RSVendorCategoriesScreenRoute.name: (routeData) {
       final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSVendorCategoriesScreenRouteArgs>(
-          orElse: () => RSVendorCategoriesScreenRouteArgs(
-              vendorId: queryParams.optString('vendorId')));
+      final args =
+          routeData.argsAs<RSVendorCategoriesScreenRouteArgs>(orElse: () => RSVendorCategoriesScreenRouteArgs(vendorId: queryParams.optString('vendorId')));
       return _i21.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i14.RSVendorCategoriesScreen(
@@ -619,8 +617,7 @@ class RepairServiceVendorsScreenRoute extends _i21.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i14.RSVendorCategoriesScreen]
-class RSVendorCategoriesScreenRoute
-    extends _i21.PageRouteInfo<RSVendorCategoriesScreenRouteArgs> {
+class RSVendorCategoriesScreenRoute extends _i21.PageRouteInfo<RSVendorCategoriesScreenRouteArgs> {
   RSVendorCategoriesScreenRoute({
     _i22.Key? key,
     required String? vendorId,
@@ -655,8 +652,7 @@ class RSVendorCategoriesScreenRouteArgs {
 
 /// generated route for
 /// [_i15.RSVendorSubCategoriesScreen]
-class RSVendorSubCategoriesScreenRoute
-    extends _i21.PageRouteInfo<RSVendorSubCategoriesScreenRouteArgs> {
+class RSVendorSubCategoriesScreenRoute extends _i21.PageRouteInfo<RSVendorSubCategoriesScreenRouteArgs> {
   RSVendorSubCategoriesScreenRoute({
     _i22.Key? key,
     required String? vendorId,
@@ -699,8 +695,7 @@ class RSVendorSubCategoriesScreenRouteArgs {
 
 /// generated route for
 /// [_i16.RSVendorBreakingTypesScreen]
-class RSVendorBreakingTypesScreenRoute
-    extends _i21.PageRouteInfo<RSVendorBreakingTypesScreenRouteArgs> {
+class RSVendorBreakingTypesScreenRoute extends _i21.PageRouteInfo<RSVendorBreakingTypesScreenRouteArgs> {
   RSVendorBreakingTypesScreenRoute({
     _i22.Key? key,
     required String? vendorId,

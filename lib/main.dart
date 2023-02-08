@@ -10,8 +10,8 @@ import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/vendors_repository.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
-import 'package:serv_expert_webclient/ui/router.dart';
-import 'package:serv_expert_webclient/ui/router.gr.dart';
+import 'package:serv_expert_webclient/router.dart';
+import 'package:serv_expert_webclient/router.gr.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
