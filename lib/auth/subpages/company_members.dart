@@ -4,8 +4,8 @@ import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/auth/auth_screen.dart';
 
 final clientDataProvider = FutureProvider.autoDispose.family<Client, String>((ref, clientId) async {
   ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);

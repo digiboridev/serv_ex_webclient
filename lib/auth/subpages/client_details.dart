@@ -1,44 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/auth/auth_screen.dart';
 
-class AuthCompanyCreate extends ConsumerStatefulWidget {
-  const AuthCompanyCreate({
+class AuthClientDetails extends ConsumerStatefulWidget {
+  const AuthClientDetails({
     Key? key,
+    this.phone,
+    this.firstName,
+    this.lastName,
+    this.email,
   }) : super(key: key);
 
+  final String? phone;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+
   @override
-  ConsumerState<AuthCompanyCreate> createState() => _CompanyRegistrationSubpageState();
+  ConsumerState<AuthClientDetails> createState() => _ClientDetailsSubpageState();
 }
 
-class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> {
+class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
   final formKey = GlobalKey<FormState>();
 
-  String publicId = '';
-  String companyName = '';
-  String companyEmail = '';
+  String phoneValue = '';
+  String firstNameValue = '';
+  String lastNameValue = '';
+  String emailValue = '';
+
+  // If value verified, u cant edit it
+  bool isPhoneVerified = false;
+  bool isEmailVerified = false;
 
   onContinue() {
     bool? valid = formKey.currentState?.validate();
     if (valid == true) {
-      formKey.currentState?.save();
-      ref.read(authScreenControllerProvider.notifier).submitCompanyCreate(
-            publicId: publicId,
-            companyName: companyName,
-            companyEmail: companyEmail,
+      ref.read(authScreenControllerProvider.notifier).submitClientDetails(
+            phone: phoneValue,
+            firstName: firstNameValue,
+            lastName: lastNameValue,
+            email: emailValue,
           );
     }
-  }
-
-  onSkip() {
-    ref.read(authScreenControllerProvider.notifier).skipCompanyCreate();
   }
 
   @override
   void initState() {
     super.initState();
+    initValues();
+  }
+
+  initValues() {
+    if (widget.phone != null) {
+      phoneValue = widget.phone!;
+      isPhoneVerified = true;
+    }
+    if (widget.email != null) {
+      emailValue = widget.email!;
+      isEmailVerified = true;
+    }
+
+    firstNameValue = widget.firstName ?? '';
+    lastNameValue = widget.lastName ?? '';
   }
 
   @override
@@ -56,7 +81,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
                 height: 32,
               ),
               const Text(
-                'COMPANY REGISTRATION',
+                'CLIENT DETAILS',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
@@ -65,11 +90,15 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
               const SizedBox(
                 height: 32,
               ),
-              publicIdField(),
+              firstnameField(),
               const SizedBox(
                 height: 16,
               ),
-              nameField(),
+              lastnameField(),
+              const SizedBox(
+                height: 16,
+              ),
+              phoneField(),
               const SizedBox(
                 height: 16,
               ),
@@ -111,42 +140,6 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
                 ),
               ),
               const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                width: 600,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(10),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        onSkip();
-                      },
-                      child: Ink(
-                        // width: 600,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurple,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'SKIP',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
                 height: 32,
               ),
             ],
@@ -156,27 +149,30 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
     );
   }
 
-  Widget publicIdField() {
+  Widget firstnameField() {
     return SizedBox(
       width: 600,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
+          initialValue: firstNameValue,
           keyboardType: TextInputType.name,
           maxLength: 20,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter id';
+              return 'Please enter first name';
             }
-
+            if (!AppValidators.isValidName(value)) {
+              return 'Please enter correct first name';
+            }
             return null;
           },
           onFieldSubmitted: (value) {
             onContinue();
           },
           onChanged: (value) {
-            publicId = value;
+            firstNameValue = value;
           },
           decoration: InputDecoration(
             counter: const SizedBox(),
@@ -185,7 +181,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             ),
             filled: true,
             hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'ID',
+            labelText: 'First name',
             fillColor: Colors.white70,
           ),
         ),
@@ -193,21 +189,22 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
     );
   }
 
-  Widget nameField() {
+  Widget lastnameField() {
     return SizedBox(
       width: 600,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
+          initialValue: lastNameValue,
           keyboardType: TextInputType.name,
           maxLength: 20,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter name';
+              return 'Please enter last name';
             }
             if (!AppValidators.isValidName(value)) {
-              return 'Please enter correct name';
+              return 'Please enter correct last name';
             }
             return null;
           },
@@ -215,7 +212,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             onContinue();
           },
           onChanged: (value) {
-            companyName = value;
+            lastNameValue = value;
           },
           decoration: InputDecoration(
             counter: const SizedBox(),
@@ -224,7 +221,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             ),
             filled: true,
             hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'Company name',
+            labelText: 'Last name',
             fillColor: Colors.white70,
           ),
         ),
@@ -238,6 +235,8 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
+          initialValue: emailValue,
+          enabled: isEmailVerified ? false : true,
           keyboardType: TextInputType.emailAddress,
           maxLength: 20,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -254,7 +253,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             onContinue();
           },
           onChanged: (value) {
-            companyEmail = value;
+            emailValue = value;
           },
           decoration: InputDecoration(
             counter: const SizedBox(),
@@ -264,6 +263,47 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
             filled: true,
             hintStyle: TextStyle(color: Colors.grey[800]),
             labelText: 'Email',
+            fillColor: Colors.white70,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget phoneField() {
+    return SizedBox(
+      width: 600,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: TextFormField(
+          initialValue: phoneValue,
+          enabled: isPhoneVerified ? false : true,
+          keyboardType: TextInputType.phone,
+          maxLength: 20,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter phone';
+            }
+            if (!AppValidators.isValidPhone(value)) {
+              return 'Please enter correct phone';
+            }
+            return null;
+          },
+          onFieldSubmitted: (value) {
+            onContinue();
+          },
+          onChanged: (value) {
+            phoneValue = value;
+          },
+          decoration: InputDecoration(
+            counter: const SizedBox(),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            filled: true,
+            hintStyle: TextStyle(color: Colors.grey[800]),
+            labelText: 'Phone',
             fillColor: Colors.white70,
           ),
         ),

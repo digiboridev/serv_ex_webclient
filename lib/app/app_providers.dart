@@ -6,7 +6,7 @@ import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
-import 'package:serv_expert_webclient/ui/contributor_controller.dart';
+import 'package:serv_expert_webclient/app/contributor_controller.dart';
 
 final currentClientStreamProvider = StreamProvider.autoDispose<Client>((ref) {
   FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);

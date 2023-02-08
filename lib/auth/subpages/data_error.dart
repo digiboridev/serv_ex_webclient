@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/auth/auth_screen.dart';
 
 class AuthDataError extends ConsumerStatefulWidget {
   const AuthDataError({

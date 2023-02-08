@@ -7,7 +7,7 @@ import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_state.dart';
+import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
 
 class AuthScreenController extends StateNotifier<AuthScreenState> {
   AuthScreenController({

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/auth/auth_screen.dart';
 
 class AuthConfirmPhone extends ConsumerStatefulWidget {
   const AuthConfirmPhone({

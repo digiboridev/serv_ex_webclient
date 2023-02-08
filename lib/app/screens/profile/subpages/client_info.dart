@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
-import 'package:serv_expert_webclient/ui/app_providers.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
+import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 
 class ClientInfoPage extends ConsumerStatefulWidget {
   const ClientInfoPage({super.key});

@@ -1,69 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/auth/auth_screen.dart';
 
-class AuthClientDetails extends ConsumerStatefulWidget {
-  const AuthClientDetails({
+class AuthCompanyCreate extends ConsumerStatefulWidget {
+  const AuthCompanyCreate({
     Key? key,
-    this.phone,
-    this.firstName,
-    this.lastName,
-    this.email,
   }) : super(key: key);
 
-  final String? phone;
-  final String? firstName;
-  final String? lastName;
-  final String? email;
-
   @override
-  ConsumerState<AuthClientDetails> createState() => _ClientDetailsSubpageState();
+  ConsumerState<AuthCompanyCreate> createState() => _CompanyRegistrationSubpageState();
 }
 
-class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
+class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> {
   final formKey = GlobalKey<FormState>();
 
-  String phoneValue = '';
-  String firstNameValue = '';
-  String lastNameValue = '';
-  String emailValue = '';
-
-  // If value verified, u cant edit it
-  bool isPhoneVerified = false;
-  bool isEmailVerified = false;
+  String publicId = '';
+  String companyName = '';
+  String companyEmail = '';
 
   onContinue() {
     bool? valid = formKey.currentState?.validate();
     if (valid == true) {
-      ref.read(authScreenControllerProvider.notifier).submitClientDetails(
-            phone: phoneValue,
-            firstName: firstNameValue,
-            lastName: lastNameValue,
-            email: emailValue,
+      formKey.currentState?.save();
+      ref.read(authScreenControllerProvider.notifier).submitCompanyCreate(
+            publicId: publicId,
+            companyName: companyName,
+            companyEmail: companyEmail,
           );
     }
+  }
+
+  onSkip() {
+    ref.read(authScreenControllerProvider.notifier).skipCompanyCreate();
   }
 
   @override
   void initState() {
     super.initState();
-    initValues();
-  }
-
-  initValues() {
-    if (widget.phone != null) {
-      phoneValue = widget.phone!;
-      isPhoneVerified = true;
-    }
-    if (widget.email != null) {
-      emailValue = widget.email!;
-      isEmailVerified = true;
-    }
-
-    firstNameValue = widget.firstName ?? '';
-    lastNameValue = widget.lastName ?? '';
   }
 
   @override
@@ -81,7 +56,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
                 height: 32,
               ),
               const Text(
-                'CLIENT DETAILS',
+                'COMPANY REGISTRATION',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
@@ -90,15 +65,11 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
               const SizedBox(
                 height: 32,
               ),
-              firstnameField(),
+              publicIdField(),
               const SizedBox(
                 height: 16,
               ),
-              lastnameField(),
-              const SizedBox(
-                height: 16,
-              ),
-              phoneField(),
+              nameField(),
               const SizedBox(
                 height: 16,
               ),
@@ -140,6 +111,42 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
                 ),
               ),
               const SizedBox(
+                height: 16,
+              ),
+              SizedBox(
+                width: 600,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(10),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        onSkip();
+                      },
+                      child: Ink(
+                        // width: 600,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'SKIP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
                 height: 32,
               ),
             ],
@@ -149,30 +156,27 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
     );
   }
 
-  Widget firstnameField() {
+  Widget publicIdField() {
     return SizedBox(
       width: 600,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
-          initialValue: firstNameValue,
           keyboardType: TextInputType.name,
           maxLength: 20,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter first name';
+              return 'Please enter id';
             }
-            if (!AppValidators.isValidName(value)) {
-              return 'Please enter correct first name';
-            }
+
             return null;
           },
           onFieldSubmitted: (value) {
             onContinue();
           },
           onChanged: (value) {
-            firstNameValue = value;
+            publicId = value;
           },
           decoration: InputDecoration(
             counter: const SizedBox(),
@@ -181,7 +185,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             ),
             filled: true,
             hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'First name',
+            labelText: 'ID',
             fillColor: Colors.white70,
           ),
         ),
@@ -189,22 +193,21 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
     );
   }
 
-  Widget lastnameField() {
+  Widget nameField() {
     return SizedBox(
       width: 600,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
-          initialValue: lastNameValue,
           keyboardType: TextInputType.name,
           maxLength: 20,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter last name';
+              return 'Please enter name';
             }
             if (!AppValidators.isValidName(value)) {
-              return 'Please enter correct last name';
+              return 'Please enter correct name';
             }
             return null;
           },
@@ -212,7 +215,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             onContinue();
           },
           onChanged: (value) {
-            lastNameValue = value;
+            companyName = value;
           },
           decoration: InputDecoration(
             counter: const SizedBox(),
@@ -221,7 +224,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             ),
             filled: true,
             hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'Last name',
+            labelText: 'Company name',
             fillColor: Colors.white70,
           ),
         ),
@@ -235,8 +238,6 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
-          initialValue: emailValue,
-          enabled: isEmailVerified ? false : true,
           keyboardType: TextInputType.emailAddress,
           maxLength: 20,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -253,7 +254,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             onContinue();
           },
           onChanged: (value) {
-            emailValue = value;
+            companyEmail = value;
           },
           decoration: InputDecoration(
             counter: const SizedBox(),
@@ -263,47 +264,6 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             filled: true,
             hintStyle: TextStyle(color: Colors.grey[800]),
             labelText: 'Email',
-            fillColor: Colors.white70,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget phoneField() {
-    return SizedBox(
-      width: 600,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          initialValue: phoneValue,
-          enabled: isPhoneVerified ? false : true,
-          keyboardType: TextInputType.phone,
-          maxLength: 20,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter phone';
-            }
-            if (!AppValidators.isValidPhone(value)) {
-              return 'Please enter correct phone';
-            }
-            return null;
-          },
-          onFieldSubmitted: (value) {
-            onContinue();
-          },
-          onChanged: (value) {
-            phoneValue = value;
-          },
-          decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'Phone',
             fillColor: Colors.white70,
           ),
         ),

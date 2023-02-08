@@ -5,8 +5,8 @@ import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
-import 'package:serv_expert_webclient/ui/app_providers.dart';
-import 'package:serv_expert_webclient/ui/contributor_controller.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
+import 'package:serv_expert_webclient/app/contributor_controller.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 
 class SB extends ConsumerWidget {

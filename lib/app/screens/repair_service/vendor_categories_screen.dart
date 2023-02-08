@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
-import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/ui/components/header.dart';
+import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
-import 'package:serv_expert_webclient/ui/screens/repair_service/providers/vendor_categories_provider.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_categories_provider.dart';
 
 class RSVendorCategoriesScreen extends ConsumerStatefulWidget {
   const RSVendorCategoriesScreen({super.key, @queryParam required this.vendorId});

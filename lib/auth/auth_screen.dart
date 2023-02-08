@@ -8,8 +8,8 @@ import 'package:serv_expert_webclient/data/reposiotories/companies_repository.da
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_controller.dart';
-import 'package:serv_expert_webclient/ui/screens/auth/auth_screen_state.dart';
+import 'package:serv_expert_webclient/auth/auth_screen_controller.dart';
+import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
 
 final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScreenController, AuthScreenState>((ref) {
   FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);
