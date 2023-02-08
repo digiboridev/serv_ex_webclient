@@ -9,6 +9,7 @@ import 'package:serv_expert_webclient/data/reposiotories/repair_service/categori
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/components/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/ui/components/header.dart';
+import 'package:serv_expert_webclient/ui/router.gr.dart';
 
 class SubcatParams extends Equatable {
   final String vendorId;
@@ -104,7 +105,9 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            context.router.navigate(RSVendorBreakingTypesScreenRoute(vendorId: widget.vendorId, categoryId: category.id));
+          },
           child: Center(child: Text(category.name, style: const TextStyle(color: Colors.white, fontSize: 24))),
         ),
       ),

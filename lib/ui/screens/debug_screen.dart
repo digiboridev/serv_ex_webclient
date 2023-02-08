@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/contrributor_controller.dart';
@@ -13,6 +15,7 @@ class SB extends ConsumerWidget {
 
   void test(WidgetRef ref) async {
     RSCategoriesRepository rep = ref.read(rsCategoriesRepositoryProvider);
+    RSBreakingTypesRepository rep2 = ref.read(rsBreakingTypesRepositoryProvider);
 
     // List<RSCategory> cats = [
     //   RSCategory(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
@@ -65,6 +68,22 @@ class SB extends ConsumerWidget {
     // }
 
     // log(cats.map((e) => e.id));
+
+    // List<RSBreakingType> asd = [
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Apple ID recovery', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: '3.5mm jack is missing', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    // ];
+
+    // asd.forEach((element) async {
+    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // });
 
     log('object');
   }

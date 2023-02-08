@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/main.dart';
 import 'package:serv_expert_webclient/ui/app_wrapper.dart';
@@ -21,6 +20,7 @@ import 'package:serv_expert_webclient/ui/screens/home_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/profile_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/subpages/client_info.dart';
 import 'package:serv_expert_webclient/ui/screens/profile/subpages/companies_info.dart';
+import 'package:serv_expert_webclient/ui/screens/repair_service/breaking_selection_screen/vendor_breaking_types_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_categories_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/vendor_subcategories_screen.dart';
 import 'package:serv_expert_webclient/ui/screens/repair_service/vendors_screen.dart';
@@ -54,6 +54,7 @@ import 'package:serv_expert_webclient/ui/screens/repair_service/vendors_screen.d
         AutoRoute(path: 'repair_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'vendor_cat', page: RSVendorCategoriesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'vendor_subcat', page: RSVendorSubCategoriesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'vendor_breakings', page: RSVendorBreakingTypesScreen, guards: [ContributorGuard]),
         AutoRoute(
           path: 'profile',
           page: ProfileScreen,
