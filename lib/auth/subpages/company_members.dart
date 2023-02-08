@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
 

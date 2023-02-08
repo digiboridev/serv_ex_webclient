@@ -4,7 +4,7 @@ import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/app/contributor_controller.dart';
 

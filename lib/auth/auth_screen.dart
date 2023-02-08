@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/services/fireauth.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/auth/auth_screen_controller.dart';

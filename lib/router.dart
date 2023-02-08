@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_wrapper.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/contributor_controller.dart';

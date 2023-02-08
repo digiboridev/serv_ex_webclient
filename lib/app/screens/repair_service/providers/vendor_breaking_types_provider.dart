@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
-import 'package:serv_expert_webclient/main.dart';
+import 'package:serv_expert_webclient/global_providers.dart';
 
 class VBTParams extends Equatable {
   final String vendorId;
