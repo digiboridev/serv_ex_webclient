@@ -2,8 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/contributor_controller.dart';
@@ -13,8 +11,8 @@ class SB extends ConsumerWidget {
   const SB({super.key});
 
   void test(WidgetRef ref) async {
-    RSCategoriesRepository rep = ref.read(rsCategoriesRepositoryProvider);
-    RSBreakingTypesRepository rep2 = ref.read(rsBreakingTypesRepositoryProvider);
+    // RSCategoriesRepository rep = ref.read(rsCategoriesRepositoryProvider);
+    // RSBreakingTypesRepository rep2 = ref.read(rsBreakingTypesRepositoryProvider);
 
     // List<RSCategory> cats = [
     //   RSCategory(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
@@ -151,12 +149,12 @@ class SB extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text('V: 0.0.8'),
-            Text(context.router.root.stack.toString()),
-            Text('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
-            Text(ref.read(fireAuthServiceProvider).uid.toString()),
-            Text(ref.read(fireAuthServiceProvider).email.toString()),
-            Text(ref.read(fireAuthServiceProvider).phoneNumber.toString()),
-            Text(contributorState.toString()),
+            SelectableText(context.router.root.stack.toString()),
+            SelectableText('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
+            SelectableText(ref.read(fireAuthServiceProvider).uid.toString()),
+            SelectableText(ref.read(fireAuthServiceProvider).email.toString()),
+            SelectableText(ref.read(fireAuthServiceProvider).phoneNumber.toString()),
+            SelectableText(contributorState.toString()),
             const SizedBox(
               height: 16,
             ),
@@ -179,9 +177,12 @@ class SB extends ConsumerWidget {
             const SizedBox(
               height: 16,
             ),
-            ElevatedButton(
-              onPressed: () => test(ref),
-              child: const Text('Test'),
+            Tooltip(
+              message: 'Yobana',
+              child: ElevatedButton(
+                onPressed: () => test(ref),
+                child: const Text('Test'),
+              ),
             ),
           ],
         ),

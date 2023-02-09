@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order_details_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order_waranty_screen.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_wrapper.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
@@ -52,10 +54,12 @@ import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.
         RedirectRoute(path: '', redirectTo: 'home'),
         AutoRoute(path: 'contributor_select', page: ContributorSelectScreen),
         AutoRoute(path: 'home', page: HomeScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'repair_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'service_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'vendor_cat', page: RSVendorCategoriesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'vendor_subcat', page: RSVendorSubCategoriesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'vendor_breakings', page: RSVendorBreakingTypesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'service_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'service_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(
           path: 'profile',
           page: ProfileScreen,
@@ -104,6 +108,27 @@ class ContributorGuard extends AutoRouteGuard {
     if (contributorState is CSUnassigned) {
       resolver.next(false);
       router.replace(const ContributorSelectScreenRoute());
+    } else {
+      resolver.next(true);
+    }
+  }
+}
+
+class ServiceOrderGuard extends AutoRouteGuard {
+  WidgetRef ref;
+  ServiceOrderGuard({
+    required this.ref,
+  });
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    if (resolver.route.args == null) {
+      resolver.next(false);
+      if (router.canNavigateBack) {
+        router.navigateBack();
+      } else {
+        router.replace(const App());
+      }
     } else {
       resolver.next(true);
     }

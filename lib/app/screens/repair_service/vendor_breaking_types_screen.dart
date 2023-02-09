@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/data/dto/new_service_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
+import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
@@ -39,6 +41,8 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
                     data: (breakingTypes) {
                       return FadeIn(
                         child: BreakingTypeSelection(
+                          vendorId: vendorId!,
+                          categoryId: categoryId!,
                           breakingTypes: breakingTypes,
                         ),
                       );
@@ -88,8 +92,10 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
 }
 
 class BreakingTypeSelection extends ConsumerStatefulWidget {
-  const BreakingTypeSelection({required this.breakingTypes, super.key});
+  const BreakingTypeSelection({required this.vendorId, required this.breakingTypes, required this.categoryId, super.key});
   final List<RSBreakingType> breakingTypes;
+  final String vendorId;
+  final String categoryId;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _BreakingTypeSelectionState();
@@ -105,6 +111,17 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
     breakingTypes = widget.breakingTypes;
   }
 
+  onSubmit() {
+    NewServiceOrder newServiceOrder = NewServiceOrder(
+      vendorId: widget.vendorId,
+      categoryId: widget.categoryId,
+      breakingTypeIds: selectedBreakingTypes.map((breakingType) => breakingType.id).toList(),
+    );
+    context.router.navigate(
+      RSOrderDetailsScreenRoute(newServiceOrder: newServiceOrder),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -113,14 +130,51 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
         const MinSpacer(
           minHeight: 32,
         ),
-        ElevatedButton(onPressed: () {}, child: const Text('Next')),
+        nextButton(),
+        const MinSpacer(
+          minHeight: 32,
+        ),
       ],
+    );
+  }
+
+  Widget nextButton() {
+    return SizedBox(
+      width: 600,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Material(
+          borderRadius: BorderRadius.circular(10),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(10),
+            onTap: onSubmit,
+            child: Ink(
+              // width: 600,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.deepPurple,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
   Widget breakingTile(RSBreakingType breakingType) {
     return Container(
-      width: 300,
+      width: 600,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(

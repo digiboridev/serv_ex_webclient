@@ -32,6 +32,7 @@ class _TheAppState extends ConsumerState<TheApp> {
     _appRouter = AppRouter(
       appGuard: AppGuard(ref: ref),
       contributorGuard: ContributorGuard(ref: ref),
+      serviceOrderGuard: ServiceOrderGuard(ref: ref),
     );
   }
 
