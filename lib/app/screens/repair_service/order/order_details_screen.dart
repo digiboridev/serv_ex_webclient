@@ -2,18 +2,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/dto/new_service_order.dart';
+import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 
 class RSOrderDetailsScreen extends ConsumerStatefulWidget {
   const RSOrderDetailsScreen({
-    required this.newServiceOrder,
+    required this.newOrder,
     super.key,
   });
 
-  final NewServiceOrder newServiceOrder;
+  final RSNewOrderDTO newOrder;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RSOrderDetailsScreenState();
@@ -31,14 +31,14 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
   onSubmit() {
     bool? valid = formKey.currentState?.validate();
     if (valid ?? false) {
-      NewServiceOrder newServiceOrder = widget.newServiceOrder;
-      newServiceOrder.description = description;
-      newServiceOrder.deviceWet = deviceWet;
-      newServiceOrder.wetDescription = wetDescription;
-      newServiceOrder.accesoriesIncluded = accesoriesIncluded;
-      newServiceOrder.accesoriesDescription = accesoriesDescription;
+      RSNewOrderDTO newOrder = widget.newOrder;
+      newOrder.description = description;
+      newOrder.deviceWet = deviceWet;
+      newOrder.wetDescription = wetDescription;
+      newOrder.accesoriesIncluded = accesoriesIncluded;
+      newOrder.accesoriesDescription = accesoriesDescription;
 
-      context.router.navigate(RSOrderWarantyScreenRoute(newServiceOrder: newServiceOrder));
+      context.router.navigate(RSOrderWarantyScreenRoute(newOrder: newOrder));
     }
   }
 
@@ -51,6 +51,17 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
           key: formKey,
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () => context.router.pop(),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 32,
               ),

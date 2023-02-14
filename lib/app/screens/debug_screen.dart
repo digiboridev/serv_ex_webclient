@@ -148,7 +148,7 @@ class SB extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('V: 0.0.8'),
+            const Text('V: 0.0.9'),
             SelectableText(context.router.root.stack.toString()),
             SelectableText('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
             SelectableText(ref.read(fireAuthServiceProvider).uid.toString()),

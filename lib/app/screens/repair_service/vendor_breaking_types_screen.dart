@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/dto/new_service_order.dart';
+import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
@@ -112,13 +112,13 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
   }
 
   onSubmit() {
-    NewServiceOrder newServiceOrder = NewServiceOrder(
+    RSNewOrderDTO newOrder = RSNewOrderDTO(
       vendorId: widget.vendorId,
       categoryId: widget.categoryId,
       breakingTypeIds: selectedBreakingTypes.map((breakingType) => breakingType.id).toList(),
     );
     context.router.navigate(
-      RSOrderDetailsScreenRoute(newServiceOrder: newServiceOrder),
+      RSOrderDetailsScreenRoute(newOrder: newOrder),
     );
   }
 

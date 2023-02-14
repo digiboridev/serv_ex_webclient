@@ -1,23 +1,31 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/dto/new_service_order.dart';
+import 'package:serv_expert_webclient/core/log.dart';
+import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
+import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 
-class RSOrderWarantyScreen extends ConsumerStatefulWidget {
-  const RSOrderWarantyScreen({
-    required this.newServiceOrder,
+class RSOrderPasswordTypeScreen extends ConsumerStatefulWidget {
+  const RSOrderPasswordTypeScreen({
+    required this.newOrder,
     super.key,
   });
 
-  final NewServiceOrder newServiceOrder;
+  final RSNewOrderDTO newOrder;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _RSOrderWarantyScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RSOrderPasswordTypeScreenState();
 }
 
-class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
+class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeScreen> {
+  onChoose(DevicePasswordType type) {
+    RSNewOrderDTO newOrder = widget.newOrder..passwordType = type;
+    log(newOrder);
+    context.router.navigate(RSOrderSubmittedScreenRoute());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,11 +33,22 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
       child: FillableScrollableWrapper(
         child: Column(
           children: [
-            SizedBox(
-              height: 32,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => context.router.pop(),
+                  ),
+                ],
+              ),
+            ),
+            MinSpacer(
+              minHeight: 32,
             ),
             Text(
-              'ORDER WARANTY',
+              'PASSWORD TYPE',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
@@ -42,8 +61,8 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
               spacing: 16,
               runSpacing: 16,
               children: [
-                hasWarantyTile(),
-                noWarantyTile(),
+                graphicTile(),
+                numericTile(),
               ],
             ),
             MinSpacer(
@@ -55,7 +74,7 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
     );
   }
 
-  Widget hasWarantyTile() {
+  Widget graphicTile() {
     return Container(
       width: 300,
       height: 100,
@@ -68,19 +87,16 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            context.router.navigateBack();
-            // context.router.navigate(const RepairServiceVendorsScreenRoute());
-          },
+          onTap: () => onChoose(DevicePasswordType.graphic),
           child: const Center(
-            child: Text('Has waranty', style: TextStyle(color: Colors.white, fontSize: 24)),
+            child: Text('Graphic', style: TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),
     );
   }
 
-  Widget noWarantyTile() {
+  Widget numericTile() {
     return Container(
       width: 300,
       height: 100,
@@ -93,11 +109,9 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            // context.router.navigate(const RepairServiceVendorsScreenRoute());
-          },
+          onTap: () => onChoose(DevicePasswordType.numeric),
           child: const Center(
-            child: Text('No waranty', style: TextStyle(color: Colors.white, fontSize: 24)),
+            child: Text('Numeric', style: TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),

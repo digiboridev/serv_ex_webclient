@@ -1,7 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class NewServiceOrder {
+enum DevicePasswordType {
+  graphic,
+  numeric,
+}
+
+class RSNewOrderDTO {
   String? vendorId;
   String? categoryId;
   List<String>? breakingTypeIds;
@@ -11,8 +15,10 @@ class NewServiceOrder {
   bool? accesoriesIncluded;
   String? accesoriesDescription;
   bool? hasWaranty;
+  bool? hasPassword;
+  DevicePasswordType? passwordType;
 
-  NewServiceOrder({
+  RSNewOrderDTO({
     this.vendorId,
     this.categoryId,
     this.breakingTypeIds,
@@ -22,6 +28,8 @@ class NewServiceOrder {
     this.accesoriesIncluded,
     this.accesoriesDescription,
     this.hasWaranty,
+    this.hasPassword,
+    this.passwordType,
   });
 
   bool validate() {
@@ -34,6 +42,8 @@ class NewServiceOrder {
     if (accesoriesIncluded == null) return false;
     if (accesoriesIncluded! && (accesoriesDescription == null || accesoriesDescription!.isEmpty)) return false;
     if (hasWaranty == null) return false;
+    if (hasPassword == null) return false;
+    if (passwordType == null) return false;
     return true;
   }
 
@@ -48,6 +58,8 @@ class NewServiceOrder {
       'accesoriesIncluded': accesoriesIncluded,
       'accesoriesDescription': accesoriesDescription,
       'hasWaranty': hasWaranty,
+      'hasPassword': hasPassword,
+      'passwordType': passwordType?.name,
     };
   }
 

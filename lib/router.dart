@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order_details_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order_waranty_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order/order_details_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order/order_has_password_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order/order_password_type_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order/order_submitted_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/order/order_waranty_screen.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_wrapper.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
@@ -60,6 +63,9 @@ import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.
         AutoRoute(path: 'vendor_breakings', page: RSVendorBreakingTypesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'service_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'service_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'service_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'service_order_passtypes', page: RSOrderPasswordTypeScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'service_order_submitted', page: RSOrderSubmittedScreen, guards: [ContributorGuard]),
         AutoRoute(
           path: 'profile',
           page: ProfileScreen,
