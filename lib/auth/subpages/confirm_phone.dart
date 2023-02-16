@@ -35,11 +35,16 @@ class _SmsSentSubpageState extends ConsumerState<AuthConfirmPhone> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Form(
-        key: formKey,
-        child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        color: Colors.white,
+        child: Form(
+          key: formKey,
+          child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+        ),
       ),
     );
   }
@@ -65,7 +70,7 @@ class _SmsSentSubpageState extends ConsumerState<AuthConfirmPhone> {
             height: 32,
           ),
           SizedBox(
-            width: 375,
+            width: 345,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: RegularButton(
@@ -164,4 +169,3 @@ class _SmsSentSubpageState extends ConsumerState<AuthConfirmPhone> {
     );
   }
 }
-

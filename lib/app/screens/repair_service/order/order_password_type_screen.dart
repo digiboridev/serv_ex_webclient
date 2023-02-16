@@ -23,7 +23,7 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
   onChoose(DevicePasswordType type) {
     RSNewOrderDTO newOrder = widget.newOrder..passwordType = type;
     log(newOrder);
-    context.router.navigate(RSOrderSubmittedScreenRoute());
+    context.router.navigate(const RSOrderSubmittedScreenRoute());
   }
 
   @override
@@ -38,23 +38,23 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: () => context.router.pop(),
                   ),
                 ],
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
-            Text(
+            const Text(
               'PASSWORD TYPE',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
             Wrap(
@@ -65,7 +65,7 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
                 numericTile(),
               ],
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
           ],

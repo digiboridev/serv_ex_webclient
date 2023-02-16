@@ -56,53 +56,53 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
                 child: Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back),
                       onPressed: () => context.router.pop(),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               ),
-              Text(
+              const Text(
                 'ORDER',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               ),
               descriptionField(),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               deviceWetRadio(),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               wetDescriptionField(),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               deviceAccesoriesRadio(),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               accesoriesDescriptionField(),
               const SizedBox(
                 height: 16,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              MinSpacer(
+              const MinSpacer(
                 minHeight: 32,
               ),
               nextButton(),
-              MinSpacer(
+              const MinSpacer(
                 minHeight: 32,
               ),
             ],
@@ -154,8 +154,8 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Accesories included?'),
-            SizedBox(
+            const Text('Accesories included?'),
+            const SizedBox(
               height: 8,
             ),
             Row(
@@ -168,7 +168,7 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
                     setState(() => accesoriesIncluded = value!);
                   },
                 ),
-                Text('Yes'),
+                const Text('Yes'),
               ],
             ),
             Row(
@@ -181,7 +181,7 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
                     setState(() => accesoriesIncluded = value!);
                   },
                 ),
-                Text('No'),
+                const Text('No'),
               ],
             ),
           ],
@@ -198,8 +198,8 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Is your device wet?'),
-            SizedBox(
+            const Text('Is your device wet?'),
+            const SizedBox(
               height: 8,
             ),
             Row(
@@ -212,7 +212,7 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
                     setState(() => deviceWet = value!);
                   },
                 ),
-                Text('Yes'),
+                const Text('Yes'),
               ],
             ),
             Row(
@@ -225,7 +225,7 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
                     setState(() => deviceWet = value!);
                   },
                 ),
-                Text('No'),
+                const Text('No'),
               ],
             ),
           ],

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/min_spacer.dart';
+import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 final clientDataProvider = FutureProvider.autoDispose.family<Client, String>((ref, clientId) async {
   ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
@@ -57,197 +62,177 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: FillableScrollableWrapper(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 32,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        color: Colors.white,
+        child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+      ),
+    );
+  }
+
+  Widget get mobileBody {
+    return FillableScrollableWrapper(
+      child: Column(
+        children: [
+          const MinSpacer(
+            minHeight: 32,
+            flex: 2,
+          ),
+          const Text('ADD COMPANY MEMBERS', style: AppTextStyles.headline),
+          const SizedBox(
+            height: 86,
+          ),
+          TextButton(
+            onPressed: onAddMemeber,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.add,
+                  color: AppColors.primary,
+                  size: 18,
+                ),
+                Text('Add member', style: AppTextStyles.btnText.copyWith(color: AppColors.primary)),
+              ],
             ),
-            const Text(
-              'ADD COMPANY MEMBERS',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
+          ),
+          const SizedBox(
+            height: 42,
+          ),
+          ...editableMembersIds.map((memberId) {
+            return SizedBox(
+              width: 345,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: memberTile(memberId, true),
               ),
-            ),
+            );
+          }).toList(),
+          if (editableMembersIds.isNotEmpty)
             const SizedBox(
               height: 32,
             ),
-            membersList(),
-            const SizedBox(
-              height: 16,
-            ),
-            GestureDetector(
-              onTap: onAddMemeber,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Icon(Icons.add_box),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  Text(
-                    'Add member',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            continueButton(),
-            const SizedBox(
-              height: 32,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Column membersList() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: editableMembersIds.map((memberId) {
-        return memberTile(memberId);
-      }).toList(),
-    );
-  }
-
-  Widget memberTile(String memberId) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.deepPurple,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Consumer(
-        builder: (context, ref, child) {
-          AsyncValue<Client> clientData = ref.watch(clientDataProvider(memberId));
-          return clientData.when(
-            data: (client) {
-              return SizedBox(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      client.firstName,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      client.lastName,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      client.email,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      client.phone,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            loading: () {
-              return const Text(
-                'Loading...',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              );
-            },
-            error: (error, stackTrace) {
-              return const Text(
-                'Error',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  Widget continueButton() {
-    return SizedBox(
-      width: 600,
-      child: Material(
-        borderRadius: BorderRadius.circular(10),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: () {
-            onContinue();
-          },
-          child: Ink(
-            // width: 600,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.deepPurple,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Center(
-              child: Text(
-                'CONTINUE',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
+          SizedBox(
+            width: 345,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: RegularButton(
+                text: 'CONTINUE',
+                textStyle: AppTextStyles.btnText,
+                onTap: onContinue,
               ),
             ),
           ),
-        ),
+          const MinSpacer(
+            minHeight: 32,
+            flex: 1,
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget get tabletBody {
+    return FillableScrollableWrapper(
+      child: Column(
+        children: [
+          const MinSpacer(
+            minHeight: 32,
+          ),
+          const Text('ADD COMPANY MEMBERS', style: AppTextStyles.headlineTablet),
+          const SizedBox(
+            height: 86,
+          ),
+          TextButton(
+            onPressed: onAddMemeber,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.add,
+                  color: AppColors.primary,
+                  size: 32,
+                ),
+                Text('Add member', style: AppTextStyles.btnTextTablet.copyWith(color: AppColors.primary)),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 42,
+          ),
+          ...editableMembersIds.map((memberId) {
+            return SizedBox(width: 546, child: memberTile(memberId, false));
+          }).toList(),
+          if (editableMembersIds.isNotEmpty)
+            const SizedBox(
+              height: 32,
+            ),
+          SizedBox(
+            width: 546,
+            child: RegularButton(
+              text: 'CONTINUE',
+              textStyle: AppTextStyles.btnTextTablet,
+              onTap: onContinue,
+            ),
+          ),
+          const MinSpacer(
+            minHeight: 32,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget memberTile(String memberId, bool isMobile) {
+    return Consumer(
+      builder: (context, ref, child) {
+        AsyncValue<Client> clientData = ref.watch(clientDataProvider(memberId));
+        return clientData.when(
+          data: (client) {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.person,
+                  color: AppColors.black,
+                  size: isMobile ? 24 : 32,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(client.firstName, style: isMobile ? AppTextStyles.formText : AppTextStyles.formTextTablet),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(client.lastName, style: isMobile ? AppTextStyles.formText : AppTextStyles.formTextTablet),
+                const Spacer(),
+                // Dont allow to delete first member because it is always company owner
+                if (editableMembersIds.indexOf(memberId) != 0)
+                  IconButton(
+                    onPressed: () {
+                      setState(() => editableMembersIds.remove(client.id));
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      size: isMobile ? 24 : 32,
+                    ),
+                    color: AppColors.primary,
+                  ),
+              ],
+            );
+          },
+          loading: () {
+            return const Text('Loading...', style: AppTextStyles.formText);
+          },
+          error: (error, stackTrace) {
+            return const Text('Error', style: AppTextStyles.formText);
+          },
+        );
+      },
     );
   }
 }

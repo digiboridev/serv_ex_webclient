@@ -35,13 +35,18 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Form(
-        key: formKey,
-        child: Layouter(
-          mobileLayout: mobileBody,
-          tabletLayout: tabletBody,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        color: Colors.white,
+        child: Form(
+          key: formKey,
+          child: Layouter(
+            mobileLayout: mobileBody,
+            tabletLayout: tabletBody,
+          ),
         ),
       ),
     );
@@ -60,7 +65,7 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
             height: 84,
           ),
           SizedBox(
-            width: 375,
+            width: 345,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: phoneField(textStyle: AppTextStyles.formText),
@@ -70,7 +75,7 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
             height: 32,
           ),
           SizedBox(
-            width: 375,
+            width: 345,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: RegularButton(

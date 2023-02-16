@@ -6,39 +6,44 @@ class RegularButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     required this.text,
-    this.disabled = false,
     this.color = AppColors.primary,
-    this.disabledColor = AppColors.primaryDisabled,
+    this.borderColor,
     this.textStyle = const TextStyle(
       color: Colors.white,
       fontSize: 18,
       fontWeight: FontWeight.w700,
     ),
+    this.borderRadius = const BorderRadius.all(Radius.circular(32)),
   }) : super(key: key);
 
   final VoidCallback onTap;
   final String text;
-  final bool disabled;
   final Color color;
-  final Color disabledColor;
+  final Color? borderColor;
   final TextStyle textStyle;
+  final BorderRadiusGeometry borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(8),
-      elevation: 10,
-      shadowColor: disabled ? disabledColor : color,
-      color: disabled ? disabledColor : color,
+      borderRadius: borderRadius,
       clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: disabled ? null : onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: Text(
-            text,
-            style: textStyle,
-            textAlign: TextAlign.center,
+      color: color,
+      elevation: 10,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          border: borderColor != null ? Border.all(color: borderColor!, width: 1) : null,
+        ),
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            child: Text(
+              text,
+              style: textStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),

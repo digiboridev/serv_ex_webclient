@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
@@ -17,7 +16,7 @@ class RSOrderSubmittedScreen extends ConsumerStatefulWidget {
 
 class _RSOrderSubmittedScreenState extends ConsumerState<RSOrderSubmittedScreen> {
   onOk() {
-    context.router.navigate(App());
+    context.router.navigate(const App());
   }
 
   @override
@@ -27,21 +26,21 @@ class _RSOrderSubmittedScreenState extends ConsumerState<RSOrderSubmittedScreen>
       child: FillableScrollableWrapper(
         child: Column(
           children: [
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
-            Text(
+            const Text(
               'ORDER SUBMITTED',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
             homeButton(),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
           ],

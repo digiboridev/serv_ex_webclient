@@ -24,7 +24,7 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
     if (hasPassword) {
       context.router.navigate(RSOrderPasswordTypeScreenRoute(newOrder: newOrder));
     } else {
-      context.router.navigate(RSOrderSubmittedScreenRoute());
+      context.router.navigate(const RSOrderSubmittedScreenRoute());
     }
   }
 
@@ -40,23 +40,23 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: () => context.router.pop(),
                   ),
                 ],
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
-            Text(
+            const Text(
               'ORDER HAS PASSWORD',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
             Wrap(
@@ -67,7 +67,7 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
                 noPassTile(),
               ],
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
           ],

@@ -25,6 +25,10 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
   Future updateState() async {
     // state = ASSsmsSent(phone: '123123123');
+    // state = ASSClientDetails(phone: '', firstName: '', lastName: '', email: '');
+    // state = ASSClientContacts();
+    // state = ASSCompanyCreate();
+    // state = ASSCompanyMembers(membersIds: [], companyId: 'companyId');
     // return;
     log('ASC updateState begin, current state: $state');
 

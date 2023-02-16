@@ -36,23 +36,23 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: () => context.router.pop(),
                   ),
                 ],
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
-            Text(
+            const Text(
               'ORDER WARANTY',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
             Wrap(
@@ -63,7 +63,7 @@ class _RSOrderWarantyScreenState extends ConsumerState<RSOrderWarantyScreen> {
                 noWarantyTile(),
               ],
             ),
-            MinSpacer(
+            const MinSpacer(
               minHeight: 32,
             ),
           ],

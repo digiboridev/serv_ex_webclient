@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
+import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/min_spacer.dart';
+import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 class AuthCompanyCreate extends ConsumerStatefulWidget {
   const AuthCompanyCreate({
@@ -43,230 +48,252 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Form(
-        key: formKey,
-        child: FillableScrollableWrapper(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 32,
-              ),
-              const Text(
-                'COMPANY REGISTRATION',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              publicIdField(),
-              const SizedBox(
-                height: 16,
-              ),
-              nameField(),
-              const SizedBox(
-                height: 16,
-              ),
-              emailField(),
-              const SizedBox(
-                height: 32,
-              ),
-              SizedBox(
-                width: 600,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(10),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        onContinue();
-                      },
-                      child: Ink(
-                        // width: 600,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurple,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'CONTINUE',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                width: 600,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(10),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        onSkip();
-                      },
-                      child: Ink(
-                        // width: 600,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurple,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'SKIP',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-            ],
-          ),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        color: Colors.white,
+        child: Form(
+          key: formKey,
+          child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
         ),
       ),
     );
   }
 
-  Widget publicIdField() {
-    return SizedBox(
-      width: 600,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          keyboardType: TextInputType.name,
-          maxLength: 20,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter id';
-            }
-
-            return null;
-          },
-          onFieldSubmitted: (value) {
-            onContinue();
-          },
-          onChanged: (value) {
-            publicId = value;
-          },
-          decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'ID',
-            fillColor: Colors.white70,
+  Widget get mobileBody {
+    return FillableScrollableWrapper(
+      child: Column(
+        children: [
+          const MinSpacer(
+            minHeight: 32,
+            flex: 2,
           ),
-        ),
+          const Text('COMPANY REGISTRATION', style: AppTextStyles.headline),
+          const SizedBox(
+            height: 86,
+          ),
+          SizedBox(
+            width: 345,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: publicIdField(textStyle: AppTextStyles.formText),
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: 345,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: nameField(textStyle: AppTextStyles.formText),
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: 345,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: emailField(textStyle: AppTextStyles.formText),
+            ),
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          SizedBox(
+            width: 345,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: RegularButton(
+                text: 'CONTINUE',
+                textStyle: AppTextStyles.btnText,
+                onTap: onContinue,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: 345,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: RegularButton(
+                color: AppColors.white,
+                borderColor: AppColors.primary,
+                text: 'SKIP',
+                textStyle: AppTextStyles.btnText.copyWith(color: AppColors.primary),
+                onTap: onSkip,
+              ),
+            ),
+          ),
+          const MinSpacer(
+            minHeight: 32,
+            flex: 1,
+          ),
+        ],
       ),
     );
   }
 
-  Widget nameField() {
-    return SizedBox(
-      width: 600,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          keyboardType: TextInputType.name,
-          maxLength: 20,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter name';
-            }
-            if (!AppValidators.isValidName(value)) {
-              return 'Please enter correct name';
-            }
-            return null;
-          },
-          onFieldSubmitted: (value) {
-            onContinue();
-          },
-          onChanged: (value) {
-            companyName = value;
-          },
-          decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'Company name',
-            fillColor: Colors.white70,
+  Widget get tabletBody {
+    return FillableScrollableWrapper(
+      child: Column(
+        children: [
+          const MinSpacer(
+            minHeight: 32,
           ),
-        ),
+          const Text('COMPANY REGISTRATION', style: AppTextStyles.headlineTablet),
+          const SizedBox(
+            height: 86,
+          ),
+          SizedBox(width: 546, child: publicIdField(textStyle: AppTextStyles.formTextTablet)),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(width: 546, child: nameField(textStyle: AppTextStyles.formTextTablet)),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(width: 546, child: emailField(textStyle: AppTextStyles.formTextTablet)),
+          const SizedBox(
+            height: 32,
+          ),
+          SizedBox(
+            width: 546,
+            child: RegularButton(
+              text: 'CONTINUE',
+              textStyle: AppTextStyles.btnTextTablet,
+              onTap: onContinue,
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: 546,
+            child: RegularButton(
+              color: AppColors.white,
+              borderColor: AppColors.primary,
+              text: 'SKIP',
+              textStyle: AppTextStyles.btnTextTablet.copyWith(color: AppColors.primary),
+              onTap: onSkip,
+            ),
+          ),
+          const MinSpacer(
+            minHeight: 32,
+          ),
+        ],
       ),
     );
   }
 
-  Widget emailField() {
-    return SizedBox(
-      width: 600,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          maxLength: 20,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter email';
-            }
-            if (!AppValidators.isValidEmail(value)) {
-              return 'Please enter correct email';
-            }
-            return null;
-          },
-          onFieldSubmitted: (value) {
-            onContinue();
-          },
-          onChanged: (value) {
-            companyEmail = value;
-          },
-          decoration: InputDecoration(
-            counter: const SizedBox(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
-            labelText: 'Email',
-            fillColor: Colors.white70,
-          ),
+  Widget publicIdField({required TextStyle textStyle}) {
+    return TextFormField(
+      initialValue: publicId,
+      keyboardType: TextInputType.name,
+      maxLength: 20,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter id';
+        }
+
+        return null;
+      },
+      onFieldSubmitted: (value) {
+        onContinue();
+      },
+      onChanged: (value) {
+        setState(() {
+          publicId = value;
+        });
+      },
+      style: textStyle,
+      decoration: InputDecoration(
+        counter: const SizedBox(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
+        filled: true,
+        labelText: 'ID',
+        fillColor: Colors.white70,
+      ),
+    );
+  }
+
+  Widget nameField({required TextStyle textStyle}) {
+    return TextFormField(
+      initialValue: companyName,
+      keyboardType: TextInputType.name,
+      maxLength: 20,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter name';
+        }
+        if (!AppValidators.isValidName(value)) {
+          return 'Please enter correct name';
+        }
+        return null;
+      },
+      onFieldSubmitted: (value) {
+        onContinue();
+      },
+      onChanged: (value) {
+        setState(() {
+          companyName = value;
+        });
+      },
+      style: textStyle,
+      decoration: InputDecoration(
+        counter: const SizedBox(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        filled: true,
+        labelText: 'Company name',
+        fillColor: Colors.white70,
+      ),
+    );
+  }
+
+  Widget emailField({required TextStyle textStyle}) {
+    return TextFormField(
+      initialValue: companyEmail,
+      keyboardType: TextInputType.emailAddress,
+      maxLength: 20,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter email';
+        }
+        if (!AppValidators.isValidEmail(value)) {
+          return 'Please enter correct email';
+        }
+        return null;
+      },
+      onFieldSubmitted: (value) {
+        onContinue();
+      },
+      onChanged: (value) {
+        setState(() {
+          companyEmail = value;
+        });
+      },
+      style: textStyle,
+      decoration: InputDecoration(
+        counter: const SizedBox(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        filled: true,
+        labelText: 'Email',
+        fillColor: Colors.white70,
       ),
     );
   }
