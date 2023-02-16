@@ -4,4 +4,4 @@ linter:
   rules:
     require_trailing_commas: true
     prefer_single_quotes: true
-    prefer_const_constructors: false # TOTO remove before release
+    # prefer_const_constructors: false # TOTO remove before release

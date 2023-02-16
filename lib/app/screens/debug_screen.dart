@@ -141,15 +141,17 @@ class SB extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ContributorState contributorState = ref.watch(contributorControllerProvider);
-
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SizedBox.expand(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('V: 0.0.9'),
+            const Text('V: 0.0.11'),
             SelectableText(context.router.root.stack.toString()),
+            SelectableText('height: $height, width: $width'),
             SelectableText('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
             SelectableText(ref.read(fireAuthServiceProvider).uid.toString()),
             SelectableText(ref.read(fireAuthServiceProvider).email.toString()),

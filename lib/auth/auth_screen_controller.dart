@@ -24,6 +24,8 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
   final CompaniesRepository _companiesRepository;
 
   Future updateState() async {
+    // state = ASSsmsSent(phone: '123123123');
+    // return;
     log('ASC updateState begin, current state: $state');
 
     bool authorized = _fireAuthService.authorized;

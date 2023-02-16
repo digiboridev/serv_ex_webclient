@@ -84,6 +84,8 @@ class ContributorController extends StateNotifier<ContributorState> {
       Client? client = await _ref.read(currentClientStreamProvider.future);
       List<Company> companies = await _ref.read(companiesStreamProvider.future);
 
+      if (!mounted) return;
+
       if (client != null && client.id == contributorId) {
         state = CSAssignedAsClient(client);
       }
