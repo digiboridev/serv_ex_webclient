@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
@@ -51,10 +53,7 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
             ),
             const Text(
               'ORDER HAS PASSWORD',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),
+              style: AppTextStyles.headline,
             ),
             const MinSpacer(
               minHeight: 32,
@@ -84,7 +83,7 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.deepPurple,
+        color: AppColors.primary,
       ),
       child: Material(
         color: Colors.transparent,
@@ -106,7 +105,7 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.deepPurple,
+        color: AppColors.primary,
       ),
       child: Material(
         color: Colors.transparent,

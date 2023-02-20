@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/contributor_controller.dart';
@@ -11,7 +14,7 @@ class SB extends ConsumerWidget {
   const SB({super.key});
 
   void test(WidgetRef ref) async {
-    // RSCategoriesRepository rep = ref.read(rsCategoriesRepositoryProvider);
+    RSCategoriesRepository rep = ref.read(rsCategoriesRepositoryProvider);
     // RSBreakingTypesRepository rep2 = ref.read(rsBreakingTypesRepositoryProvider);
 
     // List<RSCategory> cats = [
@@ -133,6 +136,15 @@ class SB extends ConsumerWidget {
 
     // asd.forEach((element) async {
     //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // });
+
+    // List<RSCategory> categories = await rep.vendorCategories('ldcj3mU7kWGJpQh6hgMM');
+    // categories.forEach((element) {
+    //   var nc = element.copyWith(
+    //       imageUri:
+    //           'https://firebasestorage.googleapis.com/v0/b/serv-expert.appspot.com/o/rs_categories%2Fother.png?alt=media&token=462cb016-8619-4c17-a0bd-1c07ab5fed3a');
+    //   rep.setVendorCategory(vendorId: 'ldcj3mU7kWGJpQh6hgMM', category: nc);
+    //   print(element.name);
     // });
 
     log('object');

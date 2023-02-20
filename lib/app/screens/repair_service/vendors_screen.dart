@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/vendor.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
@@ -31,10 +33,7 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
             ),
             const Text(
               'VENDORS',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),
+              style: AppTextStyles.headline,
             ),
             Expanded(
               child: vendorsData.when(
@@ -74,7 +73,7 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.deepPurple,
+        color: AppColors.primary,
       ),
       child: Material(
         color: Colors.transparent,

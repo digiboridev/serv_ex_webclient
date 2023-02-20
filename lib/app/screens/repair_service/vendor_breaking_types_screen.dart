@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
@@ -11,6 +12,7 @@ import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_category_provider.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_breaking_types_provider.dart';
+import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 class RSVendorBreakingTypesScreen extends ConsumerWidget {
   const RSVendorBreakingTypesScreen({super.key, @queryParam required this.vendorId, @queryParam required this.categoryId});
@@ -80,10 +82,7 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
               loading: () => '',
               error: (error, stackTrace) => 'Error',
             ),
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-            ),
+            style: AppTextStyles.headline,
           ),
         );
       },
@@ -140,34 +139,10 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
 
   Widget nextButton() {
     return SizedBox(
-      width: 600,
+      width: 546,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Material(
-          borderRadius: BorderRadius.circular(10),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: onSubmit,
-            child: Ink(
-              // width: 600,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.deepPurple,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Center(
-                child: Text(
-                  'Next',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        child: RegularButton(onTap: onSubmit, text: 'Next'),
       ),
     );
   }

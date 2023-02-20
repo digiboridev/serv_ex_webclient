@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/contributor_controller.dart';
@@ -25,7 +26,7 @@ class Header extends StatelessWidget {
                 IconButton(
                   icon: const Icon(
                     Icons.home,
-                    color: Colors.deepPurple,
+                    color: AppColors.primary,
                   ),
                   onPressed: () {
                     context.router.navigate(const HomeScreenRoute());
@@ -48,7 +49,7 @@ class Header extends StatelessWidget {
                         child: const Text(
                           'Switch contributor',
                           style: TextStyle(
-                            color: Colors.deepPurple,
+                            color: AppColors.primary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -66,7 +67,7 @@ class Header extends StatelessWidget {
                         child: const Text(
                           'Profile',
                           style: TextStyle(
-                            color: Colors.deepPurple,
+                            color: AppColors.primary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -85,7 +86,7 @@ class Header extends StatelessWidget {
                         child: const Text(
                           'Logout',
                           style: TextStyle(
-                            color: Colors.deepPurple,
+                            color: AppColors.primary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -103,7 +104,7 @@ class Header extends StatelessWidget {
                         child: const Text(
                           'Debug',
                           style: TextStyle(
-                            color: Colors.deepPurple,
+                            color: AppColors.primary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -117,7 +118,7 @@ class Header extends StatelessWidget {
                         Text(
                           contributorState.name,
                           style: const TextStyle(
-                            color: Colors.deepPurple,
+                            color: AppColors.primary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -127,7 +128,7 @@ class Header extends StatelessWidget {
                       ),
                       const Icon(
                         Icons.person,
-                        color: Colors.deepPurple,
+                        color: AppColors.primary,
                       ),
                     ],
                   ),

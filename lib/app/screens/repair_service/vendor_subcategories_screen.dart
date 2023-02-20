@@ -3,12 +3,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_category_provider.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_subcategories_provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class RSVendorSubCategoriesScreen extends ConsumerStatefulWidget {
   const RSVendorSubCategoriesScreen({super.key, @queryParam required this.vendorId, @queryParam required this.categoryId});
@@ -20,6 +23,10 @@ class RSVendorSubCategoriesScreen extends ConsumerStatefulWidget {
 }
 
 class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategoriesScreen> {
+  onCategoryTap(RSCategory category) {
+    context.router.navigate(RSVendorBreakingTypesScreenRoute(vendorId: widget.vendorId, categoryId: category.id));
+  }
+
   @override
   Widget build(BuildContext context) {
     AsyncValue<List<RSCategory>> categories = ref.watch(vendorSubcategoriesProvider(VSCParams(widget.vendorId!, widget.categoryId!)));
@@ -73,10 +80,7 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
               loading: () => '',
               error: (error, stackTrace) => 'Error',
             ),
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-            ),
+            style: AppTextStyles.headline,
           ),
         );
       },
@@ -100,21 +104,42 @@ class _RSVendorSubCategoriesScreenState extends ConsumerState<RSVendorSubCategor
 
   Widget categoryTile(RSCategory category) {
     return Container(
-      width: 360,
-      height: 280,
+      width: 300,
       margin: const EdgeInsets.symmetric(vertical: 8),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.deepPurple,
+        color: AppColors.primary,
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            context.router.navigate(RSVendorBreakingTypesScreenRoute(vendorId: widget.vendorId, categoryId: category.id));
-          },
-          child: Center(child: Text(category.name, style: const TextStyle(color: Colors.white, fontSize: 24))),
+          onTap: () => onCategoryTap(category),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 64,
+              ),
+              FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: category.imageUri,
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(category.name, style: const TextStyle(color: Colors.white, fontSize: 24)),
+              ),
+              const SizedBox(
+                height: 64,
+              ),
+            ],
+          ),
         ),
       ),
     );
