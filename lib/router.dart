@@ -92,7 +92,7 @@ class AppGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    bool isUserAuthorized = ref.read(fireAuthServiceProvider).authorized;
+    bool isUserAuthorized = ref.read(authServiceProvider).authorized;
     if (isUserAuthorized) {
       resolver.next(true);
     } else {

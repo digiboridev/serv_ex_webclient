@@ -3,14 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 
-class RSBreakingTypesRepository {
+abstract class RSBreakingTypesRepository {
+  Future setVendorBreakingType({required vendorId, required RSBreakingType rsBreakingType});
+  Future<List<RSBreakingType>> vendorBreakingTypes(String vendorId, {String? categoryId});
+}
+
+class RSBreakingTypesRepositoryImpl implements RSBreakingTypesRepository {
   CollectionReference _vendorBrRef(String vendorId) =>
       FirebaseFirestore.instance.collection('repair_service_vendors').doc(vendorId).collection('breaking_types');
 
-  String generateId(String vendorId) {
-    return _vendorBrRef(vendorId).doc().id;
-  }
-
+  @override
   Future setVendorBreakingType({required vendorId, required RSBreakingType rsBreakingType}) async {
     try {
       await _vendorBrRef(vendorId).doc(rsBreakingType.id).set(rsBreakingType.toMap());
@@ -23,6 +25,7 @@ class RSBreakingTypesRepository {
     }
   }
 
+  @override
   Future<List<RSBreakingType>> vendorBreakingTypes(String vendorId, {String? categoryId}) async {
     try {
       Query query = _vendorBrRef(vendorId);

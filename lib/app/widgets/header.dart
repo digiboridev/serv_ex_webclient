@@ -77,7 +77,7 @@ class Header extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         FocusScope.of(context).unfocus();
-                        ref.read(fireAuthServiceProvider).signOut();
+                        ref.read(authServiceProvider).signOut();
                         context.router.replaceAll([const AuthScreenRoute()]);
                       },
                       child: Container(

@@ -6,20 +6,20 @@ import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
-import 'package:serv_expert_webclient/services/fireauth.dart';
+import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
 
 class AuthScreenController extends StateNotifier<AuthScreenState> {
   AuthScreenController({
-    required FireAuthService fireAuthService,
+    required AuthService authService,
     required ClientsRepository clientsRepository,
     required CompaniesRepository companiesRepository,
-  })  : _fireAuthService = fireAuthService,
+  })  : _authService = authService,
         _clientsRepository = clientsRepository,
         _companiesRepository = companiesRepository,
         super(const ASSLoading());
 
-  final FireAuthService _fireAuthService;
+  final AuthService _authService;
   final ClientsRepository _clientsRepository;
   final CompaniesRepository _companiesRepository;
 
@@ -32,7 +32,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     // return;
     log('ASC updateState begin, current state: $state');
 
-    bool authorized = _fireAuthService.authorized;
+    bool authorized = _authService.authorized;
 
     log('Authorized: $authorized');
 
@@ -40,14 +40,14 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
       state = const ASSUnauthorized();
     } else {
       try {
-        await _clientsRepository.clientById(id: _fireAuthService.uid!, forceNetwork: true);
+        await _clientsRepository.clientById(id: _authService.uid!, forceNetwork: true);
         state = const ASSAuthorized();
       } on UnexistedResource {
         state = ASSClientDetails(
-          phone: _fireAuthService.phoneNumber,
-          email: _fireAuthService.email,
-          firstName: _fireAuthService.displayName?.split(' ').first,
-          lastName: _fireAuthService.displayName?.split(' ').last,
+          phone: _authService.phoneNumber,
+          email: _authService.email,
+          firstName: _authService.displayName?.split(' ').first,
+          lastName: _authService.displayName?.split(' ').last,
         );
       } catch (e) {
         log(e);
@@ -67,7 +67,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     state = const ASSUnauthorized(busy: true);
     try {
-      await _fireAuthService.signInWithPhoneNumberWeb(phone);
+      await _authService.signInWithPhoneNumberWeb(phone);
       log('signInWithPhone($phone) sent sms');
 
       state = ASSsmsSent(phone: phone);
@@ -86,7 +86,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     state = const ASSUnauthorized(busy: true);
     try {
-      await _fireAuthService.signInWithGoogle();
+      await _authService.signInWithGoogle();
       log('signInWithGoogle() signed in');
       await updateState();
     } catch (e) {
@@ -104,7 +104,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     state = currentState.copyWith(busy: true, error: '');
     try {
-      await _fireAuthService.confirmPhoneNumberWeb(smsCode);
+      await _authService.confirmPhoneNumberWeb(smsCode);
       log('confirmSmsCode($smsCode) confirmed');
 
       await updateState();
@@ -124,7 +124,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      Client newClient = Client(id: _fireAuthService.uid!, firstName: firstName, lastName: lastName, email: email, phone: phone);
+      Client newClient = Client(id: _authService.uid!, firstName: firstName, lastName: lastName, email: email, phone: phone);
       await _clientsRepository.setClient(newClient);
       log('submitClientDetails($firstName, $lastName, $email, $phone) submitted');
 
@@ -145,7 +145,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      await _clientsRepository.updateClientContacts(id: _fireAuthService.uid!, contacts: contacts);
+      await _clientsRepository.updateClientContacts(id: _authService.uid!, contacts: contacts);
       log('submitClientContacts($contacts) submitted');
 
       state = const ASSCompanyCreate();
@@ -166,7 +166,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     try {
       Company company =
-          await _companiesRepository.createCompany(publicId: publicId, companyName: companyName, companyEmail: companyEmail, memberId: _fireAuthService.uid!);
+          await _companiesRepository.createCompany(publicId: publicId, companyName: companyName, companyEmail: companyEmail, memberId: _authService.uid!);
       log('submitCompanyCreate($publicId, $companyName, $companyEmail) submitted');
       state = ASSCompanyMembers(companyId: company.id, membersIds: company.membersIds);
     } catch (e) {

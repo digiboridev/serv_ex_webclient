@@ -5,27 +5,27 @@ import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
-import 'package:serv_expert_webclient/services/fireauth.dart';
+import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/app/contributor_controller.dart';
 
 final currentClientStreamProvider = StreamProvider.autoDispose<Client>((ref) {
-  FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);
+  AuthService authService = ref.read(authServiceProvider);
   ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
 
-  if (!fireAuthService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
+  if (!authService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
 
-  String clientId = fireAuthService.uid!;
+  String clientId = authService.uid!;
 
   return clientsRepository.clientByIdStream(id: clientId);
 });
 
 final companiesStreamProvider = StreamProvider.autoDispose<List<Company>>((ref) {
-  FireAuthService fireAuthService = ref.read(fireAuthServiceProvider);
+  AuthService authService = ref.read(authServiceProvider);
   CompaniesRepository companiesRepository = ref.read(companiesRepositoryProvider);
 
-  if (!fireAuthService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
+  if (!authService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
 
-  String clientId = fireAuthService.uid!;
+  String clientId = authService.uid!;
 
   return companiesRepository.companiesByMemberIdStream(memberId: clientId);
 });

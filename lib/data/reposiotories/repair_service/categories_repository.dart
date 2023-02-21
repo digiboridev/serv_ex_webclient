@@ -3,9 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 
-class RSCategoriesRepository {
+abstract class RSCategoriesRepository {
+  Future setVendorCategory({required vendorId, required RSCategory category});
+  Future<RSCategory> vendorCategory({required String vendorId, required String categoryId});
+  Future<List<RSCategory>> vendorCategories(String vendorId, {String? parentId});
+}
+
+class RSCategoriesRepositoryImpl implements RSCategoriesRepository {
   CollectionReference _vendorCatRef(String vendorId) => FirebaseFirestore.instance.collection('repair_service_vendors').doc(vendorId).collection('categories');
 
+  @override
   Future setVendorCategory({required vendorId, required RSCategory category}) async {
     try {
       await _vendorCatRef(vendorId).doc(category.id).set(category.toMap());
@@ -18,6 +25,7 @@ class RSCategoriesRepository {
     }
   }
 
+  @override
   Future<RSCategory> vendorCategory({required String vendorId, required String categoryId}) async {
     try {
       DocumentSnapshot snapshot = await _vendorCatRef(vendorId).doc(categoryId).get();
@@ -31,6 +39,7 @@ class RSCategoriesRepository {
     }
   }
 
+  @override
   Future<List<RSCategory>> vendorCategories(String vendorId, {String? parentId}) async {
     try {
       Query query = _vendorCatRef(vendorId);

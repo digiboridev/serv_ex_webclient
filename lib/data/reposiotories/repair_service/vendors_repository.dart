@@ -3,9 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/vendor.dart';
 
-class RSVendorsRepository {
+abstract class RSVendorsRepository {
+  Future setVendor(RSVendor vendor);
+  Future<List<RSVendor>> vendors();
+  Stream<List<RSVendor>> vendorsStream();
+  Future<RSVendor> vendorById({required String id, bool forceNetwork = false});
+}
+
+class RSVendorsRepositoryImpl implements RSVendorsRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('repair_service_vendors');
 
+  @override
   Future setVendor(RSVendor vendor) async {
     try {
       await _ref.doc(vendor.id).set(vendor.toMap());
@@ -18,6 +26,7 @@ class RSVendorsRepository {
     }
   }
 
+  @override
   Future<List<RSVendor>> vendors() async {
     try {
       QuerySnapshot snapshot = await _ref.get();
@@ -31,6 +40,7 @@ class RSVendorsRepository {
     }
   }
 
+  @override
   Stream<List<RSVendor>> vendorsStream() {
     return _ref.snapshots().transform(
           StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<RSVendor>>.fromHandlers(
@@ -48,6 +58,7 @@ class RSVendorsRepository {
         );
   }
 
+  @override
   Future<RSVendor> vendorById({required String id, bool forceNetwork = false}) async {
     try {
       DocumentSnapshot snapshot = await _ref.doc(id).get(forceNetwork ? const GetOptions(source: Source.server) : null);

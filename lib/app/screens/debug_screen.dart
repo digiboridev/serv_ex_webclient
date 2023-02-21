@@ -164,10 +164,10 @@ class SB extends ConsumerWidget {
             const Text('V: 0.0.11'),
             SelectableText(context.router.root.stack.toString()),
             SelectableText('height: $height, width: $width'),
-            SelectableText('Authorized: ${ref.read(fireAuthServiceProvider).authorized}'),
-            SelectableText(ref.read(fireAuthServiceProvider).uid.toString()),
-            SelectableText(ref.read(fireAuthServiceProvider).email.toString()),
-            SelectableText(ref.read(fireAuthServiceProvider).phoneNumber.toString()),
+            SelectableText('Authorized: ${ref.read(authServiceProvider).authorized}'),
+            SelectableText(ref.read(authServiceProvider).uid.toString()),
+            SelectableText(ref.read(authServiceProvider).email.toString()),
+            SelectableText(ref.read(authServiceProvider).phoneNumber.toString()),
             SelectableText(contributorState.toString()),
             const SizedBox(
               height: 16,
@@ -183,7 +183,7 @@ class SB extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                ref.read(fireAuthServiceProvider).signOut();
+                ref.read(authServiceProvider).signOut();
                 context.router.replaceAll([const AuthScreenRoute()]);
               },
               child: const Text('Sign out'),

@@ -4,9 +4,27 @@ import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 
-class CompaniesRepository {
+abstract class CompaniesRepository {
+  Future<Company> createCompany({
+    required String publicId,
+    required String companyName,
+    required String companyEmail,
+    required String memberId,
+  });
+
+  Future updateCompanyMembers({required String companyId, required List<String> membersIds});
+
+  Future<Company> companyById({required String id, bool forceNetwork = false});
+
+  Future<List<Company>> companiesByMemberId({required String memberId, bool forceNetwork = false});
+
+  Stream<List<Company>> companiesByMemberIdStream({required String memberId});
+}
+
+class CompaniesRepositoryImpl implements CompaniesRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('companies');
 
+  @override
   Future<Company> createCompany({
     required String publicId,
     required String companyName,
@@ -36,6 +54,7 @@ class CompaniesRepository {
     }
   }
 
+  @override
   Future updateCompanyMembers({required String companyId, required List<String> membersIds}) async {
     try {
       await _ref.doc(companyId).update({'membersIds': membersIds});
@@ -48,6 +67,7 @@ class CompaniesRepository {
     }
   }
 
+  @override
   Future<Company> companyById({required String id, bool forceNetwork = false}) async {
     try {
       DocumentSnapshot snapshot = await _ref.doc(id).get(forceNetwork ? const GetOptions(source: Source.server) : null);
@@ -66,6 +86,7 @@ class CompaniesRepository {
     }
   }
 
+  @override
   Future<List<Company>> companiesByMemberId({required String memberId, bool forceNetwork = false}) async {
     try {
       QuerySnapshot snapshot = await _ref.where('membersIds', arrayContains: memberId).get(forceNetwork ? const GetOptions(source: Source.server) : null);
@@ -80,6 +101,7 @@ class CompaniesRepository {
     }
   }
 
+  @override
   Stream<List<Company>> companiesByMemberIdStream({required String memberId}) {
     return _ref.where('membersIds', arrayContains: memberId).snapshots().transform(
           StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Company>>.fromHandlers(

@@ -1,37 +1,74 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FireAuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // User? get user => _auth.currentUser;
-  // Stream<User?> get userStream => _auth.userChanges().asBroadcastStream();
-
+abstract class AuthService {
   /// Returns true if user is authorized
-  bool get authorized => _auth.currentUser != null;
+  bool get authorized;
 
   /// Returns current user id or null if user is not authorized
-  String? get uid => _auth.currentUser?.uid;
+  String? get uid;
 
   /// Returns current user email or null if user is not authorized
-  String? get email => _auth.currentUser?.email;
+  String? get email;
 
   /// Returns current user phone number or null if user is not authorized
-  String? get phoneNumber => _auth.currentUser?.phoneNumber;
+  String? get phoneNumber;
 
   /// Returns current user display name or null if user is not authorized
+  String? get displayName;
+
+  /// Sign in anonymously
+  Future signInAnonymously();
+
+  /// Sign in with phone number for web
+  Future signInWithPhoneNumberWeb(String phoneNumber);
+
+  /// Confirm phone number for web
+  Future confirmPhoneNumberWeb(String smsCode);
+
+  /// Sign in with Google
+  Future signInWithGoogle();
+
+  /// Reload user data
+  Future<void> reload();
+
+  /// Sign out
+  Future<void> signOut();
+
+  /// Delete user
+  Future<void> delete();
+}
+
+class FireAuthServiceImpl implements AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  bool get authorized => _auth.currentUser != null;
+
+  @override
+  String? get uid => _auth.currentUser?.uid;
+
+  @override
+  String? get email => _auth.currentUser?.email;
+
+  @override
+  String? get phoneNumber => _auth.currentUser?.phoneNumber;
+
+  @override
   String? get displayName => _auth.currentUser?.displayName;
 
-  // Uses by phone sign in for web
   ConfirmationResult? _phoneConfirmationResult;
 
+  @override
   Future signInAnonymously() async {
     return await _auth.signInAnonymously();
   }
 
+  @override
   Future signInWithPhoneNumberWeb(String phoneNumber) async {
     _phoneConfirmationResult = await _auth.signInWithPhoneNumber(phoneNumber);
   }
 
+  @override
   Future confirmPhoneNumberWeb(String smsCode) async {
     if (_phoneConfirmationResult is ConfirmationResult) {
       UserCredential credential = await _phoneConfirmationResult!.confirm(smsCode);
@@ -41,6 +78,7 @@ class FireAuthService {
     }
   }
 
+  @override
   Future signInWithGoogle() async {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
     googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -48,14 +86,17 @@ class FireAuthService {
     return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
   }
 
+  @override
   Future<void> reload() async {
     return await _auth.currentUser?.reload();
   }
 
+  @override
   Future<void> signOut() async {
     return await _auth.signOut();
   }
 
+  @override
   Future<void> delete() async {
     return await _auth.currentUser?.delete();
   }

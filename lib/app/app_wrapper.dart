@@ -22,7 +22,7 @@ class AppWrapper extends ConsumerWidget {
 
     ref.listen(currentClientStreamProvider, (p, n) {
       if (n.error is UnexistedResource) {
-        ref.read(fireAuthServiceProvider).signOut();
+        ref.read(authServiceProvider).signOut();
         context.router.replaceAll([const AuthScreenRoute()]);
       }
     });

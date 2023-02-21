@@ -4,9 +4,18 @@ import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/client/client.dart';
 import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
 
-class ClientsRepository {
+abstract class ClientsRepository {
+  Future setClient(Client client);
+  Future updateClientContacts({required String id, required List<ClientContact> contacts});
+  Future<Client> clientById({required String id, bool forceNetwork = false});
+  Stream<Client> clientByIdStream({required String id});
+  Future<Client> findClientByEmailOrPhone(String value);
+}
+
+class ClientsRepositoryImpl implements ClientsRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('clients');
 
+  @override
   Future setClient(Client client) async {
     try {
       await _ref.doc(client.id).set(client.toMap());
@@ -19,6 +28,7 @@ class ClientsRepository {
     }
   }
 
+  @override
   Future updateClientContacts({required String id, required List<ClientContact> contacts}) async {
     try {
       await _ref.doc(id).update({'contacts': contacts.map((e) => e.toMap()).toList()});
@@ -31,6 +41,7 @@ class ClientsRepository {
     }
   }
 
+  @override
   Future<Client> clientById({required String id, bool forceNetwork = false}) async {
     try {
       DocumentSnapshot snapshot = await _ref.doc(id).get(forceNetwork ? const GetOptions(source: Source.server) : null);
@@ -51,6 +62,7 @@ class ClientsRepository {
     }
   }
 
+  @override
   Stream<Client> clientByIdStream({required String id}) {
     return _ref.doc(id).snapshots().transform(
           StreamTransformer<DocumentSnapshot<Map<String, dynamic>>, Client>.fromHandlers(
@@ -73,6 +85,7 @@ class ClientsRepository {
         );
   }
 
+  @override
   Future<Client> findClientByEmailOrPhone(String value) async {
     try {
       QuerySnapshot<Object?> emailSnapshot = await _ref.where('email', isEqualTo: value).get();

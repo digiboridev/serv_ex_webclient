@@ -22,7 +22,7 @@ class ContributorSelectScreen extends ConsumerStatefulWidget {
 
 class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScreen> {
   onLogout() {
-    ref.read(fireAuthServiceProvider).signOut();
+    ref.read(authServiceProvider).signOut();
     context.router.replaceAll([const AuthScreenRoute()]);
   }
 
