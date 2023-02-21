@@ -4,29 +4,29 @@ import 'package:serv_expert_webclient/auth/components/new_contact_dialog.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_contact.dart';
-import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
+import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
 import 'package:serv_expert_webclient/widgets/layouter.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
-class AuthClientContacts extends ConsumerStatefulWidget {
-  const AuthClientContacts({
+class AuthAppUserContacts extends ConsumerStatefulWidget {
+  const AuthAppUserContacts({
     Key? key,
   }) : super(key: key);
 
   @override
-  ConsumerState<AuthClientContacts> createState() => _AuthClientContactsState();
+  ConsumerState<AuthAppUserContacts> createState() => _AuthAppUserContactsState();
 }
 
-class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
+class _AuthAppUserContactsState extends ConsumerState<AuthAppUserContacts> {
   List<NewContactDTO> editableContacts = [];
 
   onContinue() {
-    List<ClientContact> clientContacts = editableContacts
+    List<AppUserContact> clientContacts = editableContacts
         .map(
-          (e) => ClientContact(
+          (e) => AppUserContact(
             firstName: e.firstName,
             lastName: e.lastName,
             phone: e.phone,
@@ -34,7 +34,7 @@ class _AuthClientContactsState extends ConsumerState<AuthClientContacts> {
         )
         .toList();
 
-    ref.read(authScreenControllerProvider.notifier).submitClientContacts(contacts: clientContacts);
+    ref.read(authScreenControllerProvider.notifier).submitAppUserContacts(contacts: clientContacts);
   }
 
   onAddContact() async {

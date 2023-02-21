@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
@@ -26,8 +26,8 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
     context.router.replaceAll([const AuthScreenRoute()]);
   }
 
-  onClientSelect(Client client) {
-    ref.read(contributorControllerProvider.notifier).setClientContributor(client: client);
+  onAppUserSelect(AppUser appUser) {
+    ref.read(contributorControllerProvider.notifier).setAppUserContributor(appUser: appUser);
     context.router.navigate(const HomeScreenRoute());
   }
 
@@ -69,15 +69,15 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
           // Personal account
           Consumer(
             builder: (context, ref, _) {
-              AsyncValue<Client> clientData = ref.watch(currentClientStreamProvider);
-              if (clientData is AsyncData<Client>) {
+              AsyncValue<AppUser> userData = ref.watch(currentAppUserStreamProvider);
+              if (userData is AsyncData<AppUser>) {
                 return SizedBox(
                   width: 345,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: button(
-                      '${clientData.value.firstName} ${clientData.value.lastName}',
-                      () => onClientSelect(clientData.value),
+                      '${userData.value.firstName} ${userData.value.lastName}',
+                      () => onAppUserSelect(userData.value),
                       true,
                     ),
                   ),
@@ -152,15 +152,15 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
           // Personal account
           Consumer(
             builder: (context, ref, _) {
-              AsyncValue<Client> clientData = ref.watch(currentClientStreamProvider);
-              if (clientData is AsyncData<Client>) {
+              AsyncValue<AppUser> userData = ref.watch(currentAppUserStreamProvider);
+              if (userData is AsyncData<AppUser>) {
                 return SizedBox(
                   width: 546,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: button(
-                      '${clientData.value.firstName} ${clientData.value.lastName}',
-                      () => onClientSelect(clientData.value),
+                      '${userData.value.firstName} ${userData.value.lastName}',
+                      () => onAppUserSelect(userData.value),
                       false,
                     ),
                   ),

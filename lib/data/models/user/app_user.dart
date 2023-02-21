@@ -1,33 +1,33 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
-import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
+import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 
-class Client extends Equatable {
+class AppUser extends Equatable {
   final String id;
   final String firstName;
   final String lastName;
   final String phone;
   final String email;
-  final List<ClientContact> contacts;
-  Client({
+  final List<AppUserContact> contacts;
+  AppUser({
     required this.id,
     required this.firstName,
     required this.lastName,
     required this.phone,
     required this.email,
-    List<ClientContact>? contacts,
+    List<AppUserContact>? contacts,
   }) : contacts = contacts ?? [];
 
-  Client copyWith({
+  AppUser copyWith({
     String? id,
     String? firstName,
     String? lastName,
     String? phone,
     String? email,
-    List<ClientContact>? contacts,
+    List<AppUserContact>? contacts,
   }) {
-    return Client(
+    return AppUser(
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -48,20 +48,20 @@ class Client extends Equatable {
     };
   }
 
-  factory Client.fromMap(Map<String, dynamic> map) {
-    return Client(
+  factory AppUser.fromMap(Map<String, dynamic> map) {
+    return AppUser(
       id: map['id'] as String,
       firstName: map['firstName'] as String,
       lastName: map['lastName'] as String,
       phone: map['phone'] as String,
       email: map['email'] as String,
-      contacts: List<ClientContact>.from(map['contacts'].map((x) => ClientContact.fromMap(x as Map<String, dynamic>))),
+      contacts: List<AppUserContact>.from(map['contacts'].map((x) => AppUserContact.fromMap(x as Map<String, dynamic>))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Client.fromJson(String source) => Client.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AppUser.fromJson(String source) => AppUser.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

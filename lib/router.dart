@@ -13,8 +13,8 @@ import 'package:serv_expert_webclient/app/contributor_controller.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
 import 'package:serv_expert_webclient/auth/subpages/sign_in.dart';
-import 'package:serv_expert_webclient/auth/subpages/client_contacts.dart';
-import 'package:serv_expert_webclient/auth/subpages/client_details.dart';
+import 'package:serv_expert_webclient/auth/subpages/user_contacts.dart';
+import 'package:serv_expert_webclient/auth/subpages/user_details.dart';
 import 'package:serv_expert_webclient/auth/subpages/company_registration.dart';
 import 'package:serv_expert_webclient/auth/subpages/data_error.dart';
 import 'package:serv_expert_webclient/auth/subpages/confirm_phone.dart';
@@ -24,7 +24,7 @@ import 'package:serv_expert_webclient/app/screens/contributor_select_screen.dart
 import 'package:serv_expert_webclient/app/screens/debug_screen.dart';
 import 'package:serv_expert_webclient/app/screens/home_screen.dart';
 import 'package:serv_expert_webclient/app/screens/profile/profile_screen.dart';
-import 'package:serv_expert_webclient/app/screens/profile/subpages/client_info.dart';
+import 'package:serv_expert_webclient/app/screens/profile/subpages/user_info.dart';
 import 'package:serv_expert_webclient/app/screens/profile/subpages/companies_info.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/vendor_breaking_types_screen.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/vendor_categories_screen.dart';
@@ -40,8 +40,8 @@ import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.
       children: [
         AutoRoute(name: 'asSignIn', path: 'signin', page: AuthSignIn, usesPathAsKey: true),
         AutoRoute(name: 'asConfirmPhone', path: 'confirm_phone', page: AuthConfirmPhone, usesPathAsKey: true),
-        AutoRoute(name: 'asClientDetails', path: 'client_details', page: AuthClientDetails, usesPathAsKey: true),
-        AutoRoute(name: 'asClientContacts', path: 'client_contacts', page: AuthClientContacts, usesPathAsKey: true),
+        AutoRoute(name: 'asAppUserDetails', path: 'user_details', page: AuthAppUserDetails, usesPathAsKey: true),
+        AutoRoute(name: 'asAppUserContacts', path: 'user_contacts', page: AuthAppUserContacts, usesPathAsKey: true),
         AutoRoute(name: 'asCompanyCreate', path: 'company_create', page: AuthCompanyCreate, usesPathAsKey: true),
         AutoRoute(name: 'asCompanyMembers', path: 'company_members', page: AuthCompanyMembers, usesPathAsKey: true),
         AutoRoute(name: 'asDataError', path: 'data_error', page: AuthDataError, usesPathAsKey: true),
@@ -71,8 +71,8 @@ import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.
           page: ProfileScreen,
           guards: [ContributorGuard],
           children: [
-            RedirectRoute(path: '', redirectTo: 'client_info'),
-            AutoRoute(path: 'client_info', page: ClientInfoPage),
+            RedirectRoute(path: '', redirectTo: 'user_info'),
+            AutoRoute(path: 'user_info', page: AppUserInfoPage),
             AutoRoute(path: 'companies_info', page: CompaniesInfoPage),
           ],
         ),

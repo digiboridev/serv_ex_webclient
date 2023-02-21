@@ -2,7 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 
@@ -31,25 +31,25 @@ class CSAssignedAsCompany extends CSAssigned with EquatableMixin {
   String get name => company.name;
 }
 
-class CSAssignedAsClient extends CSAssigned with EquatableMixin {
-  final Client client;
-  CSAssignedAsClient(this.client);
+class CSAssignedAsAppUser extends CSAssigned with EquatableMixin {
+  final AppUser appUser;
+  CSAssignedAsAppUser(this.appUser);
 
   @override
-  List<Object> get props => [client];
+  List<Object> get props => [appUser];
 
   @override
   bool get stringify => true;
 
   @override
-  String get name => '${client.firstName} ${client.lastName}';
+  String get name => '${appUser.firstName} ${appUser.lastName}';
 }
 
 class ContributorController extends StateNotifier<ContributorState> {
   ContributorController({required AutoDisposeStateNotifierProviderRef ref})
       : _ref = ref,
         super(CSUnassigned()) {
-    ref.listen(currentClientStreamProvider, (previous, next) {
+    ref.listen(currentAppUserStreamProvider, (previous, next) {
       fetchState();
     });
 
@@ -62,9 +62,9 @@ class ContributorController extends StateNotifier<ContributorState> {
   final AutoDisposeStateNotifierProviderRef _ref;
   final _storage = GetStorage();
 
-  setClientContributor({required Client client}) {
-    _storage.write('contributor', client.id);
-    state = CSAssignedAsClient(client);
+  setAppUserContributor({required AppUser appUser}) {
+    _storage.write('contributor', appUser.id);
+    state = CSAssignedAsAppUser(appUser);
   }
 
   setCompanyContributor({required Company company}) {
@@ -81,13 +81,13 @@ class ContributorController extends StateNotifier<ContributorState> {
     String? contributorId = _storage.read('contributor');
 
     if (contributorId != null) {
-      Client? client = await _ref.read(currentClientStreamProvider.future);
+      AppUser? appUser = await _ref.read(currentAppUserStreamProvider.future);
       List<Company> companies = await _ref.read(companiesStreamProvider.future);
 
       if (!mounted) return;
 
-      if (client != null && client.id == contributorId) {
-        state = CSAssignedAsClient(client);
+      if (appUser != null && appUser.id == contributorId) {
+        state = CSAssignedAsAppUser(appUser);
       }
 
       for (Company c in companies) {

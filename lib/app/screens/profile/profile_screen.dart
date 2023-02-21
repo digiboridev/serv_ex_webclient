@@ -62,7 +62,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 borderRadius: BorderRadius.circular(8),
                 child: InkWell(
                   onTap: () {
-                    context.router.replace(const ClientInfoPageRoute());
+                    context.router.replace(const AppUserInfoPageRoute());
                   },
                   borderRadius: BorderRadius.circular(8),
                   child: Container(
@@ -74,7 +74,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           width: 8,
                         ),
                         Text(
-                          'Client',
+                          'User',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,

@@ -8,8 +8,8 @@ import 'package:serv_expert_webclient/widgets/layouter.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
-class AuthClientDetails extends ConsumerStatefulWidget {
-  const AuthClientDetails({
+class AuthAppUserDetails extends ConsumerStatefulWidget {
+  const AuthAppUserDetails({
     Key? key,
     this.phone,
     this.firstName,
@@ -23,10 +23,10 @@ class AuthClientDetails extends ConsumerStatefulWidget {
   final String? email;
 
   @override
-  ConsumerState<AuthClientDetails> createState() => _ClientDetailsSubpageState();
+  ConsumerState<AuthAppUserDetails> createState() => _AppUserDetailsSubpageState();
 }
 
-class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
+class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
   final formKey = GlobalKey<FormState>();
 
   String phoneValue = '';
@@ -41,7 +41,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
   onContinue() {
     bool? valid = formKey.currentState?.validate();
     if (valid == true) {
-      ref.read(authScreenControllerProvider.notifier).submitClientDetails(
+      ref.read(authScreenControllerProvider.notifier).submitAppUserDetails(
             phone: phoneValue,
             firstName: firstNameValue,
             lastName: lastNameValue,
@@ -94,7 +94,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
             minHeight: 32,
             flex: 2,
           ),
-          const Text('CLIENT DETAILS', style: AppTextStyles.headline),
+          const Text('USER DETAILS', style: AppTextStyles.headline),
           const SizedBox(
             height: 86,
           ),
@@ -165,7 +165,7 @@ class _ClientDetailsSubpageState extends ConsumerState<AuthClientDetails> {
           const MinSpacer(
             minHeight: 32,
           ),
-          const Text('CLIENT DETAILS', style: AppTextStyles.headlineTablet),
+          const Text('USER DETAILS', style: AppTextStyles.headlineTablet),
           const SizedBox(
             height: 72,
           ),

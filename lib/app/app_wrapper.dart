@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
@@ -15,12 +15,12 @@ class AppWrapper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<Client> client = ref.watch(currentClientStreamProvider);
+    AsyncValue<AppUser> appUser = ref.watch(currentAppUserStreamProvider);
     AsyncValue<List<Company>> companies = ref.watch(companiesStreamProvider);
     // ignore: unused_local_variable
     ContributorState contributorState = ref.watch(contributorControllerProvider);
 
-    ref.listen(currentClientStreamProvider, (p, n) {
+    ref.listen(currentAppUserStreamProvider, (p, n) {
       if (n.error is UnexistedResource) {
         ref.read(authServiceProvider).signOut();
         context.router.replaceAll([const AuthScreenRoute()]);
@@ -31,17 +31,17 @@ class AppWrapper extends ConsumerWidget {
       body: SizedBox.expand(
         child: Builder(
           builder: (_) {
-            if (client is AsyncError) {
+            if (appUser is AsyncError) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('${client.error}'),
+                  Text('${appUser.error}'),
                   const SizedBox(
                     height: 8,
                   ),
                   ElevatedButton(
-                    onPressed: () => ref.refresh(currentClientStreamProvider),
+                    onPressed: () => ref.refresh(currentAppUserStreamProvider),
                     child: const Text('retry'),
                   ),
                 ],
@@ -64,7 +64,7 @@ class AppWrapper extends ConsumerWidget {
               );
             }
 
-            if (client is AsyncLoading || companies is AsyncLoading) {
+            if (appUser is AsyncLoading || companies is AsyncLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );

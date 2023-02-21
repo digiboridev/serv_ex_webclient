@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
-import 'package:serv_expert_webclient/data/models/client/client_contact.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
+import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 
-abstract class ClientsRepository {
-  Future setClient(Client client);
-  Future updateClientContacts({required String id, required List<ClientContact> contacts});
-  Future<Client> clientById({required String id, bool forceNetwork = false});
-  Stream<Client> clientByIdStream({required String id});
-  Future<Client> findClientByEmailOrPhone(String value);
+abstract class AppUsersRepository {
+  Future setAppUser(AppUser appUser);
+  Future updateAppUserContacts({required String id, required List<AppUserContact> contacts});
+  Future<AppUser> appUserById({required String id, bool forceNetwork = false});
+  Stream<AppUser> appUserByIdStream({required String id});
+  Future<AppUser> findAppUserByEmailOrPhone(String value);
 }
 
-class ClientsRepositoryImpl implements ClientsRepository {
-  CollectionReference get _ref => FirebaseFirestore.instance.collection('clients');
+class AppUsersRepositoryImpl implements AppUsersRepository {
+  CollectionReference get _ref => FirebaseFirestore.instance.collection('app_users');
 
   @override
-  Future setClient(Client client) async {
+  Future setAppUser(AppUser appUser) async {
     try {
-      await _ref.doc(client.id).set(client.toMap());
+      await _ref.doc(appUser.id).set(appUser.toMap());
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
@@ -29,7 +29,7 @@ class ClientsRepositoryImpl implements ClientsRepository {
   }
 
   @override
-  Future updateClientContacts({required String id, required List<ClientContact> contacts}) async {
+  Future updateAppUserContacts({required String id, required List<AppUserContact> contacts}) async {
     try {
       await _ref.doc(id).update({'contacts': contacts.map((e) => e.toMap()).toList()});
     } catch (e) {
@@ -42,14 +42,14 @@ class ClientsRepositoryImpl implements ClientsRepository {
   }
 
   @override
-  Future<Client> clientById({required String id, bool forceNetwork = false}) async {
+  Future<AppUser> appUserById({required String id, bool forceNetwork = false}) async {
     try {
       DocumentSnapshot snapshot = await _ref.doc(id).get(forceNetwork ? const GetOptions(source: Source.server) : null);
 
       if (snapshot.exists) {
-        return Client.fromMap(snapshot.data() as Map<String, dynamic>);
+        return AppUser.fromMap(snapshot.data() as Map<String, dynamic>);
       } else {
-        throw UnexistedResource('Client $id does not exist');
+        throw UnexistedResource('AppUser $id does not exist');
       }
     } catch (e) {
       if (e is FirebaseException && e.code == 'permission-denied') {
@@ -63,14 +63,14 @@ class ClientsRepositoryImpl implements ClientsRepository {
   }
 
   @override
-  Stream<Client> clientByIdStream({required String id}) {
+  Stream<AppUser> appUserByIdStream({required String id}) {
     return _ref.doc(id).snapshots().transform(
-          StreamTransformer<DocumentSnapshot<Map<String, dynamic>>, Client>.fromHandlers(
+          StreamTransformer<DocumentSnapshot<Map<String, dynamic>>, AppUser>.fromHandlers(
             handleData: (snapshot, sink) {
               if (snapshot.exists) {
-                sink.add(Client.fromMap(snapshot.data() as Map<String, dynamic>));
+                sink.add(AppUser.fromMap(snapshot.data() as Map<String, dynamic>));
               } else {
-                sink.addError(UnexistedResource('Client $id does not exist'));
+                sink.addError(UnexistedResource('AppUser $id does not exist'));
               }
             },
             handleError: (e, stackTrace, sink) {
@@ -86,17 +86,17 @@ class ClientsRepositoryImpl implements ClientsRepository {
   }
 
   @override
-  Future<Client> findClientByEmailOrPhone(String value) async {
+  Future<AppUser> findAppUserByEmailOrPhone(String value) async {
     try {
       QuerySnapshot<Object?> emailSnapshot = await _ref.where('email', isEqualTo: value).get();
       QuerySnapshot<Object?> phoneSnapshot = await _ref.where('phone', isEqualTo: value).get();
 
       if (emailSnapshot.docs.isNotEmpty) {
-        return Client.fromMap(emailSnapshot.docs.first.data() as Map<String, dynamic>);
+        return AppUser.fromMap(emailSnapshot.docs.first.data() as Map<String, dynamic>);
       } else if (phoneSnapshot.docs.isNotEmpty) {
-        return Client.fromMap(phoneSnapshot.docs.first.data() as Map<String, dynamic>);
+        return AppUser.fromMap(phoneSnapshot.docs.first.data() as Map<String, dynamic>);
       } else {
-        throw UnexistedResource('Client with email or phone $value does not exist');
+        throw UnexistedResource('AppUser with email or phone $value does not exist');
       }
     } catch (e) {
       if (e is FirebaseException && e.code == 'permission-denied') {

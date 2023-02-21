@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
@@ -13,10 +13,10 @@ import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
 
 final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScreenController, AuthScreenState>((ref) {
   AuthService authService = ref.read(authServiceProvider);
-  ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
+  AppUsersRepository appUsersRepository = ref.read(appUsersRepositoryProvider);
   CompaniesRepository companiesRepository = ref.read(companiesRepositoryProvider);
 
-  return AuthScreenController(authService: authService, clientsRepository: clientsRepository, companiesRepository: companiesRepository);
+  return AuthScreenController(authService: authService, appUsersRepository: appUsersRepository, companiesRepository: companiesRepository);
 });
 
 class AuthScreen extends ConsumerStatefulWidget {
@@ -68,14 +68,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               routes: (_) => [
                 const AsSignIn(),
                 if (loginState is ASSsmsSent) AsConfirmPhone(phone: loginState.phone),
-                if (loginState is ASSClientDetails)
-                  AsClientDetails(
+                if (loginState is ASSAppUserDetails)
+                  AsAppUserDetails(
                     phone: loginState.phone,
                     email: loginState.email,
                     firstName: loginState.firstName,
                     lastName: loginState.lastName,
                   ),
-                if (loginState is ASSClientContacts) const AsClientContacts(),
+                if (loginState is ASSAppUserContacts) const AsAppUserContacts(),
                 if (loginState is ASSCompanyCreate) const AsCompanyCreate(),
                 if (loginState is ASSCompanyMembers) AsCompanyMembers(membersIds: loginState.membersIds),
                 if (loginState is ASSDataError) AsDataError(error: loginState.error),

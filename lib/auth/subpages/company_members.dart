@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/core/validators.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
-import 'package:serv_expert_webclient/data/reposiotories/clients_repository.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
+import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
@@ -12,9 +12,9 @@ import 'package:serv_expert_webclient/widgets/layouter.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
-final clientDataProvider = FutureProvider.autoDispose.family<Client, String>((ref, clientId) async {
-  ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
-  return clientsRepository.clientById(id: clientId);
+final userDataProvider = FutureProvider.autoDispose.family<AppUser, String>((ref, appUserId) async {
+  AppUsersRepository appUsersRepository = ref.read(appUsersRepositoryProvider);
+  return appUsersRepository.appUserById(id: appUserId);
 });
 
 class AuthCompanyMembers extends ConsumerStatefulWidget {
@@ -49,7 +49,7 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
         );
       },
     );
-    if (result is Client) {
+    if (result is AppUser) {
       setState(() => editableMembersIds.add(result.id));
     }
   }
@@ -189,9 +189,9 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
   Widget memberTile(String memberId, bool isMobile) {
     return Consumer(
       builder: (context, ref, child) {
-        AsyncValue<Client> clientData = ref.watch(clientDataProvider(memberId));
-        return clientData.when(
-          data: (client) {
+        AsyncValue<AppUser> userData = ref.watch(userDataProvider(memberId));
+        return userData.when(
+          data: (appUser) {
             return Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,17 +204,17 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(client.firstName, style: isMobile ? AppTextStyles.formText : AppTextStyles.formTextTablet),
+                Text(appUser.firstName, style: isMobile ? AppTextStyles.formText : AppTextStyles.formTextTablet),
                 const SizedBox(
                   width: 8,
                 ),
-                Text(client.lastName, style: isMobile ? AppTextStyles.formText : AppTextStyles.formTextTablet),
+                Text(appUser.lastName, style: isMobile ? AppTextStyles.formText : AppTextStyles.formTextTablet),
                 const Spacer(),
                 // Dont allow to delete first member because it is always company owner
                 if (editableMembersIds.indexOf(memberId) != 0)
                   IconButton(
                     onPressed: () {
-                      setState(() => editableMembersIds.remove(client.id));
+                      setState(() => editableMembersIds.remove(appUser.id));
                     },
                     icon: Icon(
                       Icons.delete,
@@ -237,9 +237,9 @@ class _AuthCompanyMembersState extends ConsumerState<AuthCompanyMembers> {
   }
 }
 
-final clientByEmailOrPhoneProvider = FutureProvider.autoDispose.family<Client, String>((ref, searchString) async {
-  ClientsRepository clientsRepository = ref.read(clientsRepositoryProvider);
-  return clientsRepository.findClientByEmailOrPhone(searchString);
+final userByEmailOrPhoneProvider = FutureProvider.autoDispose.family<AppUser, String>((ref, searchString) async {
+  AppUsersRepository appUsersRepository = ref.read(appUsersRepositoryProvider);
+  return appUsersRepository.findAppUserByEmailOrPhone(searchString);
 });
 
 class AddMemberDialog extends ConsumerStatefulWidget {
@@ -256,7 +256,7 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
 
   @override
   Widget build(BuildContext context) {
-    AsyncValue<Client> clientData = ref.watch(clientByEmailOrPhoneProvider(searchString));
+    AsyncValue<AppUser> userData = ref.watch(userByEmailOrPhoneProvider(searchString));
 
     return Container(
       decoration: BoxDecoration(
@@ -282,8 +282,8 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
             const SizedBox(
               height: 16,
             ),
-            if (searchString.isNotEmpty && clientData is AsyncLoading) const CircularProgressIndicator(),
-            if (searchString.isNotEmpty && clientData is AsyncError)
+            if (searchString.isNotEmpty && userData is AsyncLoading) const CircularProgressIndicator(),
+            if (searchString.isNotEmpty && userData is AsyncError)
               const Text(
                 'User not found',
                 style: TextStyle(
@@ -292,9 +292,9 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-            if (searchString.isNotEmpty && clientData is AsyncData<Client>) ...[
+            if (searchString.isNotEmpty && userData is AsyncData<AppUser>) ...[
               Text(
-                '${clientData.value.firstName} ${clientData.value.lastName} ${clientData.value.email} ${clientData.value.phone}',
+                '${userData.value.firstName} ${userData.value.lastName} ${userData.value.email} ${userData.value.phone}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -304,7 +304,7 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
               const SizedBox(
                 height: 16,
               ),
-              if (widget.membersIds.contains(clientData.value.id))
+              if (widget.membersIds.contains(userData.value.id))
                 const Text(
                   'User already added',
                   style: TextStyle(
@@ -313,13 +313,13 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              if (widget.membersIds.contains(clientData.value.id))
+              if (widget.membersIds.contains(userData.value.id))
                 const SizedBox(
                   height: 16,
                 ),
-              if (!widget.membersIds.contains(clientData.value.id))
+              if (!widget.membersIds.contains(userData.value.id))
                 addButton(() {
-                  Navigator.of(context).pop(clientData.value);
+                  Navigator.of(context).pop(userData.value);
                 }),
             ],
           ],
@@ -352,7 +352,7 @@ class _AddMemberDialogState extends ConsumerState<AddMemberDialog> {
         },
         onFieldSubmitted: (value) {
           // searchString = value;
-          // ref.refresh(clientByEmailOrPhoneProvider(searchString));
+          // ref.refresh(userByEmailOrPhoneProvider(searchString));
           setState(() {
             searchString = value;
           });

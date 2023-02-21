@@ -19,8 +19,8 @@ import 'app/screens/contributor_select_screen.dart' as _i11;
 import 'app/screens/debug_screen.dart' as _i23;
 import 'app/screens/home_screen.dart' as _i12;
 import 'app/screens/profile/profile_screen.dart' as _i22;
-import 'app/screens/profile/subpages/client_info.dart' as _i24;
 import 'app/screens/profile/subpages/companies_info.dart' as _i25;
+import 'app/screens/profile/subpages/user_info.dart' as _i24;
 import 'app/screens/repair_service/order/order_details_screen.dart' as _i17;
 import 'app/screens/repair_service/order/order_has_password_screen.dart'
     as _i19;
@@ -33,14 +33,14 @@ import 'app/screens/repair_service/vendor_categories_screen.dart' as _i14;
 import 'app/screens/repair_service/vendor_subcategories_screen.dart' as _i15;
 import 'app/screens/repair_service/vendors_screen.dart' as _i13;
 import 'auth/auth_screen.dart' as _i1;
-import 'auth/subpages/client_contacts.dart' as _i6;
-import 'auth/subpages/client_details.dart' as _i5;
 import 'auth/subpages/company_members.dart' as _i8;
 import 'auth/subpages/company_registration.dart' as _i7;
 import 'auth/subpages/confirm_phone.dart' as _i4;
 import 'auth/subpages/data_error.dart' as _i9;
 import 'auth/subpages/sign_in.dart' as _i3;
 import 'auth/subpages/success.dart' as _i10;
+import 'auth/subpages/user_contacts.dart' as _i6;
+import 'auth/subpages/user_details.dart' as _i5;
 import 'data/dto/repair_service/new_order.dart' as _i29;
 import 'router.dart' as _i28;
 
@@ -88,12 +88,12 @@ class AppRouter extends _i26.RootStackRouter {
         ),
       );
     },
-    AsClientDetails.name: (routeData) {
-      final args = routeData.argsAs<AsClientDetailsArgs>(
-          orElse: () => const AsClientDetailsArgs());
+    AsAppUserDetails.name: (routeData) {
+      final args = routeData.argsAs<AsAppUserDetailsArgs>(
+          orElse: () => const AsAppUserDetailsArgs());
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.AuthClientDetails(
+        child: _i5.AuthAppUserDetails(
           key: args.key,
           phone: args.phone,
           firstName: args.firstName,
@@ -102,10 +102,10 @@ class AppRouter extends _i26.RootStackRouter {
         ),
       );
     },
-    AsClientContacts.name: (routeData) {
+    AsAppUserContacts.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i6.AuthClientContacts(),
+        child: const _i6.AuthAppUserContacts(),
       );
     },
     AsCompanyCreate.name: (routeData) {
@@ -261,10 +261,10 @@ class AppRouter extends _i26.RootStackRouter {
         child: const _i23.SB(),
       );
     },
-    ClientInfoPageRoute.name: (routeData) {
+    AppUserInfoPageRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i24.ClientInfoPage(),
+        child: const _i24.AppUserInfoPage(),
       );
     },
     CompaniesInfoPageRoute.name: (routeData) {
@@ -294,14 +294,14 @@ class AppRouter extends _i26.RootStackRouter {
               usesPathAsKey: true,
             ),
             _i26.RouteConfig(
-              AsClientDetails.name,
-              path: 'client_details',
+              AsAppUserDetails.name,
+              path: 'user_details',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
             _i26.RouteConfig(
-              AsClientContacts.name,
-              path: 'client_contacts',
+              AsAppUserContacts.name,
+              path: 'user_contacts',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
@@ -430,12 +430,12 @@ class AppRouter extends _i26.RootStackRouter {
                   '#redirect',
                   path: '',
                   parent: ProfileScreenRoute.name,
-                  redirectTo: 'client_info',
+                  redirectTo: 'user_info',
                   fullMatch: true,
                 ),
                 _i26.RouteConfig(
-                  ClientInfoPageRoute.name,
-                  path: 'client_info',
+                  AppUserInfoPageRoute.name,
+                  path: 'user_info',
                   parent: ProfileScreenRoute.name,
                 ),
                 _i26.RouteConfig(
@@ -528,18 +528,18 @@ class AsConfirmPhoneArgs {
 }
 
 /// generated route for
-/// [_i5.AuthClientDetails]
-class AsClientDetails extends _i26.PageRouteInfo<AsClientDetailsArgs> {
-  AsClientDetails({
+/// [_i5.AuthAppUserDetails]
+class AsAppUserDetails extends _i26.PageRouteInfo<AsAppUserDetailsArgs> {
+  AsAppUserDetails({
     _i27.Key? key,
     String? phone,
     String? firstName,
     String? lastName,
     String? email,
   }) : super(
-          AsClientDetails.name,
-          path: 'client_details',
-          args: AsClientDetailsArgs(
+          AsAppUserDetails.name,
+          path: 'user_details',
+          args: AsAppUserDetailsArgs(
             key: key,
             phone: phone,
             firstName: firstName,
@@ -548,11 +548,11 @@ class AsClientDetails extends _i26.PageRouteInfo<AsClientDetailsArgs> {
           ),
         );
 
-  static const String name = 'AsClientDetails';
+  static const String name = 'AsAppUserDetails';
 }
 
-class AsClientDetailsArgs {
-  const AsClientDetailsArgs({
+class AsAppUserDetailsArgs {
+  const AsAppUserDetailsArgs({
     this.key,
     this.phone,
     this.firstName,
@@ -572,20 +572,20 @@ class AsClientDetailsArgs {
 
   @override
   String toString() {
-    return 'AsClientDetailsArgs{key: $key, phone: $phone, firstName: $firstName, lastName: $lastName, email: $email}';
+    return 'AsAppUserDetailsArgs{key: $key, phone: $phone, firstName: $firstName, lastName: $lastName, email: $email}';
   }
 }
 
 /// generated route for
-/// [_i6.AuthClientContacts]
-class AsClientContacts extends _i26.PageRouteInfo<void> {
-  const AsClientContacts()
+/// [_i6.AuthAppUserContacts]
+class AsAppUserContacts extends _i26.PageRouteInfo<void> {
+  const AsAppUserContacts()
       : super(
-          AsClientContacts.name,
-          path: 'client_contacts',
+          AsAppUserContacts.name,
+          path: 'user_contacts',
         );
 
-  static const String name = 'AsClientContacts';
+  static const String name = 'AsAppUserContacts';
 }
 
 /// generated route for
@@ -1018,15 +1018,15 @@ class SBRoute extends _i26.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i24.ClientInfoPage]
-class ClientInfoPageRoute extends _i26.PageRouteInfo<void> {
-  const ClientInfoPageRoute()
+/// [_i24.AppUserInfoPage]
+class AppUserInfoPageRoute extends _i26.PageRouteInfo<void> {
+  const AppUserInfoPageRoute()
       : super(
-          ClientInfoPageRoute.name,
-          path: 'client_info',
+          AppUserInfoPageRoute.name,
+          path: 'user_info',
         );
 
-  static const String name = 'ClientInfoPageRoute';
+  static const String name = 'AppUserInfoPageRoute';
 }
 
 /// generated route for

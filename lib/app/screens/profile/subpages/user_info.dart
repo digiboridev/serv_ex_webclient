@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/models/client/client.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 
-class ClientInfoPage extends ConsumerStatefulWidget {
-  const ClientInfoPage({super.key});
+class AppUserInfoPage extends ConsumerStatefulWidget {
+  const AppUserInfoPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ClientInfoPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AppUserInfoPageState();
 }
 
-class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
+class _AppUserInfoPageState extends ConsumerState<AppUserInfoPage> {
   @override
   Widget build(BuildContext context) {
-    Client client = ref.read(currentClientStreamProvider).value!;
+    AppUser appUser = ref.read(currentAppUserStreamProvider).value!;
 
     return Container(
       color: Colors.white,
@@ -22,14 +22,14 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
         child: Column(
           children: [
             header(),
-            info(client),
+            info(appUser),
           ],
         ),
       ),
     );
   }
 
-  Widget info(Client client) {
+  Widget info(AppUser appUser) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -54,7 +54,7 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
               const SizedBox(
                 width: 4,
               ),
-              Text('${client.firstName} ${client.lastName}'),
+              Text('${appUser.firstName} ${appUser.lastName}'),
             ],
           ),
           Row(
@@ -63,7 +63,7 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
               const SizedBox(
                 width: 4,
               ),
-              Text(client.email),
+              Text(appUser.email),
             ],
           ),
           Row(
@@ -72,7 +72,7 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
               const SizedBox(
                 width: 4,
               ),
-              Text(client.phone),
+              Text(appUser.phone),
             ],
           ),
         ],
@@ -85,7 +85,7 @@ class _ClientInfoPageState extends ConsumerState<ClientInfoPage> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: const [
-          Text('Client info', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+          Text('User info', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
         ],
       ),
     );

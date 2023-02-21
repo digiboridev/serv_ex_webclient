@@ -29,7 +29,7 @@ class ASSDataError extends AuthScreenState {
   const ASSDataError();
 }
 
-/// This state is used when user is not authorized and client needs to choose how to authorize
+/// This state is used when user is not authorized and appUser needs to choose how to authorize
 class ASSUnauthorized extends AuthScreenState {
   const ASSUnauthorized({
     super.busy,
@@ -37,7 +37,7 @@ class ASSUnauthorized extends AuthScreenState {
   });
 }
 
-/// This state is used for phone auth when client needs to confirm his phone number
+/// This state is used for phone auth when appUser needs to confirm his phone number
 class ASSsmsSent extends AuthScreenState {
   const ASSsmsSent({
     super.busy,
@@ -63,10 +63,10 @@ class ASSsmsSent extends AuthScreenState {
   }
 }
 
-/// This state is used when user is authorized and client needs to fill his details
+/// This state is used when user is authorized and appUser needs to fill his details
 /// (first name, last name, email, phone) is the fields from auth provider, and user cant modify them if its exist
-class ASSClientDetails extends AuthScreenState {
-  const ASSClientDetails({
+class ASSAppUserDetails extends AuthScreenState {
+  const ASSAppUserDetails({
     super.busy,
     super.error,
     required this.phone,
@@ -83,7 +83,7 @@ class ASSClientDetails extends AuthScreenState {
   @override
   List<Object> get props => [busy, error, phone ?? 0, firstName ?? 0, lastName ?? 0, email ?? 0];
 
-  ASSClientDetails copyWith({
+  ASSAppUserDetails copyWith({
     bool? busy,
     String? error,
     String? phone,
@@ -91,7 +91,7 @@ class ASSClientDetails extends AuthScreenState {
     String? lastName,
     String? email,
   }) {
-    return ASSClientDetails(
+    return ASSAppUserDetails(
       busy: busy ?? this.busy,
       error: error ?? this.error,
       phone: phone ?? this.phone,
@@ -102,18 +102,18 @@ class ASSClientDetails extends AuthScreenState {
   }
 }
 
-/// This state is used when user is filled client details and asks to add contacts
-class ASSClientContacts extends AuthScreenState {
-  const ASSClientContacts({
+/// This state is used when user is filled appUser details and asks to add contacts
+class ASSAppUserContacts extends AuthScreenState {
+  const ASSAppUserContacts({
     super.busy,
     super.error,
   });
 
-  ASSClientContacts copyWith({
+  ASSAppUserContacts copyWith({
     bool? busy,
     String? error,
   }) {
-    return ASSClientContacts(
+    return ASSAppUserContacts(
       busy: busy ?? this.busy,
       error: error ?? this.error,
     );
@@ -163,7 +163,7 @@ class ASSCompanyMembers extends AuthScreenState {
   }
 }
 
-/// This state is used when all authorization is done and client can use the app
+/// This state is used when all authorization is done and appUser can use the app
 class ASSAuthorized extends AuthScreenState {
   const ASSAuthorized({
     super.busy,
