@@ -22,10 +22,8 @@ import 'app/screens/profile/profile_screen.dart' as _i22;
 import 'app/screens/profile/subpages/companies_info.dart' as _i25;
 import 'app/screens/profile/subpages/user_info.dart' as _i24;
 import 'app/screens/repair_service/order/order_details_screen.dart' as _i17;
-import 'app/screens/repair_service/order/order_has_password_screen.dart'
-    as _i19;
-import 'app/screens/repair_service/order/order_password_type_screen.dart'
-    as _i20;
+import 'app/screens/repair_service/order/order_has_password_screen.dart' as _i19;
+import 'app/screens/repair_service/order/order_password_type_screen.dart' as _i20;
 import 'app/screens/repair_service/order/order_submitted_screen.dart' as _i21;
 import 'app/screens/repair_service/order/order_waranty_screen.dart' as _i18;
 import 'app/screens/repair_service/vendor_breaking_types_screen.dart' as _i16;
@@ -33,14 +31,14 @@ import 'app/screens/repair_service/vendor_categories_screen.dart' as _i14;
 import 'app/screens/repair_service/vendor_subcategories_screen.dart' as _i15;
 import 'app/screens/repair_service/vendors_screen.dart' as _i13;
 import 'auth/auth_screen.dart' as _i1;
-import 'auth/subpages/company_members.dart' as _i8;
-import 'auth/subpages/company_registration.dart' as _i7;
-import 'auth/subpages/confirm_phone.dart' as _i4;
-import 'auth/subpages/data_error.dart' as _i9;
-import 'auth/subpages/sign_in.dart' as _i3;
-import 'auth/subpages/success.dart' as _i10;
-import 'auth/subpages/user_contacts.dart' as _i6;
-import 'auth/subpages/user_details.dart' as _i5;
+import 'auth/pages/company_members.dart' as _i8;
+import 'auth/pages/company_registration.dart' as _i7;
+import 'auth/pages/confirm_phone.dart' as _i4;
+import 'auth/pages/data_error.dart' as _i9;
+import 'auth/pages/sign_in.dart' as _i3;
+import 'auth/pages/success.dart' as _i10;
+import 'auth/pages/user_contacts.dart' as _i6;
+import 'auth/pages/user_details.dart' as _i5;
 import 'data/dto/repair_service/new_order.dart' as _i29;
 import 'router.dart' as _i28;
 
@@ -89,8 +87,7 @@ class AppRouter extends _i26.RootStackRouter {
       );
     },
     AsAppUserDetails.name: (routeData) {
-      final args = routeData.argsAs<AsAppUserDetailsArgs>(
-          orElse: () => const AsAppUserDetailsArgs());
+      final args = routeData.argsAs<AsAppUserDetailsArgs>(orElse: () => const AsAppUserDetailsArgs());
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.AuthAppUserDetails(
@@ -160,9 +157,8 @@ class AppRouter extends _i26.RootStackRouter {
     },
     RSVendorCategoriesScreenRoute.name: (routeData) {
       final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSVendorCategoriesScreenRouteArgs>(
-          orElse: () => RSVendorCategoriesScreenRouteArgs(
-              vendorId: queryParams.optString('vendorId')));
+      final args =
+          routeData.argsAs<RSVendorCategoriesScreenRouteArgs>(orElse: () => RSVendorCategoriesScreenRouteArgs(vendorId: queryParams.optString('vendorId')));
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i14.RSVendorCategoriesScreen(
@@ -718,8 +714,7 @@ class RepairServiceVendorsScreenRoute extends _i26.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i14.RSVendorCategoriesScreen]
-class RSVendorCategoriesScreenRoute
-    extends _i26.PageRouteInfo<RSVendorCategoriesScreenRouteArgs> {
+class RSVendorCategoriesScreenRoute extends _i26.PageRouteInfo<RSVendorCategoriesScreenRouteArgs> {
   RSVendorCategoriesScreenRoute({
     _i27.Key? key,
     required String? vendorId,
@@ -754,8 +749,7 @@ class RSVendorCategoriesScreenRouteArgs {
 
 /// generated route for
 /// [_i15.RSVendorSubCategoriesScreen]
-class RSVendorSubCategoriesScreenRoute
-    extends _i26.PageRouteInfo<RSVendorSubCategoriesScreenRouteArgs> {
+class RSVendorSubCategoriesScreenRoute extends _i26.PageRouteInfo<RSVendorSubCategoriesScreenRouteArgs> {
   RSVendorSubCategoriesScreenRoute({
     _i27.Key? key,
     required String? vendorId,
@@ -798,8 +792,7 @@ class RSVendorSubCategoriesScreenRouteArgs {
 
 /// generated route for
 /// [_i16.RSVendorBreakingTypesScreen]
-class RSVendorBreakingTypesScreenRoute
-    extends _i26.PageRouteInfo<RSVendorBreakingTypesScreenRouteArgs> {
+class RSVendorBreakingTypesScreenRoute extends _i26.PageRouteInfo<RSVendorBreakingTypesScreenRouteArgs> {
   RSVendorBreakingTypesScreenRoute({
     _i27.Key? key,
     required String? vendorId,
@@ -842,8 +835,7 @@ class RSVendorBreakingTypesScreenRouteArgs {
 
 /// generated route for
 /// [_i17.RSOrderDetailsScreen]
-class RSOrderDetailsScreenRoute
-    extends _i26.PageRouteInfo<RSOrderDetailsScreenRouteArgs> {
+class RSOrderDetailsScreenRoute extends _i26.PageRouteInfo<RSOrderDetailsScreenRouteArgs> {
   RSOrderDetailsScreenRoute({
     required _i29.RSNewOrderDTO newOrder,
     _i27.Key? key,
@@ -877,8 +869,7 @@ class RSOrderDetailsScreenRouteArgs {
 
 /// generated route for
 /// [_i18.RSOrderWarantyScreen]
-class RSOrderWarantyScreenRoute
-    extends _i26.PageRouteInfo<RSOrderWarantyScreenRouteArgs> {
+class RSOrderWarantyScreenRoute extends _i26.PageRouteInfo<RSOrderWarantyScreenRouteArgs> {
   RSOrderWarantyScreenRoute({
     required _i29.RSNewOrderDTO newOrder,
     _i27.Key? key,
@@ -912,8 +903,7 @@ class RSOrderWarantyScreenRouteArgs {
 
 /// generated route for
 /// [_i19.RSOrderHasPasswordScreen]
-class RSOrderHasPasswordScreenRoute
-    extends _i26.PageRouteInfo<RSOrderHasPasswordScreenRouteArgs> {
+class RSOrderHasPasswordScreenRoute extends _i26.PageRouteInfo<RSOrderHasPasswordScreenRouteArgs> {
   RSOrderHasPasswordScreenRoute({
     required _i29.RSNewOrderDTO newOrder,
     _i27.Key? key,
@@ -947,8 +937,7 @@ class RSOrderHasPasswordScreenRouteArgs {
 
 /// generated route for
 /// [_i20.RSOrderPasswordTypeScreen]
-class RSOrderPasswordTypeScreenRoute
-    extends _i26.PageRouteInfo<RSOrderPasswordTypeScreenRouteArgs> {
+class RSOrderPasswordTypeScreenRoute extends _i26.PageRouteInfo<RSOrderPasswordTypeScreenRouteArgs> {
   RSOrderPasswordTypeScreenRoute({
     required _i29.RSNewOrderDTO newOrder,
     _i27.Key? key,

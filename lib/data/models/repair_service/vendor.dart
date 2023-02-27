@@ -1,21 +1,26 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
+import 'package:serv_expert_webclient/data/models/access.dart';
 
 class RSVendor extends Equatable {
   final String id;
   final String name;
+  final Access access;
   const RSVendor({
     required this.id,
     required this.name,
+    required this.access,
   });
 
   RSVendor copyWith({
     String? id,
     String? name,
+    Access? access,
   }) {
     return RSVendor(
       id: id ?? this.id,
       name: name ?? this.name,
+      access: access ?? this.access,
     );
   }
 
@@ -23,6 +28,7 @@ class RSVendor extends Equatable {
     return <String, dynamic>{
       'id': id,
       'name': name,
+      'access': access.toMap(),
     };
   }
 
@@ -30,6 +36,7 @@ class RSVendor extends Equatable {
     return RSVendor(
       id: map['id'] as String,
       name: map['name'] as String,
+      access: Access.fromMap(map['access'] as Map<String, dynamic>),
     );
   }
 

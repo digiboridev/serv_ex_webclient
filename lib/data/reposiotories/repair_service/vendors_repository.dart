@@ -8,6 +8,7 @@ abstract class RSVendorsRepository {
   Future<List<RSVendor>> vendors();
   Stream<List<RSVendor>> vendorsStream();
   Future<RSVendor> vendorById({required String id, bool forceNetwork = false});
+  Stream<RSVendor> vendorByIdStream({required String id});
 }
 
 class RSVendorsRepositoryImpl implements RSVendorsRepository {
