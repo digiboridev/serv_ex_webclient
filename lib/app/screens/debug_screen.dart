@@ -161,7 +161,7 @@ class SB extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('V: 0.0.12'),
+            const Text('V: 0.0.13'),
             SelectableText(context.router.root.stack.toString()),
             SelectableText('height: $height, width: $width'),
             SelectableText('Authorized: ${ref.read(authServiceProvider).authorized}'),
