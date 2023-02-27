@@ -2,10 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
+import 'package:serv_expert_webclient/app/contributor_controller.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
@@ -111,14 +114,26 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
   }
 
   onSubmit() {
-    RSNewOrderDTO newOrder = RSNewOrderDTO(
-      vendorId: widget.vendorId,
-      categoryId: widget.categoryId,
-      breakingTypeIds: selectedBreakingTypes.map((breakingType) => breakingType.id).toList(),
-    );
-    context.router.navigate(
-      RSOrderDetailsScreenRoute(newOrder: newOrder),
-    );
+    ContributorState contributorState = ref.read(contributorControllerProvider);
+    if (contributorState is CSAssigned) {
+      RSOrderCustomerInfo customerInfo = RSOrderCustomerInfo(
+        customerType: (contributorState is CSAssignedAsCompany) ? RSOrderCustomerType.company : RSOrderCustomerType.personal,
+        customerId: contributorState.id,
+      );
+
+      RSNewOrderDTO newOrder = RSNewOrderDTO(
+        vendorId: widget.vendorId,
+        customerInfo: customerInfo,
+        categoryId: widget.categoryId,
+        breakingTypeIds: selectedBreakingTypes.map((breakingType) => breakingType.id).toList(),
+      );
+
+      context.router.navigate(
+        RSOrderDetailsScreenRoute(newOrder: newOrder),
+      );
+    } else {
+      throw Exception('Contributor is not assigned');
+    }
   }
 
   @override

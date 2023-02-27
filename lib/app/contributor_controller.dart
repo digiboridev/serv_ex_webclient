@@ -15,6 +15,7 @@ class CSUnassigned extends ContributorState {
 
 abstract class CSAssigned extends ContributorState {
   String get name;
+  String get id;
 }
 
 class CSAssignedAsCompany extends CSAssigned with EquatableMixin {
@@ -29,6 +30,9 @@ class CSAssignedAsCompany extends CSAssigned with EquatableMixin {
 
   @override
   String get name => company.name;
+
+  @override
+  String get id => company.id;
 }
 
 class CSAssignedAsAppUser extends CSAssigned with EquatableMixin {
@@ -43,6 +47,9 @@ class CSAssignedAsAppUser extends CSAssigned with EquatableMixin {
 
   @override
   String get name => '${appUser.firstName} ${appUser.lastName}';
+
+  @override
+  String get id => appUser.id;
 }
 
 class ContributorController extends StateNotifier<ContributorState> {

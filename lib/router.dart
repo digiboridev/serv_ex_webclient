@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/screens/profile/subpages/orders.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/order/order_details_screen.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/order/order_has_password_screen.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/order/order_password_type_screen.dart';
@@ -74,6 +75,7 @@ import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.
             RedirectRoute(path: '', redirectTo: 'user_info'),
             AutoRoute(path: 'user_info', page: AppUserInfoPage),
             AutoRoute(path: 'companies_info', page: CompaniesInfoPage),
+            AutoRoute(path: 'orders', page: OrdersPage),
           ],
         ),
         AutoRoute(path: 'b', page: SB),

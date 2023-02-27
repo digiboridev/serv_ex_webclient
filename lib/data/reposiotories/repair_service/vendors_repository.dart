@@ -80,6 +80,7 @@ class RSVendorsRepositoryImpl implements RSVendorsRepository {
     }
   }
 
+  @override
   Stream<RSVendor> vendorByIdStream({required String id}) {
     return _ref.doc(id).snapshots().transform(
           StreamTransformer<DocumentSnapshot<Map<String, dynamic>>, RSVendor>.fromHandlers(

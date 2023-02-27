@@ -2,10 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
+import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
+import 'package:serv_expert_webclient/services/rs_orders_service.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
+import 'package:serv_expert_webclient/widgets/loading_wrapper.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 
 class RSOrderHasPasswordScreen extends ConsumerStatefulWidget {
@@ -21,12 +25,37 @@ class RSOrderHasPasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScreen> {
-  onChoose(bool hasPassword) {
+  bool busy = false;
+
+  onChoose(bool hasPassword) async {
+    if (busy) return;
     RSNewOrderDTO newOrder = widget.newOrder..hasPassword = hasPassword;
     if (hasPassword) {
       context.router.navigate(RSOrderPasswordTypeScreenRoute(newOrder: newOrder));
     } else {
-      context.router.navigate(const RSOrderSubmittedScreenRoute());
+      RSOrdersService ordersService = ref.read(rsOrdersServiceProvider);
+
+      setState(() => busy = true);
+
+      try {
+        await ordersService.createOrder(order: newOrder);
+        if (mounted) {
+          context.router.navigate(const RSOrderSubmittedScreenRoute());
+        }
+      } catch (e) {
+        log(e);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            action: SnackBarAction(
+              label: 'Dismiss',
+              onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+            ),
+          ),
+        );
+      }
+
+      setState(() => busy = false);
     }
   }
 
@@ -35,41 +64,44 @@ class _RSOrderHasPasswordScreenState extends ConsumerState<RSOrderHasPasswordScr
     return Container(
       color: Colors.white,
       child: FillableScrollableWrapper(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
+        child: LoadingWrapper(
+          busy: busy,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => context.router.pop(),
+                    ),
+                  ],
+                ),
+              ),
+              const MinSpacer(
+                minHeight: 32,
+              ),
+              const Text(
+                'ORDER HAS PASSWORD',
+                style: AppTextStyles.headline,
+              ),
+              const MinSpacer(
+                minHeight: 32,
+              ),
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => context.router.pop(),
-                  ),
+                  hasPassTile(),
+                  noPassTile(),
                 ],
               ),
-            ),
-            const MinSpacer(
-              minHeight: 32,
-            ),
-            const Text(
-              'ORDER HAS PASSWORD',
-              style: AppTextStyles.headline,
-            ),
-            const MinSpacer(
-              minHeight: 32,
-            ),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: [
-                hasPassTile(),
-                noPassTile(),
-              ],
-            ),
-            const MinSpacer(
-              minHeight: 32,
-            ),
-          ],
+              const MinSpacer(
+                minHeight: 32,
+              ),
+            ],
+          ),
         ),
       ),
     );

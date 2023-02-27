@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 
 enum DevicePasswordType {
   graphic,
@@ -7,6 +9,7 @@ enum DevicePasswordType {
 
 class RSNewOrderDTO {
   String? vendorId;
+  RSOrderCustomerInfo? customerInfo;
   String? categoryId;
   List<String>? breakingTypeIds;
   String? description;
@@ -20,6 +23,7 @@ class RSNewOrderDTO {
 
   RSNewOrderDTO({
     this.vendorId,
+    this.customerInfo,
     this.categoryId,
     this.breakingTypeIds,
     this.description,
@@ -34,6 +38,7 @@ class RSNewOrderDTO {
 
   bool validate() {
     if (vendorId == null || vendorId!.isEmpty) return false;
+    if (customerInfo == null) return false;
     if (categoryId == null || categoryId!.isEmpty) return false;
     if (breakingTypeIds == null || breakingTypeIds!.isEmpty) return false;
     if (description == null || description!.isEmpty) return false;
@@ -43,15 +48,16 @@ class RSNewOrderDTO {
     if (accesoriesIncluded! && (accesoriesDescription == null || accesoriesDescription!.isEmpty)) return false;
     if (hasWaranty == null) return false;
     if (hasPassword == null) return false;
-    if (passwordType == null) return false;
+    if (hasPassword! && passwordType == null) return false;
     return true;
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'vendorId': vendorId,
-      'categoryId': categoryId,
-      'breakingTypeIds': breakingTypeIds,
+      'customerInfo': customerInfo?.toMap(),
+      'category': categoryId,
+      'breakingTypes': breakingTypeIds,
       'description': description,
       'deviceWet': deviceWet,
       'wetDescription': wetDescription,
