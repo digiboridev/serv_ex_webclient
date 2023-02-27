@@ -7,6 +7,8 @@ import 'package:serv_expert_webclient/core/firebase_options.dart';
 import 'package:serv_expert_webclient/router.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -30,6 +32,7 @@ class _TheAppState extends ConsumerState<TheApp> {
   void initState() {
     super.initState();
     _appRouter = AppRouter(
+      navigatorKey: navigatorKey,
       appGuard: AppGuard(ref: ref),
       contributorGuard: ContributorGuard(ref: ref),
       serviceOrderGuard: ServiceOrderGuard(ref: ref),

@@ -14,6 +14,7 @@ class RegularButton extends StatelessWidget {
       fontWeight: FontWeight.w700,
     ),
     this.borderRadius = const BorderRadius.all(Radius.circular(32)),
+    this.padding = const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
   }) : super(key: key);
 
   final VoidCallback onTap;
@@ -22,6 +23,7 @@ class RegularButton extends StatelessWidget {
   final Color? borderColor;
   final TextStyle textStyle;
   final BorderRadiusGeometry borderRadius;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class RegularButton extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            padding: padding,
             child: Text(
               text,
               style: textStyle,

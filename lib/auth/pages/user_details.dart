@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
-import 'package:serv_expert_webclient/core/validators.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
+import 'package:serv_expert_webclient/utils/validators.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
-import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
@@ -72,6 +73,8 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context);
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -80,128 +83,50 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
         color: Colors.white,
         child: Form(
           key: formKey,
-          child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+          child: body,
         ),
       ),
     );
   }
 
-  Widget get mobileBody {
+  Widget get body {
     return FillableScrollableWrapper(
       child: Column(
         children: [
-          const MinSpacer(
-            minHeight: 32,
-            flex: 2,
-          ),
-          const Text('USER DETAILS', style: AppTextStyles.headline),
-          const SizedBox(
-            height: 86,
-          ),
+          MinSpacer(flex: whenLayout<int>(mobile: 2, tablet: 1), minHeight: 32),
+          const Headline(text: 'USER DETAILS'),
+          SizedBox(height: whenLayout<double>(mobile: 84.ms, tablet: 72.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: firstnameField()),
+          SizedBox(height: whenLayout<double>(mobile: 16.ms, tablet: 24.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: lastnameField()),
+          SizedBox(height: whenLayout<double>(mobile: 16.ms, tablet: 24.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: phoneField()),
+          SizedBox(height: whenLayout<double>(mobile: 16.ms, tablet: 24.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: emailField()),
+          SizedBox(height: whenLayout<double>(mobile: 32.ms, tablet: 48.ts)),
           SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: firstnameField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: lastnameField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: phoneField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: emailField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RegularButton(
-                text: 'CONTINUE',
-                textStyle: AppTextStyles.btnText,
-                onTap: onContinue,
-              ),
-            ),
-          ),
-          const MinSpacer(
-            minHeight: 32,
-            flex: 1,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget get tabletBody {
-    return FillableScrollableWrapper(
-      child: Column(
-        children: [
-          const MinSpacer(
-            minHeight: 32,
-          ),
-          const Text('USER DETAILS', style: AppTextStyles.headlineTablet),
-          const SizedBox(
-            height: 72,
-          ),
-          SizedBox(width: 546, child: firstnameField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(width: 546, child: lastnameField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(width: 546, child: phoneField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(width: 546, child: emailField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 546,
+            width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
             child: RegularButton(
               text: 'CONTINUE',
-              textStyle: AppTextStyles.btnTextTablet,
+              textStyle: TextStyle(
+                fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
+              ),
               onTap: onContinue,
             ),
           ),
-          const MinSpacer(
-            minHeight: 32,
-          ),
+          const MinSpacer(flex: 1, minHeight: 32),
         ],
       ),
     );
   }
 
-  Widget firstnameField({required TextStyle textStyle}) {
+  Widget firstnameField() {
     return TextFormField(
       initialValue: firstNameValue,
       keyboardType: TextInputType.name,
@@ -224,11 +149,20 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
           firstNameValue = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'First name',
@@ -237,7 +171,7 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
     );
   }
 
-  Widget lastnameField({required TextStyle textStyle}) {
+  Widget lastnameField() {
     return TextFormField(
       initialValue: lastNameValue,
       keyboardType: TextInputType.name,
@@ -260,11 +194,20 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
           lastNameValue = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'Last name',
@@ -273,7 +216,7 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
     );
   }
 
-  Widget emailField({required TextStyle textStyle}) {
+  Widget emailField() {
     return TextFormField(
       initialValue: emailValue,
       enabled: isEmailVerified ? false : true,
@@ -297,11 +240,20 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
           emailValue = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'Email',
@@ -310,7 +262,7 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
     );
   }
 
-  Widget phoneField({required TextStyle textStyle}) {
+  Widget phoneField() {
     return TextFormField(
       initialValue: phoneValue,
       enabled: isPhoneVerified ? false : true,
@@ -334,11 +286,20 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
           phoneValue = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'Phone',

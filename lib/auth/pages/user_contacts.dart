@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/auth/components/new_contact_dialog.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_contact.dart';
 import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
-import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
@@ -53,163 +53,85 @@ class _AuthAppUserContactsState extends ConsumerState<AuthAppUserContacts> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context);
+
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Container(
         color: Colors.white,
-        child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+        child: body,
       ),
     );
   }
 
-  Widget get mobileBody {
+  Widget get body {
     return FillableScrollableWrapper(
       child: Column(
         children: [
-          const MinSpacer(
-            minHeight: 32,
-            flex: 2,
-          ),
-          const Text('ADD CONTACTS', style: AppTextStyles.headline),
-          const SizedBox(
-            height: 48,
-          ),
+          MinSpacer(flex: whenLayout<int>(mobile: 2, tablet: 1), minHeight: 32),
+          const Headline(text: 'ADD CONTACTS'),
+          SizedBox(height: whenLayout<double>(mobile: 48.ms, tablet: 72.ts)),
           TextButton(
             onPressed: onAddContact,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   Icons.add,
                   color: AppColors.primary,
-                  size: 18,
+                  size: whenLayout<double>(mobile: 18.ms, tablet: 32.ts),
                 ),
-                Text('Add contact', style: AppTextStyles.btnText.copyWith(color: AppColors.primary)),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 42,
-          ),
-          ...editableContacts
-              .map(
-                (contact) => SizedBox(
-                  width: 345,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: AppColors.black,
-                          size: 24,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(contact.firstName, style: AppTextStyles.formText),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(contact.lastName, style: AppTextStyles.formText),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            setState(() => editableContacts.remove(contact));
-                          },
-                          icon: const Icon(
-                            Icons.delete,
-                            size: 24,
-                          ),
-                          color: AppColors.primary,
-                        ),
-                      ],
-                    ),
+                Text(
+                  'Add contact',
+                  style: TextStyle(
+                    fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primary,
                   ),
                 ),
-              )
-              .toList(),
-          if (editableContacts.isNotEmpty)
-            const SizedBox(
-              height: 32,
-            ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RegularButton(
-                text: 'CONTINUE',
-                textStyle: AppTextStyles.btnText,
-                onTap: onContinue,
-              ),
-            ),
-          ),
-          const MinSpacer(
-            minHeight: 32,
-            flex: 1,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget get tabletBody {
-    return FillableScrollableWrapper(
-      child: Column(
-        children: [
-          const MinSpacer(
-            minHeight: 32,
-          ),
-          const Text('ADD CONTACTS', style: AppTextStyles.headlineTablet),
-          const SizedBox(
-            height: 72,
-          ),
-          TextButton(
-            onPressed: onAddContact,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.add,
-                  color: AppColors.primary,
-                  size: 32,
-                ),
-                Text('Add contact', style: AppTextStyles.btnTextTablet.copyWith(color: AppColors.primary)),
               ],
             ),
           ),
-          const SizedBox(
-            height: 52,
-          ),
+          SizedBox(height: whenLayout<double>(mobile: 42.ms, tablet: 54.ts)),
           ...editableContacts
               .map(
                 (contact) => SizedBox(
-                  width: 546,
+                  width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.person,
                         color: AppColors.black,
-                        size: 32,
+                        size: whenLayout<double>(mobile: 24.ms, tablet: 32.ts),
                       ),
-                      const SizedBox(
-                        width: 8,
+                      SizedBox(width: whenLayout<double>(mobile: 4.ms, tablet: 6.ts)),
+                      Text(
+                        contact.firstName,
+                        style: TextStyle(
+                          fontSize: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                        ),
                       ),
-                      Text(contact.firstName, style: AppTextStyles.formTextTablet),
-                      const SizedBox(
-                        width: 8,
+                      SizedBox(width: whenLayout<double>(mobile: 4.ms, tablet: 6.ts)),
+                      Text(
+                        contact.lastName,
+                        style: TextStyle(
+                          fontSize: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                        ),
                       ),
-                      Text(contact.lastName, style: AppTextStyles.formTextTablet),
                       const Spacer(),
                       IconButton(
                         onPressed: () {
                           setState(() => editableContacts.remove(contact));
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.delete,
-                          size: 32,
+                          size: whenLayout<double>(mobile: 24.ms, tablet: 32.ts),
                         ),
                         color: AppColors.primary,
                       ),
@@ -218,21 +140,24 @@ class _AuthAppUserContactsState extends ConsumerState<AuthAppUserContacts> {
                 ),
               )
               .toList(),
-          if (editableContacts.isNotEmpty)
-            const SizedBox(
-              height: 64,
-            ),
+          if (editableContacts.isNotEmpty) SizedBox(height: whenLayout<double>(mobile: 32.ms, tablet: 64.ts)),
           SizedBox(
-            width: 546,
+            width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
             child: RegularButton(
               text: 'CONTINUE',
-              textStyle: AppTextStyles.btnTextTablet,
+              textStyle: TextStyle(
+                fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
+              ),
               onTap: onContinue,
             ),
           ),
-          const MinSpacer(
-            minHeight: 32,
-          ),
+          const MinSpacer(flex: 1, minHeight: 32),
         ],
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
-import 'package:serv_expert_webclient/core/validators.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_contact.dart';
+import 'package:serv_expert_webclient/utils/validators.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 class AddContactDialog extends ConsumerStatefulWidget {

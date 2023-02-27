@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
-import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
@@ -35,6 +35,8 @@ class _SmsSentSubpageState extends ConsumerState<AuthConfirmPhone> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context);
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -43,111 +45,76 @@ class _SmsSentSubpageState extends ConsumerState<AuthConfirmPhone> {
         color: Colors.white,
         child: Form(
           key: formKey,
-          child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+          child: body,
         ),
       ),
     );
   }
 
-  Widget get mobileBody {
+  Widget get body {
     return FillableScrollableWrapper(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const MinSpacer(
+          MinSpacer(
+            flex: whenLayout<int>(mobile: 2, tablet: 1),
             minHeight: 32,
-            flex: 3,
           ),
-          const Text('SMS', style: AppTextStyles.headline),
-          const SizedBox(
-            height: 84,
+          const Headline(text: 'SMS'),
+          SizedBox(
+            height: whenLayout<double>(mobile: 84.ms, tablet: 72.ts),
           ),
           SizedBox(
-            child: codeField(mobile: true),
-          ),
-          const SizedBox(
-            height: 32,
+            child: codeField(),
           ),
           SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RegularButton(
-                text: 'CONTINUE',
-                textStyle: AppTextStyles.btnText,
-                onTap: onContinue,
-              ),
-            ),
-          ),
-          const MinSpacer(
-            minHeight: 32,
-            flex: 2,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget get tabletBody {
-    return FillableScrollableWrapper(
-      child: Column(
-        children: [
-          const MinSpacer(
-            minHeight: 64,
-          ),
-          const Text('SMS', style: AppTextStyles.headlineTablet),
-          const SizedBox(
-            height: 72,
+            height: whenLayout<double>(mobile: 32.ms, tablet: 32.ts),
           ),
           SizedBox(
-            child: codeField(mobile: false),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 546,
+            width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
             child: RegularButton(
               text: 'CONTINUE',
-              textStyle: AppTextStyles.btnTextTablet,
+              textStyle: TextStyle(
+                fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
+              ),
               onTap: onContinue,
             ),
           ),
           const MinSpacer(
-            minHeight: 64,
+            minHeight: 32,
+            flex: 1,
           ),
         ],
       ),
     );
   }
 
-  Pinput codeField({required bool mobile}) {
-    PinTheme mobileTheme = PinTheme(
-      height: 44,
-      width: 44,
-      textStyle: AppTextStyles.formText,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: AppColors.gray, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-    );
-
-    PinTheme tabletTheme = PinTheme(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      height: 60,
-      width: 60,
-      textStyle: AppTextStyles.formTextTablet,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: AppColors.gray, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-    );
-
+  Pinput codeField() {
     return Pinput(
-      defaultPinTheme: mobile ? mobileTheme : tabletTheme,
+      defaultPinTheme: PinTheme(
+        margin: EdgeInsets.symmetric(
+          horizontal: whenLayout<double>(mobile: 2.ms, tablet: 4.ts),
+        ),
+        height: whenLayout<double>(mobile: 44.ms, tablet: 60.ts),
+        width: whenLayout<double>(mobile: 44.ms, tablet: 60.ts),
+        textStyle: TextStyle(
+          fontSize: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+          fontWeight: FontWeight.w400,
+          color: AppColors.black,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: AppColors.gray, width: whenLayout<double>(mobile: 1.ms, tablet: 1.ts)),
+          borderRadius: BorderRadius.circular(whenLayout<double>(mobile: 8.ms, tablet: 12.ts)),
+        ),
+      ),
       length: 6,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],

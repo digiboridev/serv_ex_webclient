@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
-import 'package:serv_expert_webclient/core/validators.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
+import 'package:serv_expert_webclient/utils/validators.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
-import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
@@ -48,6 +48,8 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context);
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -56,79 +58,58 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
         color: Colors.white,
         child: Form(
           key: formKey,
-          child: Layouter(mobileLayout: mobileBody, tabletLayout: tabletBody),
+          child: body,
         ),
       ),
     );
   }
 
-  Widget get mobileBody {
+  Widget get body {
     return FillableScrollableWrapper(
       child: Column(
         children: [
-          const MinSpacer(
-            minHeight: 32,
-            flex: 2,
-          ),
-          const Text('COMPANY REGISTRATION', style: AppTextStyles.headline),
-          const SizedBox(
-            height: 86,
-          ),
+          MinSpacer(flex: whenLayout<int>(mobile: 2, tablet: 1), minHeight: 32),
+          const Headline(text: 'COMPANY REGISTRATION'),
+          SizedBox(height: whenLayout<double>(mobile: 84.ms, tablet: 72.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: publicIdField()),
+          SizedBox(height: whenLayout<double>(mobile: 8.ms, tablet: 16.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: nameField()),
+          SizedBox(height: whenLayout<double>(mobile: 8.ms, tablet: 16.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: emailField()),
+          SizedBox(height: whenLayout<double>(mobile: 16.ms, tablet: 24.ts)),
           SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: publicIdField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: nameField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: emailField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RegularButton(
-                text: 'CONTINUE',
-                textStyle: AppTextStyles.btnText,
-                onTap: onContinue,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RegularButton(
+            width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
+            child: RegularButton(
+              text: 'CONTINUE',
+              textStyle: TextStyle(
+                fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                fontWeight: FontWeight.w500,
                 color: AppColors.white,
-                borderColor: AppColors.primary,
-                text: 'SKIP',
-                textStyle: AppTextStyles.btnText.copyWith(color: AppColors.primary),
-                onTap: onSkip,
               ),
+              padding: EdgeInsets.symmetric(
+                horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
+              ),
+              onTap: onContinue,
+            ),
+          ),
+          SizedBox(height: whenLayout<double>(mobile: 16.ms, tablet: 24.ts)),
+          SizedBox(
+            width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
+            child: RegularButton(
+              color: AppColors.white,
+              borderColor: AppColors.primary,
+              text: 'SKIP',
+              textStyle: TextStyle(
+                fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                fontWeight: FontWeight.w500,
+                color: AppColors.primary,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
+              ),
+              onTap: onContinue,
             ),
           ),
           const MinSpacer(
@@ -140,59 +121,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
     );
   }
 
-  Widget get tabletBody {
-    return FillableScrollableWrapper(
-      child: Column(
-        children: [
-          const MinSpacer(
-            minHeight: 32,
-          ),
-          const Text('COMPANY REGISTRATION', style: AppTextStyles.headlineTablet),
-          const SizedBox(
-            height: 86,
-          ),
-          SizedBox(width: 546, child: publicIdField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(width: 546, child: nameField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(width: 546, child: emailField(textStyle: AppTextStyles.formTextTablet)),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 546,
-            child: RegularButton(
-              text: 'CONTINUE',
-              textStyle: AppTextStyles.btnTextTablet,
-              onTap: onContinue,
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 546,
-            child: RegularButton(
-              color: AppColors.white,
-              borderColor: AppColors.primary,
-              text: 'SKIP',
-              textStyle: AppTextStyles.btnTextTablet.copyWith(color: AppColors.primary),
-              onTap: onSkip,
-            ),
-          ),
-          const MinSpacer(
-            minHeight: 32,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget publicIdField({required TextStyle textStyle}) {
+  Widget publicIdField() {
     return TextFormField(
       initialValue: publicId,
       keyboardType: TextInputType.name,
@@ -213,11 +142,20 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
           publicId = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'ID',
@@ -226,7 +164,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
     );
   }
 
-  Widget nameField({required TextStyle textStyle}) {
+  Widget nameField() {
     return TextFormField(
       initialValue: companyName,
       keyboardType: TextInputType.name,
@@ -249,11 +187,20 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
           companyName = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'Company name',
@@ -262,7 +209,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
     );
   }
 
-  Widget emailField({required TextStyle textStyle}) {
+  Widget emailField() {
     return TextFormField(
       initialValue: companyEmail,
       keyboardType: TextInputType.emailAddress,
@@ -285,11 +232,20 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
           companyEmail = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
         labelText: 'Email',

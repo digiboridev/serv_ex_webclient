@@ -1,11 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
-import 'package:serv_expert_webclient/core/validators.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
+import 'package:serv_expert_webclient/utils/validators.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/widgets/layouter.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
@@ -35,6 +37,8 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context);
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -43,101 +47,48 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
         color: Colors.white,
         child: Form(
           key: formKey,
-          child: Layouter(
-            mobileLayout: mobileBody,
-            tabletLayout: tabletBody,
-          ),
+          child: body,
         ),
       ),
     );
   }
 
-  Widget get mobileBody {
+  Widget get body {
     return FillableScrollableWrapper(
       child: Column(
         children: [
-          const MinSpacer(
-            flex: 3,
-            minHeight: 32,
-          ),
-          const Text('LOG IN', style: AppTextStyles.headline),
-          const SizedBox(
-            height: 84,
-          ),
+          MinSpacer(flex: whenLayout<int>(mobile: 2, tablet: 1), minHeight: 32),
+          const Headline(text: 'LOG IN'),
+          SizedBox(height: whenLayout<double>(mobile: 84.ms, tablet: 72.ts)),
+          SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: phoneField()),
+          SizedBox(height: whenLayout<double>(mobile: 32.ms, tablet: 32.ts)),
           SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: phoneField(textStyle: AppTextStyles.formText),
-            ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 345,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RegularButton(
-                text: 'CONTINUE',
-                textStyle: AppTextStyles.btnText,
-                onTap: onContinue,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 38,
-          ),
-          socialButtons(iconSize: 56),
-          const MinSpacer(
-            flex: 1,
-            minHeight: 32,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget get tabletBody {
-    return FillableScrollableWrapper(
-      child: Column(
-        children: [
-          const MinSpacer(
-            minHeight: 64,
-          ),
-          const Text('LOG IN', style: AppTextStyles.headlineTablet),
-          const SizedBox(
-            height: 72,
-          ),
-          SizedBox(
-            width: 546,
-            child: phoneField(textStyle: AppTextStyles.formTextTablet),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: 546,
+            width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts),
             child: RegularButton(
               text: 'CONTINUE',
-              textStyle: AppTextStyles.btnTextTablet,
+              textStyle: TextStyle(
+                fontSize: whenLayout<double>(mobile: 18.ms, tablet: 24.ts),
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
+                vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
+              ),
               onTap: onContinue,
             ),
           ),
-          const SizedBox(
-            height: 32,
-          ),
-          socialButtons(iconSize: 64),
-          const MinSpacer(
-            minHeight: 64,
-          ),
+          SizedBox(height: whenLayout<double>(mobile: 32.ms, tablet: 32.ts)),
+          socialButtons(iconSize: whenLayout<double>(mobile: 56.ms, tablet: 64.ts)),
+          const MinSpacer(flex: 1, minHeight: 32),
         ],
       ),
     );
   }
 
-  TextFormField phoneField({required TextStyle textStyle}) {
+  TextFormField phoneField() {
     return TextFormField(
+      scrollPadding: EdgeInsets.zero,
       initialValue: phone,
       keyboardType: TextInputType.phone,
       maxLength: 20,
@@ -160,14 +111,22 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
           phone = value;
         });
       },
-      style: textStyle,
+      style: TextStyle(
+        fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: whenLayout(mobile: 16.ms, tablet: 24.ts),
+          vertical: whenLayout(mobile: 16.ms, tablet: 24.ts),
+        ),
         counter: const SizedBox(),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 12.ts)),
         ),
         filled: true,
-        // hintStyle: TextStyle(color: Colors.grey[800]),
         labelText: 'Phone number',
         fillColor: Colors.white70,
       ),
