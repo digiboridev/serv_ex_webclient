@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
-import 'package:serv_expert_webclient/app/app_providers.dart';
+import 'package:serv_expert_webclient/app/providers/app_providers.dart';
 
 abstract class ContributorState {}
 

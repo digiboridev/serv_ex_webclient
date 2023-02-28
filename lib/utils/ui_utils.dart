@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serv_expert_webclient/main.dart';
 
-bool disableScale = false;
+bool disableScale = true;
 
 /// Design screen constants
 const double _mobileDesignWidth = 375;

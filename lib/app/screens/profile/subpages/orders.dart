@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/contributor_controller.dart';
-import 'package:serv_expert_webclient/app/app_providers.dart';
+import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
+import 'package:serv_expert_webclient/app/providers/app_providers.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/vendor_category_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/vendor_subcategories_provider.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
@@ -48,24 +51,6 @@ class _OrdersPageState extends ConsumerState<OrdersPage> {
   Widget ordersList(List<RSOrder> orders) {
     return ListView(
       children: orders.map((e) => orderInfo(e)).toList(),
-      // children: [
-      //   Container(
-      //     color: Colors.red,
-      //     width: 100,
-      //     height: 500,
-      //   ),
-      //   Container(
-      //     color: Colors.yellow,
-      //     width: 100,
-      //     height: 500,
-      //   ),
-      //   Container(
-      //     color: Colors.black,
-      //     width: 100,
-      //     height: 500,
-      //   ),
-      //   ...orders.map((e) => orderInfo(e)).toList()
-      // ],
     );
   }
 
@@ -105,6 +90,37 @@ class _OrdersPageState extends ConsumerState<OrdersPage> {
               ),
               Text(order.status.name),
             ],
+          ),
+          Row(
+            children: [
+              const Text('Created:'),
+              const SizedBox(
+                width: 4,
+              ),
+              Text(order.createdAt.toString()),
+            ],
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              AsyncValue<RSCategory> categoryData =
+                  ref.watch(vendorCategoryProvider(VCParams(vendorId: order.details.vendorId, categoryId: order.details.categoryId)));
+
+              return Row(
+                children: [
+                  const Text('Category:'),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  Text(
+                    categoryData.when(
+                      data: (category) => category.name,
+                      loading: () => 'Loading...',
+                      error: (error, stack) => error.toString(),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),

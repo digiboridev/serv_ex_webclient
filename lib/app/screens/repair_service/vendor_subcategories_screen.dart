@@ -3,15 +3,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/vendor_category_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/vendor_subcategories_provider.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_category_provider.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendor_subcategories_provider.dart';
 import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:transparent_image/transparent_image.dart';
 

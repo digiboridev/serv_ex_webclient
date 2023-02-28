@@ -6,7 +6,7 @@ import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.da
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
-import 'package:serv_expert_webclient/app/contributor_controller.dart';
+import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 
 final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) {
   AuthService authService = ref.read(authServiceProvider);
