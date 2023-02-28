@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -24,24 +26,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: Column(
           children: [
             const Header(),
-            const SizedBox(height: 32),
-            const Text(
-              'HOME',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
+            SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
+            const Headline(
+              text: 'HOME SCREEN',
+            ),
+            SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
+            Expanded(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
+                spacing: whenLayout(mobile: 8.ms, tablet: 16.ts),
+                runSpacing: whenLayout(mobile: 8.ms, tablet: 16.ts),
+                children: [
+                  serviceTile(),
+                  ordersTile(),
+                ],
               ),
             ),
-            const Spacer(),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: [
-                serviceTile(),
-                ordersTile(),
-              ],
-            ),
-            const Spacer(),
+            SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
           ],
         ),
       ),
@@ -50,12 +52,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget serviceTile() {
     return Container(
-      width: 300,
-      height: 100,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      width: whenLayout(mobile: 160.ms, tablet: 300.ts),
+      height: whenLayout(mobile: 160.ms, tablet: 268.ts),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 16.ts)),
         color: AppColors.primary,
       ),
       child: Material(
@@ -64,8 +65,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onTap: () {
             context.router.navigate(const RepairServiceVendorsScreenRoute());
           },
-          child: const Center(
-            child: Text('SERVICES', style: TextStyle(color: Colors.white, fontSize: 24)),
+          child: Center(
+            child: Text(
+              'SERVICES',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+              ),
+            ),
           ),
         ),
       ),
@@ -74,12 +81,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget ordersTile() {
     return Container(
-      width: 300,
-      height: 100,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      width: whenLayout(mobile: 160.ms, tablet: 300.ts),
+      height: whenLayout(mobile: 160.ms, tablet: 268.ts),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 16.ts)),
         color: AppColors.primary,
       ),
       child: Material(
@@ -93,8 +99,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             );
           },
-          child: const Center(
-            child: Text('TOVARS', style: TextStyle(color: Colors.white, fontSize: 24)),
+          child: Center(
+            child: Text(
+              'TOVARS',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+              ),
+            ),
           ),
         ),
       ),

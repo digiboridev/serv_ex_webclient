@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
-import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/vendor.dart';
+import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/app/screens/repair_service/providers/vendors_provider.dart';
+import 'package:serv_expert_webclient/widgets/headline.dart';
 
 class RepairServiceVendorsScreen extends ConsumerStatefulWidget {
   const RepairServiceVendorsScreen({super.key});
@@ -20,6 +21,8 @@ class RepairServiceVendorsScreen extends ConsumerStatefulWidget {
 class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendorsScreen> {
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context);
+
     AsyncValue<List<RSVendor>> vendorsData = ref.watch(vendorsProvider);
 
     return Container(
@@ -28,25 +31,19 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
         child: Column(
           children: [
             const Header(),
-            const SizedBox(
-              height: 32,
+            SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
+            const Headline(
+              text: 'VENDORS',
             ),
-            const Text(
-              'VENDORS',
-              style: AppTextStyles.headline,
-            ),
+            SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
             Expanded(
               child: vendorsData.when(
-                data: (vendors) {
-                  return FadeIn(child: content(vendors));
-                },
+                data: (vendors) => FadeIn(child: content(vendors)),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stackTrace) => Center(child: Text(error.toString())),
               ),
             ),
-            const SizedBox(
-              height: 32,
-            ),
+            SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
           ],
         ),
       ),
@@ -54,25 +51,22 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
   }
 
   Widget content(List<RSVendor> vendors) {
-    return Column(
-      children: [
-        const Spacer(),
-        Column(
-          children: vendors.map((vendor) => vendorTile(vendor)).toList(),
-        ),
-        const Spacer()
-      ],
+    return Wrap(
+      alignment: WrapAlignment.center,
+      runAlignment: WrapAlignment.center,
+      spacing: whenLayout(mobile: 8.ms, tablet: 16.ts),
+      runSpacing: whenLayout(mobile: 8.ms, tablet: 16.ts),
+      children: vendors.map((vendor) => vendorTile(vendor)).toList(),
     );
   }
 
   Widget vendorTile(RSVendor vendor) {
     return Container(
-      width: 300,
-      height: 100,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      width: whenLayout(mobile: 160.ms, tablet: 300.ts),
+      height: whenLayout(mobile: 160.ms, tablet: 268.ts),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(whenLayout(mobile: 8.ms, tablet: 16.ts)),
         color: AppColors.primary,
       ),
       child: Material(
@@ -82,7 +76,13 @@ class _RepairServiceVendorsScreenState extends ConsumerState<RepairServiceVendor
             context.router.navigate(RSVendorCategoriesScreenRoute(vendorId: vendor.id));
           },
           child: Center(
-            child: Text(vendor.name, style: const TextStyle(color: Colors.white, fontSize: 24)),
+            child: Text(
+              vendor.name,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
+              ),
+            ),
           ),
         ),
       ),

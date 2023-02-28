@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serv_expert_webclient/main.dart';
 
+bool disableScale = false;
+
 /// Design screen constants
 const double _mobileDesignWidth = 375;
 const double _tabletDesignWidth = 1194;
@@ -19,8 +21,8 @@ double get tabletDesignScale {
 
 /// Extension to access multiplied size from any number
 extension DesignScaleExt on num {
-  double get ms => this * mobileDesignScale;
-  double get ts => this * tabletDesignScale;
+  double get ms => this * (disableScale ? 1 : mobileDesignScale);
+  double get ts => this * (disableScale ? 1 : tabletDesignScale);
 }
 
 /// Breakpoints shortcuts
