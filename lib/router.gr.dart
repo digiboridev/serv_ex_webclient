@@ -11,28 +11,27 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i27;
-import 'package:flutter/material.dart' as _i28;
+import 'package:auto_route/auto_route.dart' as _i26;
+import 'package:flutter/material.dart' as _i27;
 
 import 'app/app_wrapper.dart' as _i2;
 import 'app/screens/contributor_select_screen.dart' as _i11;
-import 'app/screens/debug_screen.dart' as _i23;
+import 'app/screens/debug_screen.dart' as _i22;
 import 'app/screens/home_screen.dart' as _i12;
-import 'app/screens/profile/profile_screen.dart' as _i22;
-import 'app/screens/profile/subpages/companies_info.dart' as _i25;
-import 'app/screens/profile/subpages/orders.dart' as _i26;
-import 'app/screens/profile/subpages/user_info.dart' as _i24;
-import 'app/screens/repair_service/order/order_details_screen.dart' as _i17;
+import 'app/screens/profile/profile_screen.dart' as _i21;
+import 'app/screens/profile/subpages/companies_info.dart' as _i24;
+import 'app/screens/profile/subpages/orders.dart' as _i25;
+import 'app/screens/profile/subpages/user_info.dart' as _i23;
+import 'app/screens/repair_service/breaking_types_screen.dart' as _i15;
+import 'app/screens/repair_service/categories_screen.dart' as _i13;
+import 'app/screens/repair_service/order/order_details_screen.dart' as _i16;
 import 'app/screens/repair_service/order/order_has_password_screen.dart'
-    as _i19;
+    as _i18;
 import 'app/screens/repair_service/order/order_password_type_screen.dart'
-    as _i20;
-import 'app/screens/repair_service/order/order_submitted_screen.dart' as _i21;
-import 'app/screens/repair_service/order/order_waranty_screen.dart' as _i18;
-import 'app/screens/repair_service/vendor_breaking_types_screen.dart' as _i16;
-import 'app/screens/repair_service/vendor_categories_screen.dart' as _i14;
-import 'app/screens/repair_service/vendor_subcategories_screen.dart' as _i15;
-import 'app/screens/repair_service/vendors_screen.dart' as _i13;
+    as _i19;
+import 'app/screens/repair_service/order/order_submitted_screen.dart' as _i20;
+import 'app/screens/repair_service/order/order_waranty_screen.dart' as _i17;
+import 'app/screens/repair_service/subcategories_screen.dart' as _i14;
 import 'auth/auth_screen.dart' as _i1;
 import 'auth/pages/company_members.dart' as _i8;
 import 'auth/pages/company_registration.dart' as _i7;
@@ -42,46 +41,46 @@ import 'auth/pages/sign_in.dart' as _i3;
 import 'auth/pages/success.dart' as _i10;
 import 'auth/pages/user_contacts.dart' as _i6;
 import 'auth/pages/user_details.dart' as _i5;
-import 'data/dto/repair_service/new_order.dart' as _i30;
-import 'router.dart' as _i29;
+import 'data/dto/repair_service/new_order.dart' as _i29;
+import 'router.dart' as _i28;
 
-class AppRouter extends _i27.RootStackRouter {
+class AppRouter extends _i26.RootStackRouter {
   AppRouter({
-    _i28.GlobalKey<_i28.NavigatorState>? navigatorKey,
+    _i27.GlobalKey<_i27.NavigatorState>? navigatorKey,
     required this.appGuard,
     required this.contributorGuard,
     required this.serviceOrderGuard,
   }) : super(navigatorKey);
 
-  final _i29.AppGuard appGuard;
+  final _i28.AppGuard appGuard;
 
-  final _i29.ContributorGuard contributorGuard;
+  final _i28.ContributorGuard contributorGuard;
 
-  final _i29.ServiceOrderGuard serviceOrderGuard;
+  final _i28.ServiceOrderGuard serviceOrderGuard;
 
   @override
-  final Map<String, _i27.PageFactory> pagesMap = {
+  final Map<String, _i26.PageFactory> pagesMap = {
     AuthScreenRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.AuthScreen(),
       );
     },
     App.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.AppWrapper(),
       );
     },
     AsSignIn.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.AuthSignIn(),
       );
     },
     AsConfirmPhone.name: (routeData) {
       final args = routeData.argsAs<AsConfirmPhoneArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i4.AuthConfirmPhone(
           key: args.key,
@@ -92,7 +91,7 @@ class AppRouter extends _i27.RootStackRouter {
     AsAppUserDetails.name: (routeData) {
       final args = routeData.argsAs<AsAppUserDetailsArgs>(
           orElse: () => const AsAppUserDetailsArgs());
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.AuthAppUserDetails(
           key: args.key,
@@ -104,20 +103,20 @@ class AppRouter extends _i27.RootStackRouter {
       );
     },
     AsAppUserContacts.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i6.AuthAppUserContacts(),
       );
     },
     AsCompanyCreate.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i7.AuthCompanyCreate(),
       );
     },
     AsCompanyMembers.name: (routeData) {
       final args = routeData.argsAs<AsCompanyMembersArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i8.AuthCompanyMembers(
           key: args.key,
@@ -127,7 +126,7 @@ class AppRouter extends _i27.RootStackRouter {
     },
     AsDataError.name: (routeData) {
       final args = routeData.argsAs<AsDataErrorArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i9.AuthDataError(
           key: args.key,
@@ -136,79 +135,60 @@ class AppRouter extends _i27.RootStackRouter {
       );
     },
     AsSuccess.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i10.AuthSucces(),
       );
     },
     ContributorSelectScreenRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i11.ContributorSelectScreen(),
       );
     },
     HomeScreenRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i12.HomeScreen(),
       );
     },
-    RepairServiceVendorsScreenRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+    RSCategoriesScreenRoute.name: (routeData) {
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i13.RepairServiceVendorsScreen(),
+        child: const _i13.RSCategoriesScreen(),
       );
     },
-    RSVendorCategoriesScreenRoute.name: (routeData) {
+    RSSubCategoriesScreenRoute.name: (routeData) {
       final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSVendorCategoriesScreenRouteArgs>(
-          orElse: () => RSVendorCategoriesScreenRouteArgs(
-              vendorId: queryParams.optString('vendorId')));
-      return _i27.MaterialPageX<dynamic>(
+      final args = routeData.argsAs<RSSubCategoriesScreenRouteArgs>(
+          orElse: () => RSSubCategoriesScreenRouteArgs(
+              categoryId: queryParams.optString('categoryId')));
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i14.RSVendorCategoriesScreen(
+        child: _i14.RSSubCategoriesScreen(
           key: args.key,
-          vendorId: args.vendorId,
-        ),
-      );
-    },
-    RSVendorSubCategoriesScreenRoute.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSVendorSubCategoriesScreenRouteArgs>(
-          orElse: () => RSVendorSubCategoriesScreenRouteArgs(
-                vendorId: queryParams.optString('vendorId'),
-                categoryId: queryParams.optString('categoryId'),
-              ));
-      return _i27.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i15.RSVendorSubCategoriesScreen(
-          key: args.key,
-          vendorId: args.vendorId,
           categoryId: args.categoryId,
         ),
       );
     },
-    RSVendorBreakingTypesScreenRoute.name: (routeData) {
+    RSBreakingTypesScreenRoute.name: (routeData) {
       final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSVendorBreakingTypesScreenRouteArgs>(
-          orElse: () => RSVendorBreakingTypesScreenRouteArgs(
-                vendorId: queryParams.optString('vendorId'),
-                categoryId: queryParams.optString('categoryId'),
-              ));
-      return _i27.MaterialPageX<dynamic>(
+      final args = routeData.argsAs<RSBreakingTypesScreenRouteArgs>(
+          orElse: () => RSBreakingTypesScreenRouteArgs(
+              categoryId: queryParams.optString('categoryId')));
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i16.RSVendorBreakingTypesScreen(
+        child: _i15.RSBreakingTypesScreen(
           key: args.key,
-          vendorId: args.vendorId,
           categoryId: args.categoryId,
         ),
       );
     },
     RSOrderDetailsScreenRoute.name: (routeData) {
       final args = routeData.argsAs<RSOrderDetailsScreenRouteArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i17.RSOrderDetailsScreen(
+        child: _i16.RSOrderDetailsScreen(
           newOrder: args.newOrder,
           key: args.key,
         ),
@@ -216,9 +196,9 @@ class AppRouter extends _i27.RootStackRouter {
     },
     RSOrderWarantyScreenRoute.name: (routeData) {
       final args = routeData.argsAs<RSOrderWarantyScreenRouteArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i18.RSOrderWarantyScreen(
+        child: _i17.RSOrderWarantyScreen(
           newOrder: args.newOrder,
           key: args.key,
         ),
@@ -226,9 +206,9 @@ class AppRouter extends _i27.RootStackRouter {
     },
     RSOrderHasPasswordScreenRoute.name: (routeData) {
       final args = routeData.argsAs<RSOrderHasPasswordScreenRouteArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i19.RSOrderHasPasswordScreen(
+        child: _i18.RSOrderHasPasswordScreen(
           newOrder: args.newOrder,
           key: args.key,
         ),
@@ -236,101 +216,101 @@ class AppRouter extends _i27.RootStackRouter {
     },
     RSOrderPasswordTypeScreenRoute.name: (routeData) {
       final args = routeData.argsAs<RSOrderPasswordTypeScreenRouteArgs>();
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i20.RSOrderPasswordTypeScreen(
+        child: _i19.RSOrderPasswordTypeScreen(
           newOrder: args.newOrder,
           key: args.key,
         ),
       );
     },
     RSOrderSubmittedScreenRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i21.RSOrderSubmittedScreen(),
+        child: const _i20.RSOrderSubmittedScreen(),
       );
     },
     ProfileScreenRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i22.ProfileScreen(),
+        child: const _i21.ProfileScreen(),
       );
     },
     SBRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i23.SB(),
+        child: const _i22.SB(),
       );
     },
     AppUserInfoPageRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i24.AppUserInfoPage(),
+        child: const _i23.AppUserInfoPage(),
       );
     },
     CompaniesInfoPageRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i25.CompaniesInfoPage(),
+        child: const _i24.CompaniesInfoPage(),
       );
     },
     OrdersPageRoute.name: (routeData) {
-      return _i27.MaterialPageX<dynamic>(
+      return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i26.OrdersPage(),
+        child: const _i25.OrdersPage(),
       );
     },
   };
 
   @override
-  List<_i27.RouteConfig> get routes => [
-        _i27.RouteConfig(
+  List<_i26.RouteConfig> get routes => [
+        _i26.RouteConfig(
           AuthScreenRoute.name,
           path: '/auth',
           children: [
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsSignIn.name,
               path: 'signin',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsConfirmPhone.name,
               path: 'confirm_phone',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsAppUserDetails.name,
               path: 'user_details',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsAppUserContacts.name,
               path: 'user_contacts',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsCompanyCreate.name,
               path: 'company_create',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsCompanyMembers.name,
               path: 'company_members',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsDataError.name,
               path: 'data_error',
               parent: AuthScreenRoute.name,
               usesPathAsKey: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               AsSuccess.name,
               path: 'succes',
               parent: AuthScreenRoute.name,
@@ -338,126 +318,120 @@ class AppRouter extends _i27.RootStackRouter {
             ),
           ],
         ),
-        _i27.RouteConfig(
+        _i26.RouteConfig(
           App.name,
           path: '/',
           guards: [appGuard],
           children: [
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               '#redirect',
               path: '',
               parent: App.name,
               redirectTo: 'home',
               fullMatch: true,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               ContributorSelectScreenRoute.name,
               path: 'contributor_select',
               parent: App.name,
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               HomeScreenRoute.name,
               path: 'home',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i27.RouteConfig(
-              RepairServiceVendorsScreenRoute.name,
-              path: 'service_vendors',
+            _i26.RouteConfig(
+              RSCategoriesScreenRoute.name,
+              path: 'rs_categories',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i27.RouteConfig(
-              RSVendorCategoriesScreenRoute.name,
-              path: 'vendor_cat',
+            _i26.RouteConfig(
+              RSSubCategoriesScreenRoute.name,
+              path: 'rs_subcategories',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i27.RouteConfig(
-              RSVendorSubCategoriesScreenRoute.name,
-              path: 'vendor_subcat',
+            _i26.RouteConfig(
+              RSBreakingTypesScreenRoute.name,
+              path: 'rs_breaking_types',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i27.RouteConfig(
-              RSVendorBreakingTypesScreenRoute.name,
-              path: 'vendor_breakings',
-              parent: App.name,
-              guards: [contributorGuard],
-            ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               RSOrderDetailsScreenRoute.name,
-              path: 'service_order_details',
+              path: 'rs_order_details',
               parent: App.name,
               guards: [
                 contributorGuard,
                 serviceOrderGuard,
               ],
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               RSOrderWarantyScreenRoute.name,
-              path: 'service_order_waranty',
+              path: 'rs_order_waranty',
               parent: App.name,
               guards: [
                 contributorGuard,
                 serviceOrderGuard,
               ],
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               RSOrderHasPasswordScreenRoute.name,
-              path: 'service_order_haspass',
+              path: 'rs_order_haspass',
               parent: App.name,
               guards: [
                 contributorGuard,
                 serviceOrderGuard,
               ],
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               RSOrderPasswordTypeScreenRoute.name,
-              path: 'service_order_passtypes',
+              path: 'rs_order_passtypes',
               parent: App.name,
               guards: [
                 contributorGuard,
                 serviceOrderGuard,
               ],
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               RSOrderSubmittedScreenRoute.name,
-              path: 'service_order_submitted',
+              path: 'rs_order_submitted',
               parent: App.name,
               guards: [contributorGuard],
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               ProfileScreenRoute.name,
               path: 'profile',
               parent: App.name,
               guards: [contributorGuard],
               children: [
-                _i27.RouteConfig(
+                _i26.RouteConfig(
                   '#redirect',
                   path: '',
                   parent: ProfileScreenRoute.name,
                   redirectTo: 'user_info',
                   fullMatch: true,
                 ),
-                _i27.RouteConfig(
+                _i26.RouteConfig(
                   AppUserInfoPageRoute.name,
                   path: 'user_info',
                   parent: ProfileScreenRoute.name,
                 ),
-                _i27.RouteConfig(
+                _i26.RouteConfig(
                   CompaniesInfoPageRoute.name,
                   path: 'companies_info',
                   parent: ProfileScreenRoute.name,
                 ),
-                _i27.RouteConfig(
+                _i26.RouteConfig(
                   OrdersPageRoute.name,
                   path: 'orders',
                   parent: ProfileScreenRoute.name,
                 ),
               ],
             ),
-            _i27.RouteConfig(
+            _i26.RouteConfig(
               SBRoute.name,
               path: 'b',
               parent: App.name,
@@ -469,8 +443,8 @@ class AppRouter extends _i27.RootStackRouter {
 
 /// generated route for
 /// [_i1.AuthScreen]
-class AuthScreenRoute extends _i27.PageRouteInfo<void> {
-  const AuthScreenRoute({List<_i27.PageRouteInfo>? children})
+class AuthScreenRoute extends _i26.PageRouteInfo<void> {
+  const AuthScreenRoute({List<_i26.PageRouteInfo>? children})
       : super(
           AuthScreenRoute.name,
           path: '/auth',
@@ -482,8 +456,8 @@ class AuthScreenRoute extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.AppWrapper]
-class App extends _i27.PageRouteInfo<void> {
-  const App({List<_i27.PageRouteInfo>? children})
+class App extends _i26.PageRouteInfo<void> {
+  const App({List<_i26.PageRouteInfo>? children})
       : super(
           App.name,
           path: '/',
@@ -495,7 +469,7 @@ class App extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.AuthSignIn]
-class AsSignIn extends _i27.PageRouteInfo<void> {
+class AsSignIn extends _i26.PageRouteInfo<void> {
   const AsSignIn()
       : super(
           AsSignIn.name,
@@ -507,9 +481,9 @@ class AsSignIn extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.AuthConfirmPhone]
-class AsConfirmPhone extends _i27.PageRouteInfo<AsConfirmPhoneArgs> {
+class AsConfirmPhone extends _i26.PageRouteInfo<AsConfirmPhoneArgs> {
   AsConfirmPhone({
-    _i28.Key? key,
+    _i27.Key? key,
     required String phone,
   }) : super(
           AsConfirmPhone.name,
@@ -529,7 +503,7 @@ class AsConfirmPhoneArgs {
     required this.phone,
   });
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   final String phone;
 
@@ -541,9 +515,9 @@ class AsConfirmPhoneArgs {
 
 /// generated route for
 /// [_i5.AuthAppUserDetails]
-class AsAppUserDetails extends _i27.PageRouteInfo<AsAppUserDetailsArgs> {
+class AsAppUserDetails extends _i26.PageRouteInfo<AsAppUserDetailsArgs> {
   AsAppUserDetails({
-    _i28.Key? key,
+    _i27.Key? key,
     String? phone,
     String? firstName,
     String? lastName,
@@ -572,7 +546,7 @@ class AsAppUserDetailsArgs {
     this.email,
   });
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   final String? phone;
 
@@ -590,7 +564,7 @@ class AsAppUserDetailsArgs {
 
 /// generated route for
 /// [_i6.AuthAppUserContacts]
-class AsAppUserContacts extends _i27.PageRouteInfo<void> {
+class AsAppUserContacts extends _i26.PageRouteInfo<void> {
   const AsAppUserContacts()
       : super(
           AsAppUserContacts.name,
@@ -602,7 +576,7 @@ class AsAppUserContacts extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.AuthCompanyCreate]
-class AsCompanyCreate extends _i27.PageRouteInfo<void> {
+class AsCompanyCreate extends _i26.PageRouteInfo<void> {
   const AsCompanyCreate()
       : super(
           AsCompanyCreate.name,
@@ -614,9 +588,9 @@ class AsCompanyCreate extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.AuthCompanyMembers]
-class AsCompanyMembers extends _i27.PageRouteInfo<AsCompanyMembersArgs> {
+class AsCompanyMembers extends _i26.PageRouteInfo<AsCompanyMembersArgs> {
   AsCompanyMembers({
-    _i28.Key? key,
+    _i27.Key? key,
     required List<String> membersIds,
   }) : super(
           AsCompanyMembers.name,
@@ -636,7 +610,7 @@ class AsCompanyMembersArgs {
     required this.membersIds,
   });
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   final List<String> membersIds;
 
@@ -648,9 +622,9 @@ class AsCompanyMembersArgs {
 
 /// generated route for
 /// [_i9.AuthDataError]
-class AsDataError extends _i27.PageRouteInfo<AsDataErrorArgs> {
+class AsDataError extends _i26.PageRouteInfo<AsDataErrorArgs> {
   AsDataError({
-    _i28.Key? key,
+    _i27.Key? key,
     required String error,
   }) : super(
           AsDataError.name,
@@ -670,7 +644,7 @@ class AsDataErrorArgs {
     required this.error,
   });
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   final String error;
 
@@ -682,7 +656,7 @@ class AsDataErrorArgs {
 
 /// generated route for
 /// [_i10.AuthSucces]
-class AsSuccess extends _i27.PageRouteInfo<void> {
+class AsSuccess extends _i26.PageRouteInfo<void> {
   const AsSuccess()
       : super(
           AsSuccess.name,
@@ -694,7 +668,7 @@ class AsSuccess extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.ContributorSelectScreen]
-class ContributorSelectScreenRoute extends _i27.PageRouteInfo<void> {
+class ContributorSelectScreenRoute extends _i26.PageRouteInfo<void> {
   const ContributorSelectScreenRoute()
       : super(
           ContributorSelectScreenRoute.name,
@@ -706,7 +680,7 @@ class ContributorSelectScreenRoute extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i12.HomeScreen]
-class HomeScreenRoute extends _i27.PageRouteInfo<void> {
+class HomeScreenRoute extends _i26.PageRouteInfo<void> {
   const HomeScreenRoute()
       : super(
           HomeScreenRoute.name,
@@ -717,151 +691,99 @@ class HomeScreenRoute extends _i27.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.RepairServiceVendorsScreen]
-class RepairServiceVendorsScreenRoute extends _i27.PageRouteInfo<void> {
-  const RepairServiceVendorsScreenRoute()
+/// [_i13.RSCategoriesScreen]
+class RSCategoriesScreenRoute extends _i26.PageRouteInfo<void> {
+  const RSCategoriesScreenRoute()
       : super(
-          RepairServiceVendorsScreenRoute.name,
-          path: 'service_vendors',
+          RSCategoriesScreenRoute.name,
+          path: 'rs_categories',
         );
 
-  static const String name = 'RepairServiceVendorsScreenRoute';
+  static const String name = 'RSCategoriesScreenRoute';
 }
 
 /// generated route for
-/// [_i14.RSVendorCategoriesScreen]
-class RSVendorCategoriesScreenRoute
-    extends _i27.PageRouteInfo<RSVendorCategoriesScreenRouteArgs> {
-  RSVendorCategoriesScreenRoute({
-    _i28.Key? key,
-    required String? vendorId,
-  }) : super(
-          RSVendorCategoriesScreenRoute.name,
-          path: 'vendor_cat',
-          args: RSVendorCategoriesScreenRouteArgs(
-            key: key,
-            vendorId: vendorId,
-          ),
-          rawQueryParams: {'vendorId': vendorId},
-        );
-
-  static const String name = 'RSVendorCategoriesScreenRoute';
-}
-
-class RSVendorCategoriesScreenRouteArgs {
-  const RSVendorCategoriesScreenRouteArgs({
-    this.key,
-    required this.vendorId,
-  });
-
-  final _i28.Key? key;
-
-  final String? vendorId;
-
-  @override
-  String toString() {
-    return 'RSVendorCategoriesScreenRouteArgs{key: $key, vendorId: $vendorId}';
-  }
-}
-
-/// generated route for
-/// [_i15.RSVendorSubCategoriesScreen]
-class RSVendorSubCategoriesScreenRoute
-    extends _i27.PageRouteInfo<RSVendorSubCategoriesScreenRouteArgs> {
-  RSVendorSubCategoriesScreenRoute({
-    _i28.Key? key,
-    required String? vendorId,
+/// [_i14.RSSubCategoriesScreen]
+class RSSubCategoriesScreenRoute
+    extends _i26.PageRouteInfo<RSSubCategoriesScreenRouteArgs> {
+  RSSubCategoriesScreenRoute({
+    _i27.Key? key,
     required String? categoryId,
   }) : super(
-          RSVendorSubCategoriesScreenRoute.name,
-          path: 'vendor_subcat',
-          args: RSVendorSubCategoriesScreenRouteArgs(
+          RSSubCategoriesScreenRoute.name,
+          path: 'rs_subcategories',
+          args: RSSubCategoriesScreenRouteArgs(
             key: key,
-            vendorId: vendorId,
             categoryId: categoryId,
           ),
-          rawQueryParams: {
-            'vendorId': vendorId,
-            'categoryId': categoryId,
-          },
+          rawQueryParams: {'categoryId': categoryId},
         );
 
-  static const String name = 'RSVendorSubCategoriesScreenRoute';
+  static const String name = 'RSSubCategoriesScreenRoute';
 }
 
-class RSVendorSubCategoriesScreenRouteArgs {
-  const RSVendorSubCategoriesScreenRouteArgs({
+class RSSubCategoriesScreenRouteArgs {
+  const RSSubCategoriesScreenRouteArgs({
     this.key,
-    required this.vendorId,
     required this.categoryId,
   });
 
-  final _i28.Key? key;
-
-  final String? vendorId;
+  final _i27.Key? key;
 
   final String? categoryId;
 
   @override
   String toString() {
-    return 'RSVendorSubCategoriesScreenRouteArgs{key: $key, vendorId: $vendorId, categoryId: $categoryId}';
+    return 'RSSubCategoriesScreenRouteArgs{key: $key, categoryId: $categoryId}';
   }
 }
 
 /// generated route for
-/// [_i16.RSVendorBreakingTypesScreen]
-class RSVendorBreakingTypesScreenRoute
-    extends _i27.PageRouteInfo<RSVendorBreakingTypesScreenRouteArgs> {
-  RSVendorBreakingTypesScreenRoute({
-    _i28.Key? key,
-    required String? vendorId,
+/// [_i15.RSBreakingTypesScreen]
+class RSBreakingTypesScreenRoute
+    extends _i26.PageRouteInfo<RSBreakingTypesScreenRouteArgs> {
+  RSBreakingTypesScreenRoute({
+    _i27.Key? key,
     required String? categoryId,
   }) : super(
-          RSVendorBreakingTypesScreenRoute.name,
-          path: 'vendor_breakings',
-          args: RSVendorBreakingTypesScreenRouteArgs(
+          RSBreakingTypesScreenRoute.name,
+          path: 'rs_breaking_types',
+          args: RSBreakingTypesScreenRouteArgs(
             key: key,
-            vendorId: vendorId,
             categoryId: categoryId,
           ),
-          rawQueryParams: {
-            'vendorId': vendorId,
-            'categoryId': categoryId,
-          },
+          rawQueryParams: {'categoryId': categoryId},
         );
 
-  static const String name = 'RSVendorBreakingTypesScreenRoute';
+  static const String name = 'RSBreakingTypesScreenRoute';
 }
 
-class RSVendorBreakingTypesScreenRouteArgs {
-  const RSVendorBreakingTypesScreenRouteArgs({
+class RSBreakingTypesScreenRouteArgs {
+  const RSBreakingTypesScreenRouteArgs({
     this.key,
-    required this.vendorId,
     required this.categoryId,
   });
 
-  final _i28.Key? key;
-
-  final String? vendorId;
+  final _i27.Key? key;
 
   final String? categoryId;
 
   @override
   String toString() {
-    return 'RSVendorBreakingTypesScreenRouteArgs{key: $key, vendorId: $vendorId, categoryId: $categoryId}';
+    return 'RSBreakingTypesScreenRouteArgs{key: $key, categoryId: $categoryId}';
   }
 }
 
 /// generated route for
-/// [_i17.RSOrderDetailsScreen]
+/// [_i16.RSOrderDetailsScreen]
 class RSOrderDetailsScreenRoute
-    extends _i27.PageRouteInfo<RSOrderDetailsScreenRouteArgs> {
+    extends _i26.PageRouteInfo<RSOrderDetailsScreenRouteArgs> {
   RSOrderDetailsScreenRoute({
-    required _i30.RSNewOrderDTO newOrder,
-    _i28.Key? key,
+    required _i29.RSNewOrderDTO newOrder,
+    _i27.Key? key,
   }) : super(
           RSOrderDetailsScreenRoute.name,
-          path: 'service_order_details',
+          path: 'rs_order_details',
           args: RSOrderDetailsScreenRouteArgs(
             newOrder: newOrder,
             key: key,
@@ -877,9 +799,9 @@ class RSOrderDetailsScreenRouteArgs {
     this.key,
   });
 
-  final _i30.RSNewOrderDTO newOrder;
+  final _i29.RSNewOrderDTO newOrder;
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   @override
   String toString() {
@@ -888,15 +810,15 @@ class RSOrderDetailsScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i18.RSOrderWarantyScreen]
+/// [_i17.RSOrderWarantyScreen]
 class RSOrderWarantyScreenRoute
-    extends _i27.PageRouteInfo<RSOrderWarantyScreenRouteArgs> {
+    extends _i26.PageRouteInfo<RSOrderWarantyScreenRouteArgs> {
   RSOrderWarantyScreenRoute({
-    required _i30.RSNewOrderDTO newOrder,
-    _i28.Key? key,
+    required _i29.RSNewOrderDTO newOrder,
+    _i27.Key? key,
   }) : super(
           RSOrderWarantyScreenRoute.name,
-          path: 'service_order_waranty',
+          path: 'rs_order_waranty',
           args: RSOrderWarantyScreenRouteArgs(
             newOrder: newOrder,
             key: key,
@@ -912,9 +834,9 @@ class RSOrderWarantyScreenRouteArgs {
     this.key,
   });
 
-  final _i30.RSNewOrderDTO newOrder;
+  final _i29.RSNewOrderDTO newOrder;
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   @override
   String toString() {
@@ -923,15 +845,15 @@ class RSOrderWarantyScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i19.RSOrderHasPasswordScreen]
+/// [_i18.RSOrderHasPasswordScreen]
 class RSOrderHasPasswordScreenRoute
-    extends _i27.PageRouteInfo<RSOrderHasPasswordScreenRouteArgs> {
+    extends _i26.PageRouteInfo<RSOrderHasPasswordScreenRouteArgs> {
   RSOrderHasPasswordScreenRoute({
-    required _i30.RSNewOrderDTO newOrder,
-    _i28.Key? key,
+    required _i29.RSNewOrderDTO newOrder,
+    _i27.Key? key,
   }) : super(
           RSOrderHasPasswordScreenRoute.name,
-          path: 'service_order_haspass',
+          path: 'rs_order_haspass',
           args: RSOrderHasPasswordScreenRouteArgs(
             newOrder: newOrder,
             key: key,
@@ -947,9 +869,9 @@ class RSOrderHasPasswordScreenRouteArgs {
     this.key,
   });
 
-  final _i30.RSNewOrderDTO newOrder;
+  final _i29.RSNewOrderDTO newOrder;
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   @override
   String toString() {
@@ -958,15 +880,15 @@ class RSOrderHasPasswordScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i20.RSOrderPasswordTypeScreen]
+/// [_i19.RSOrderPasswordTypeScreen]
 class RSOrderPasswordTypeScreenRoute
-    extends _i27.PageRouteInfo<RSOrderPasswordTypeScreenRouteArgs> {
+    extends _i26.PageRouteInfo<RSOrderPasswordTypeScreenRouteArgs> {
   RSOrderPasswordTypeScreenRoute({
-    required _i30.RSNewOrderDTO newOrder,
-    _i28.Key? key,
+    required _i29.RSNewOrderDTO newOrder,
+    _i27.Key? key,
   }) : super(
           RSOrderPasswordTypeScreenRoute.name,
-          path: 'service_order_passtypes',
+          path: 'rs_order_passtypes',
           args: RSOrderPasswordTypeScreenRouteArgs(
             newOrder: newOrder,
             key: key,
@@ -982,9 +904,9 @@ class RSOrderPasswordTypeScreenRouteArgs {
     this.key,
   });
 
-  final _i30.RSNewOrderDTO newOrder;
+  final _i29.RSNewOrderDTO newOrder;
 
-  final _i28.Key? key;
+  final _i27.Key? key;
 
   @override
   String toString() {
@@ -993,21 +915,21 @@ class RSOrderPasswordTypeScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i21.RSOrderSubmittedScreen]
-class RSOrderSubmittedScreenRoute extends _i27.PageRouteInfo<void> {
+/// [_i20.RSOrderSubmittedScreen]
+class RSOrderSubmittedScreenRoute extends _i26.PageRouteInfo<void> {
   const RSOrderSubmittedScreenRoute()
       : super(
           RSOrderSubmittedScreenRoute.name,
-          path: 'service_order_submitted',
+          path: 'rs_order_submitted',
         );
 
   static const String name = 'RSOrderSubmittedScreenRoute';
 }
 
 /// generated route for
-/// [_i22.ProfileScreen]
-class ProfileScreenRoute extends _i27.PageRouteInfo<void> {
-  const ProfileScreenRoute({List<_i27.PageRouteInfo>? children})
+/// [_i21.ProfileScreen]
+class ProfileScreenRoute extends _i26.PageRouteInfo<void> {
+  const ProfileScreenRoute({List<_i26.PageRouteInfo>? children})
       : super(
           ProfileScreenRoute.name,
           path: 'profile',
@@ -1018,8 +940,8 @@ class ProfileScreenRoute extends _i27.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i23.SB]
-class SBRoute extends _i27.PageRouteInfo<void> {
+/// [_i22.SB]
+class SBRoute extends _i26.PageRouteInfo<void> {
   const SBRoute()
       : super(
           SBRoute.name,
@@ -1030,8 +952,8 @@ class SBRoute extends _i27.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i24.AppUserInfoPage]
-class AppUserInfoPageRoute extends _i27.PageRouteInfo<void> {
+/// [_i23.AppUserInfoPage]
+class AppUserInfoPageRoute extends _i26.PageRouteInfo<void> {
   const AppUserInfoPageRoute()
       : super(
           AppUserInfoPageRoute.name,
@@ -1042,8 +964,8 @@ class AppUserInfoPageRoute extends _i27.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i25.CompaniesInfoPage]
-class CompaniesInfoPageRoute extends _i27.PageRouteInfo<void> {
+/// [_i24.CompaniesInfoPage]
+class CompaniesInfoPageRoute extends _i26.PageRouteInfo<void> {
   const CompaniesInfoPageRoute()
       : super(
           CompaniesInfoPageRoute.name,
@@ -1054,8 +976,8 @@ class CompaniesInfoPageRoute extends _i27.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i26.OrdersPage]
-class OrdersPageRoute extends _i27.PageRouteInfo<void> {
+/// [_i25.OrdersPage]
+class OrdersPageRoute extends _i26.PageRouteInfo<void> {
   const OrdersPageRoute()
       : super(
           OrdersPageRoute.name,

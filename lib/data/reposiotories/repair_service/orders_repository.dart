@@ -11,12 +11,10 @@ abstract class RSOrdersRepository {
   Stream<RSOrder> orderByIdStream({required String id});
   Future<List<RSOrder>> ordersByCustomerId({required String id, bool descending, bool forceNetwork = false});
   Stream<List<RSOrder>> ordersByCustomerIdStream({required String id, bool descending});
-  Future<List<RSOrder>> ordersByVendorId({required String id, bool descending, bool forceNetwork = false});
-  Stream<List<RSOrder>> ordersByVendorIdStream({required String vendorId, bool descending});
 }
 
 class RSOrdersRepositoryImpl implements RSOrdersRepository {
-  CollectionReference get _ref => FirebaseFirestore.instance.collection('repair_service_orders');
+  CollectionReference get _ref => FirebaseFirestore.instance.collection('rs_orders');
 
   @override
   String generateId() => _ref.doc().id;
@@ -112,41 +110,6 @@ class RSOrdersRepositoryImpl implements RSOrdersRepository {
   @override
   Stream<List<RSOrder>> ordersByCustomerIdStream({required String id, bool descending = false}) {
     return _ref.where('customerInfo.customerId', isEqualTo: id).orderBy('createdAt', descending: descending).snapshots().transform(
-          StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<RSOrder>>.fromHandlers(
-            handleData: (snapshot, sink) {
-              sink.add(snapshot.docs.map((e) => RSOrder.fromMap(e.data())).toList());
-            },
-            handleError: (e, stackTrace, sink) {
-              if (e is FirebaseException && e.code == 'permission-denied') {
-                sink.addError(PermissionDenied(e.message!));
-              } else {
-                sink.addError(UnknownException(e.toString()));
-              }
-            },
-          ),
-        );
-  }
-
-  @override
-  Future<List<RSOrder>> ordersByVendorId({required String id, bool descending = false, bool forceNetwork = false}) async {
-    try {
-      QuerySnapshot snapshot = await _ref
-          .where('details.vendorId', isEqualTo: id)
-          .orderBy('createdAt', descending: descending)
-          .get(forceNetwork ? const GetOptions(source: Source.server) : null);
-      return snapshot.docs.map((e) => RSOrder.fromMap(e.data() as Map<String, dynamic>)).toList();
-    } catch (e) {
-      if (e is FirebaseException && e.code == 'permission-denied') {
-        throw PermissionDenied(e.message!);
-      } else {
-        throw UnknownException(e.toString());
-      }
-    }
-  }
-
-  @override
-  Stream<List<RSOrder>> ordersByVendorIdStream({required String vendorId, bool descending = false}) {
-    return _ref.where('details.vendorId', isEqualTo: vendorId).orderBy('createdAt', descending: descending).snapshots().transform(
           StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<RSOrder>>.fromHandlers(
             handleData: (snapshot, sink) {
               sink.add(snapshot.docs.map((e) => RSOrder.fromMap(e.data())).toList());

@@ -4,18 +4,18 @@ import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 
 abstract class RSCategoriesRepository {
-  Future setVendorCategory({required vendorId, required RSCategory category});
-  Future<RSCategory> vendorCategory({required String vendorId, required String categoryId});
-  Future<List<RSCategory>> vendorCategories(String vendorId, {String? parentId});
+  Future setCategory(RSCategory category);
+  Future<RSCategory> categoryById({required String categoryId});
+  Future<List<RSCategory>> categories({String? parentId});
 }
 
 class RSCategoriesRepositoryImpl implements RSCategoriesRepository {
-  CollectionReference _vendorCatRef(String vendorId) => FirebaseFirestore.instance.collection('repair_service_vendors').doc(vendorId).collection('categories');
+  CollectionReference get _ref => FirebaseFirestore.instance.collection('rs_categories');
 
   @override
-  Future setVendorCategory({required vendorId, required RSCategory category}) async {
+  Future setCategory(RSCategory category) async {
     try {
-      await _vendorCatRef(vendorId).doc(category.id).set(category.toMap());
+      await _ref.doc(category.id).set(category.toMap());
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
@@ -26,9 +26,9 @@ class RSCategoriesRepositoryImpl implements RSCategoriesRepository {
   }
 
   @override
-  Future<RSCategory> vendorCategory({required String vendorId, required String categoryId}) async {
+  Future<RSCategory> categoryById({required String categoryId}) async {
     try {
-      DocumentSnapshot snapshot = await _vendorCatRef(vendorId).doc(categoryId).get();
+      DocumentSnapshot snapshot = await _ref.doc(categoryId).get();
       return RSCategory.fromMap(snapshot.data() as Map<String, dynamic>);
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied') {
@@ -40,9 +40,9 @@ class RSCategoriesRepositoryImpl implements RSCategoriesRepository {
   }
 
   @override
-  Future<List<RSCategory>> vendorCategories(String vendorId, {String? parentId}) async {
+  Future<List<RSCategory>> categories({String? parentId}) async {
     try {
-      Query query = _vendorCatRef(vendorId);
+      Query query = _ref;
 
       query = query.where('parentId', isEqualTo: parentId, isNull: parentId == null);
 

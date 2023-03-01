@@ -20,7 +20,6 @@ class RSOrdersService {
       id: _ordersRepository.generateId(),
       customerInfo: order.customerInfo!,
       details: RSOrderDetails(
-        vendorId: order.vendorId!,
         categoryId: order.categoryId!,
         breakingTypeIds: order.breakingTypeIds!,
         description: order.description!,

@@ -27,10 +27,9 @@ import 'package:serv_expert_webclient/app/screens/home_screen.dart';
 import 'package:serv_expert_webclient/app/screens/profile/profile_screen.dart';
 import 'package:serv_expert_webclient/app/screens/profile/subpages/user_info.dart';
 import 'package:serv_expert_webclient/app/screens/profile/subpages/companies_info.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/vendor_breaking_types_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/vendor_categories_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/vendor_subcategories_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/breaking_types_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/categories_screen.dart';
+import 'package:serv_expert_webclient/app/screens/repair_service/subcategories_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route,Screen',
@@ -58,15 +57,15 @@ import 'package:serv_expert_webclient/app/screens/repair_service/vendors_screen.
         RedirectRoute(path: '', redirectTo: 'home'),
         AutoRoute(path: 'contributor_select', page: ContributorSelectScreen),
         AutoRoute(path: 'home', page: HomeScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'service_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'vendor_cat', page: RSVendorCategoriesScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'vendor_subcat', page: RSVendorSubCategoriesScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'vendor_breakings', page: RSVendorBreakingTypesScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'service_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
-        AutoRoute(path: 'service_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
-        AutoRoute(path: 'service_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
-        AutoRoute(path: 'service_order_passtypes', page: RSOrderPasswordTypeScreen, guards: [ContributorGuard, ServiceOrderGuard]),
-        AutoRoute(path: 'service_order_submitted', page: RSOrderSubmittedScreen, guards: [ContributorGuard]),
+        // AutoRoute(path: 'service_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'rs_categories', page: RSCategoriesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'rs_subcategories', page: RSSubCategoriesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'rs_breaking_types', page: RSBreakingTypesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'rs_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'rs_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'rs_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'rs_order_passtypes', page: RSOrderPasswordTypeScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'rs_order_submitted', page: RSOrderSubmittedScreen, guards: [ContributorGuard]),
         AutoRoute(
           path: 'profile',
           page: ProfileScreen,

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/app/providers/app_providers.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/vendor_category_provider.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/vendor_subcategories_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
@@ -13,7 +12,7 @@ final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) {
   ContributorState contributorState = ref.watch(contributorControllerProvider);
   RSOrdersRepository ordersRepository = ref.read(rsOrdersRepositoryProvider);
   if (contributorState is CSAssigned) {
-    return ordersRepository.ordersByCustomerIdStream(id: contributorState.id);
+    return ordersRepository.ordersByCustomerIdStream(id: contributorState.id, descending: true);
   } else {
     throw Exception('You have to be assigned to get this resource');
   }
@@ -102,8 +101,7 @@ class _OrdersPageState extends ConsumerState<OrdersPage> {
           ),
           Consumer(
             builder: (context, ref, child) {
-              AsyncValue<RSCategory> categoryData =
-                  ref.watch(vendorCategoryProvider(VCParams(vendorId: order.details.vendorId, categoryId: order.details.categoryId)));
+              AsyncValue<RSCategory> categoryData = ref.watch(rsCategoryProvider(order.details.categoryId));
 
               return Row(
                 children: [

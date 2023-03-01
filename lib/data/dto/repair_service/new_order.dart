@@ -8,7 +8,6 @@ enum DevicePasswordType {
 }
 
 class RSNewOrderDTO {
-  String? vendorId;
   RSOrderCustomerInfo? customerInfo;
   String? categoryId;
   List<String>? breakingTypeIds;
@@ -22,7 +21,6 @@ class RSNewOrderDTO {
   DevicePasswordType? passwordType;
 
   RSNewOrderDTO({
-    this.vendorId,
     this.customerInfo,
     this.categoryId,
     this.breakingTypeIds,
@@ -37,7 +35,6 @@ class RSNewOrderDTO {
   });
 
   bool validate() {
-    if (vendorId == null || vendorId!.isEmpty) return false;
     if (customerInfo == null) return false;
     if (categoryId == null || categoryId!.isEmpty) return false;
     if (breakingTypeIds == null || breakingTypeIds!.isEmpty) return false;
@@ -54,7 +51,6 @@ class RSNewOrderDTO {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'vendorId': vendorId,
       'customerInfo': customerInfo?.toMap(),
       'category': categoryId,
       'breakingTypes': breakingTypeIds,

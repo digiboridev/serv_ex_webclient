@@ -63,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            context.router.navigate(const RepairServiceVendorsScreenRoute());
+            context.router.navigate(const RSCategoriesScreenRoute());
           },
           child: Center(
             child: Text(

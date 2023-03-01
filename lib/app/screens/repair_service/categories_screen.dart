@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/vendor_categories_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/categories_provider.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
@@ -12,23 +12,24 @@ import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class RSVendorCategoriesScreen extends ConsumerStatefulWidget {
-  const RSVendorCategoriesScreen({super.key, @queryParam required this.vendorId});
-  final String? vendorId;
+class RSCategoriesScreen extends ConsumerStatefulWidget {
+  const RSCategoriesScreen({
+    super.key,
+  });
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _RSVendorCategoriesScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RSCategoriesScreenState();
 }
 
-class _RSVendorCategoriesScreenState extends ConsumerState<RSVendorCategoriesScreen> {
+class _RSCategoriesScreenState extends ConsumerState<RSCategoriesScreen> {
   onCategoryTap(RSCategory category) {
-    context.router.navigate(RSVendorSubCategoriesScreenRoute(vendorId: widget.vendorId, categoryId: category.id));
+    context.router.navigate(RSSubCategoriesScreenRoute(categoryId: category.id));
   }
 
   @override
   Widget build(BuildContext context) {
     MediaQuery.of(context);
 
-    AsyncValue<List<RSCategory>> categories = ref.watch(vendorCategoriesProvider(widget.vendorId!));
+    AsyncValue<List<RSCategory>> categories = ref.watch(rsCategoriesProvider(null));
 
     return FillableScrollableWrapper(
       child: Container(

@@ -4,8 +4,8 @@ import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/providers/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/vendor_breaking_types_provider.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/vendor_category_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/breaking_types_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
@@ -17,10 +17,9 @@ import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
-class RSVendorBreakingTypesScreen extends ConsumerWidget {
-  const RSVendorBreakingTypesScreen({super.key, @queryParam required this.vendorId, @queryParam required this.categoryId});
+class RSBreakingTypesScreen extends ConsumerWidget {
+  const RSBreakingTypesScreen({super.key, @queryParam required this.categoryId});
 
-  final String? vendorId;
   final String? categoryId;
 
   @override
@@ -41,12 +40,11 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  AsyncValue<List<RSBreakingType>> breakingTypes = ref.watch(vendorBreakingTypesProvider(VBTParams(vendorId!, categoryId!)));
+                  AsyncValue<List<RSBreakingType>> breakingTypes = ref.watch(rsBreakingTypesProvider(categoryId!));
                   return breakingTypes.when(
                     data: (breakingTypes) {
                       return FadeIn(
                         child: BreakingTypeSelection(
-                          vendorId: vendorId!,
                           categoryId: categoryId!,
                           breakingTypes: breakingTypes,
                         ),
@@ -70,11 +68,7 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
   Consumer categoryName() {
     return Consumer(
       builder: (context, ref, child) {
-        AsyncValue<RSCategory> selectedCategoryData = ref.watch(
-          vendorCategoryProvider(
-            VCParams(vendorId: vendorId!, categoryId: categoryId!),
-          ),
-        );
+        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(categoryId!));
 
         return FadeIn(
           child: Text(
@@ -94,9 +88,8 @@ class RSVendorBreakingTypesScreen extends ConsumerWidget {
 }
 
 class BreakingTypeSelection extends ConsumerStatefulWidget {
-  const BreakingTypeSelection({required this.vendorId, required this.breakingTypes, required this.categoryId, super.key});
+  const BreakingTypeSelection({required this.breakingTypes, required this.categoryId, super.key});
   final List<RSBreakingType> breakingTypes;
-  final String vendorId;
   final String categoryId;
 
   @override
@@ -122,7 +115,6 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
       );
 
       RSNewOrderDTO newOrder = RSNewOrderDTO(
-        vendorId: widget.vendorId,
         customerInfo: customerInfo,
         categoryId: widget.categoryId,
         breakingTypeIds: selectedBreakingTypes.map((breakingType) => breakingType.id).toList(),

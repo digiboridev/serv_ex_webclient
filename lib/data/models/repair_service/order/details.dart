@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class RSOrderDetails extends Equatable {
-  final String vendorId;
   final String categoryId;
   final List<String> breakingTypeIds;
   final String description;
@@ -14,7 +13,6 @@ class RSOrderDetails extends Equatable {
   final bool hasWaranty;
   final bool hasPassword; // TODO add password field
   const RSOrderDetails({
-    required this.vendorId,
     required this.categoryId,
     required this.breakingTypeIds,
     required this.description,
@@ -28,7 +26,6 @@ class RSOrderDetails extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'vendorId': vendorId,
       'categoryId': categoryId,
       'breakingTypeIds': breakingTypeIds,
       'description': description,
@@ -43,7 +40,6 @@ class RSOrderDetails extends Equatable {
 
   factory RSOrderDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderDetails(
-      vendorId: map['vendorId'] as String,
       categoryId: map['categoryId'] as String,
       breakingTypeIds: List<String>.from((map['breakingTypeIds'] as List)),
       description: map['description'] as String,
@@ -66,7 +62,6 @@ class RSOrderDetails extends Equatable {
   @override
   List<Object> get props {
     return [
-      vendorId,
       categoryId,
       breakingTypeIds,
       description,
@@ -80,7 +75,6 @@ class RSOrderDetails extends Equatable {
   }
 
   RSOrderDetails copyWith({
-    String? vendorId,
     String? categoryId,
     List<String>? breakingTypeIds,
     String? description,
@@ -92,7 +86,6 @@ class RSOrderDetails extends Equatable {
     bool? hasPassword,
   }) {
     return RSOrderDetails(
-      vendorId: vendorId ?? this.vendorId,
       categoryId: categoryId ?? this.categoryId,
       breakingTypeIds: breakingTypeIds ?? this.breakingTypeIds,
       description: description ?? this.description,

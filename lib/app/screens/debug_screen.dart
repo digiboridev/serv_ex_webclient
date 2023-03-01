@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/providers/app_providers.dart';
@@ -14,8 +15,8 @@ class SB extends ConsumerWidget {
   const SB({super.key});
 
   void test(WidgetRef ref) async {
-    RSCategoriesRepository rep = ref.read(rsCategoriesRepositoryProvider);
-    // RSBreakingTypesRepository rep2 = ref.read(rsBreakingTypesRepositoryProvider);
+    RSCategoriesRepository catrep = ref.read(rsCategoriesRepositoryProvider);
+    RSBreakingTypesRepository brrep = ref.read(rsBreakingTypesRepositoryProvider);
 
     // List<RSCategory> cats = [
     //   RSCategory(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
@@ -134,17 +135,16 @@ class SB extends ConsumerWidget {
     //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
     // ];
 
-    // asd.forEach((element) async {
-    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    // var cats = await catrep.vendorCategories('ldcj3mU7kWGJpQh6hgMM');
+
+    // cats.forEach((cat) async {
+    //   await catrep.setCategory(cat);
     // });
 
-    // List<RSCategory> categories = await rep.vendorCategories('ldcj3mU7kWGJpQh6hgMM');
-    // categories.forEach((element) {
-    //   var nc = element.copyWith(
-    //       imageUri:
-    //           'https://firebasestorage.googleapis.com/v0/b/serv-expert.appspot.com/o/rs_categories%2Fother.png?alt=media&token=462cb016-8619-4c17-a0bd-1c07ab5fed3a');
-    //   rep.setVendorCategory(vendorId: 'ldcj3mU7kWGJpQh6hgMM', category: nc);
-    //   print(element.name);
+    // var brks = await brrep.vendorBreakingTypes('ldcj3mU7kWGJpQh6hgMM');
+
+    // brks.forEach((brk) async {
+    //   await brrep.setBreakingType(brk);
     // });
 
     log('object');
@@ -161,7 +161,7 @@ class SB extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('V: 0.0.13'),
+            const Text('V: 0.0.14'),
             SelectableText(context.router.root.stack.toString()),
             SelectableText('height: $height, width: $width'),
             SelectableText('Authorized: ${ref.read(authServiceProvider).authorized}'),
