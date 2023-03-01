@@ -16,7 +16,7 @@ enum RSOrderStatus {
 }
 
 class RSOrderStatusesDetails extends Equatable {
-  final String? acceptedDetails;
+  final RSOrderAcceptDetails? acceptedDetails;
   final String? onDiagnosticDetails;
   final String? offerSentDetails;
   final String? offerAcceptedDetails;
@@ -40,7 +40,7 @@ class RSOrderStatusesDetails extends Equatable {
   });
 
   RSOrderStatusesDetails copyWith({
-    String? acceptedDetails,
+    RSOrderAcceptDetails? acceptedDetails,
     String? onDiagnosticDetails,
     String? offerSentDetails,
     String? offerAcceptedDetails,
@@ -67,7 +67,7 @@ class RSOrderStatusesDetails extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'acceptedDetails': acceptedDetails,
+      'acceptedDetails': acceptedDetails?.toMap(),
       'onDiagnosticDetails': onDiagnosticDetails,
       'offerSentDetails': offerSentDetails,
       'offerAcceptedDetails': offerAcceptedDetails,
@@ -82,7 +82,7 @@ class RSOrderStatusesDetails extends Equatable {
 
   factory RSOrderStatusesDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderStatusesDetails(
-      acceptedDetails: map['acceptedDetails'] != null ? map['acceptedDetails'] as String : null,
+      acceptedDetails: map['acceptedDetails'] != null ? RSOrderAcceptDetails.fromMap(map['acceptedDetails'] as Map<String, dynamic>) : null,
       onDiagnosticDetails: map['onDiagnosticDetails'] != null ? map['onDiagnosticDetails'] as String : null,
       offerSentDetails: map['offerSentDetails'] != null ? map['offerSentDetails'] as String : null,
       offerAcceptedDetails: map['offerAcceptedDetails'] != null ? map['offerAcceptedDetails'] as String : null,
@@ -115,6 +115,61 @@ class RSOrderStatusesDetails extends Equatable {
       closedByOfferRejectedDetails ?? '',
       closedWithoutRepairDetails ?? '',
       canceledDetails ?? '',
+    ];
+  }
+}
+
+// Order Accept Details
+
+class RSOrderAcceptDetails extends Equatable {
+  final String deviceName;
+  final String problemDescription;
+  final String conditionDescription;
+  final bool diagnosticRequired;
+  final String deviceImage;
+  const RSOrderAcceptDetails({
+    required this.deviceName,
+    required this.problemDescription,
+    required this.conditionDescription,
+    required this.diagnosticRequired,
+    required this.deviceImage,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'deviceName': deviceName,
+      'problemDescription': problemDescription,
+      'conditionDescription': conditionDescription,
+      'diagnosticRequired': diagnosticRequired,
+      'deviceImage': deviceImage,
+    };
+  }
+
+  factory RSOrderAcceptDetails.fromMap(Map<String, dynamic> map) {
+    return RSOrderAcceptDetails(
+      deviceName: map['deviceName'] as String,
+      problemDescription: map['problemDescription'] as String,
+      conditionDescription: map['conditionDescription'] as String,
+      diagnosticRequired: map['diagnosticRequired'] as bool,
+      deviceImage: map['deviceImage'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory RSOrderAcceptDetails.fromJson(String source) => RSOrderAcceptDetails.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object> get props {
+    return [
+      deviceName,
+      problemDescription,
+      conditionDescription,
+      diagnosticRequired,
+      deviceImage,
     ];
   }
 }

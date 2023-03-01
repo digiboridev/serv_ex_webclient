@@ -40,7 +40,7 @@ class _OrdersPageState extends ConsumerState<OrdersPage> {
             child: ordersState.when(
               data: (orders) => ordersList(orders),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Text(error.toString()),
+              error: (error, stack) => Center(child: Text(error.toString())),
             ),
           ),
         ],
