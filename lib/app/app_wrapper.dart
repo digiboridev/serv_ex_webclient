@@ -6,13 +6,10 @@ import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
-import 'package:serv_expert_webclient/app/providers/app_providers.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 
-/// This is the main wrapper of the app, it's responsible for:
-/// - user data, list of companies and selected contributor
-/// - holding the state of this dependencies across the entire app
 class AppWrapper extends ConsumerWidget {
   const AppWrapper({super.key});
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
-import 'package:serv_expert_webclient/app/providers/app_providers.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';

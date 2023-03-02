@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/providers/app_providers.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/breaking_types_provider.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';

@@ -7,6 +7,7 @@ abstract class RSOrdersRepository {
   String generateId();
   Future setOrder(RSOrder order);
   Future<List<RSOrder>> orders();
+  Stream<List<RSOrder>> ordersStream({descending = false});
   Future<RSOrder> orderById({required String id, bool forceNetwork = false});
   Stream<RSOrder> orderByIdStream({required String id});
   Future<List<RSOrder>> ordersByCustomerId({required String id, bool descending, bool forceNetwork = false});
@@ -44,6 +45,24 @@ class RSOrdersRepositoryImpl implements RSOrdersRepository {
         throw UnknownException(e.toString());
       }
     }
+  }
+
+  @override
+  Stream<List<RSOrder>> ordersStream({descending = false}) {
+    return _ref.orderBy('createdAt', descending: descending).snapshots().transform(
+          StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<RSOrder>>.fromHandlers(
+            handleData: (snapshot, sink) {
+              sink.add(snapshot.docs.map((e) => RSOrder.fromMap(e.data())).toList());
+            },
+            handleError: (e, stackTrace, sink) {
+              if (e is FirebaseException && e.code == 'permission-denied') {
+                sink.addError(PermissionDenied(e.message!));
+              } else {
+                sink.addError(UnknownException(e.toString()));
+              }
+            },
+          ),
+        );
   }
 
   @override

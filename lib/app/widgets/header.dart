@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
-import 'package:serv_expert_webclient/app/providers/app_providers.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 

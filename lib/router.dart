@@ -9,7 +9,7 @@ import 'package:serv_expert_webclient/app/screens/repair_service/order/order_sub
 import 'package:serv_expert_webclient/app/screens/repair_service/order/order_waranty_screen.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_wrapper.dart';
-import 'package:serv_expert_webclient/app/providers/app_providers.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
