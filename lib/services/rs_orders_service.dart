@@ -21,7 +21,7 @@ class RSOrdersService {
       customerInfo: order.customerInfo!,
       details: RSOrderDetails(
         categoryId: order.categoryId!,
-        breakingTypeIds: order.breakingTypeIds!,
+        issueIds: order.issueIds!,
         description: order.description!,
         deviceWet: order.deviceWet!,
         wetDescription: order.wetDescription!,

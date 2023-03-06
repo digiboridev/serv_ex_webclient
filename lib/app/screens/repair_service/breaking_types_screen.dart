@@ -4,11 +4,11 @@ import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/breaking_types_provider.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/issues_provider.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
-import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/issue.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
@@ -17,8 +17,8 @@ import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
-class RSBreakingTypesScreen extends ConsumerWidget {
-  const RSBreakingTypesScreen({super.key, @queryParam required this.categoryId});
+class RSIssuesScreen extends ConsumerWidget {
+  const RSIssuesScreen({super.key, @queryParam required this.categoryId});
 
   final String? categoryId;
 
@@ -40,13 +40,13 @@ class RSBreakingTypesScreen extends ConsumerWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  AsyncValue<List<RSBreakingType>> breakingTypes = ref.watch(rsBreakingTypesProvider(categoryId!));
-                  return breakingTypes.when(
-                    data: (breakingTypes) {
+                  AsyncValue<List<RSIssue>> issues = ref.watch(rsIssuesProvider(categoryId!));
+                  return issues.when(
+                    data: (issues) {
                       return FadeIn(
-                        child: BreakingTypeSelection(
+                        child: IssueSelection(
                           categoryId: categoryId!,
-                          breakingTypes: breakingTypes,
+                          issues: issues,
                         ),
                       );
                     },
@@ -87,23 +87,23 @@ class RSBreakingTypesScreen extends ConsumerWidget {
   }
 }
 
-class BreakingTypeSelection extends ConsumerStatefulWidget {
-  const BreakingTypeSelection({required this.breakingTypes, required this.categoryId, super.key});
-  final List<RSBreakingType> breakingTypes;
+class IssueSelection extends ConsumerStatefulWidget {
+  const IssueSelection({required this.issues, required this.categoryId, super.key});
+  final List<RSIssue> issues;
   final String categoryId;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _BreakingTypeSelectionState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _IssueSelectionState();
 }
 
-class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
-  late final List<RSBreakingType> breakingTypes;
-  List<RSBreakingType> selectedBreakingTypes = [];
+class _IssueSelectionState extends ConsumerState<IssueSelection> {
+  late final List<RSIssue> issues;
+  List<RSIssue> selectedIssues = [];
 
   @override
   void initState() {
     super.initState();
-    breakingTypes = widget.breakingTypes;
+    issues = widget.issues;
   }
 
   onSubmit() {
@@ -117,7 +117,7 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
       RSNewOrderDTO newOrder = RSNewOrderDTO(
         customerInfo: customerInfo,
         categoryId: widget.categoryId,
-        breakingTypeIds: selectedBreakingTypes.map((breakingType) => breakingType.id).toList(),
+        issueIds: selectedIssues.map((issue) => issue.id).toList(),
       );
 
       context.router.navigate(
@@ -132,7 +132,7 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Column(children: breakingTypes.map((breakingType) => breakingTile(breakingType)).toList()),
+        Column(children: issues.map((issue) => issueTile(issue)).toList()),
         const MinSpacer(
           minHeight: 32,
         ),
@@ -154,7 +154,7 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
     );
   }
 
-  Widget breakingTile(RSBreakingType breakingType) {
+  Widget issueTile(RSIssue issue) {
     return Container(
       width: 600,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -166,20 +166,20 @@ class _BreakingTypeSelectionState extends ConsumerState<BreakingTypeSelection> {
       child: Row(
         children: [
           Checkbox(
-            value: selectedBreakingTypes.contains(breakingType),
+            value: selectedIssues.contains(issue),
             onChanged: (value) {
               if (value!) {
                 setState(() {
-                  selectedBreakingTypes.add(breakingType);
+                  selectedIssues.add(issue);
                 });
               } else {
                 setState(() {
-                  selectedBreakingTypes.remove(breakingType);
+                  selectedIssues.remove(issue);
                 });
               }
             },
           ),
-          Text(breakingType.name),
+          Text(issue.name),
         ],
       ),
     );

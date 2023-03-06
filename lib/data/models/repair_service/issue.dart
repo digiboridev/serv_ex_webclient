@@ -2,22 +2,22 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
-class RSBreakingType extends Equatable {
+class RSIssue extends Equatable {
   final String id;
   final String name;
   final String categoryId;
-  const RSBreakingType({
+  const RSIssue({
     required this.id,
     required this.name,
     required this.categoryId,
   });
 
-  RSBreakingType copyWith({
+  RSIssue copyWith({
     String? id,
     String? name,
     String? categoryId,
   }) {
-    return RSBreakingType(
+    return RSIssue(
       id: id ?? this.id,
       name: name ?? this.name,
       categoryId: categoryId ?? this.categoryId,
@@ -32,8 +32,8 @@ class RSBreakingType extends Equatable {
     };
   }
 
-  factory RSBreakingType.fromMap(Map<String, dynamic> map) {
-    return RSBreakingType(
+  factory RSIssue.fromMap(Map<String, dynamic> map) {
+    return RSIssue(
       id: map['id'] as String,
       name: map['name'] as String,
       categoryId: map['categoryId'] as String,
@@ -42,7 +42,7 @@ class RSBreakingType extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory RSBreakingType.fromJson(String source) => RSBreakingType.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RSIssue.fromJson(String source) => RSIssue.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

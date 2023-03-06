@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/issues_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
@@ -16,7 +16,7 @@ class SB extends ConsumerWidget {
 
   void test(WidgetRef ref) async {
     RSCategoriesRepository catrep = ref.read(rsCategoriesRepositoryProvider);
-    RSBreakingTypesRepository brrep = ref.read(rsBreakingTypesRepositoryProvider);
+    RSIssuesRepository brrep = ref.read(rsIssuesRepositoryProvider);
 
     // List<RSCategory> cats = [
     //   RSCategory(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
@@ -71,68 +71,68 @@ class SB extends ConsumerWidget {
     // log(cats.map((e) => e.id));
 
     // ios device breakings
-    // List<RSBreakingType> asd = [
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Apple ID recovery', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: '3.5mm jack is missing', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    // List<RSIssue> asd = [
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Apple ID recovery', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: '3.5mm jack is missing', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: '9xQZLlZWjMhHdgHzePsq'),
     // ];
 
     // asd.forEach((element) async {
-    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    //   await rep2.setVendorIssue(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsIssue: element);
     // });
 
     // android device breakings
-    // List<RSBreakingType> asd = [
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    // List<RSIssue> asd = [
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'sR47gCR4uAnUS6asbloF'),
     // ];
 
     // asd.forEach((element) async {
-    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    //   await rep2.setVendorIssue(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsIssue: element);
     // });
 
     // ereader device breakings
-    // List<RSBreakingType> asd = [
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    // List<RSIssue> asd = [
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
     // ];
 
     // asd.forEach((element) async {
-    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    //   await rep2.setVendorIssue(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsIssue: element);
     // });
 
     // drawing device breakings
-    // List<RSBreakingType> asd = [
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Sensor isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Stylus dont recogrizing', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    // List<RSIssue> asd = [
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Sensor isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Stylus dont recogrizing', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'SeKOQSMEian7mVKmFGMz'),
     // ];
 
     // asd.forEach((element) async {
-    //   await rep2.setVendorBreakingType(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsBreakingType: element);
+    //   await rep2.setVendorIssue(vendorId: 'ldcj3mU7kWGJpQh6hgMM', rsIssue: element);
     // });
 
     // other phone tablet device breakings
-    // List<RSBreakingType> asd = [
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Hardware problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
-    //   RSBreakingType(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+    // List<RSIssue> asd = [
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Hardware problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+    //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
     // ];
 
     // var cats = await catrep.vendorCategories('ldcj3mU7kWGJpQh6hgMM');
@@ -141,10 +141,10 @@ class SB extends ConsumerWidget {
     //   await catrep.setCategory(cat);
     // });
 
-    // var brks = await brrep.vendorBreakingTypes('ldcj3mU7kWGJpQh6hgMM');
+    // var brks = await brrep.vendorIssues('ldcj3mU7kWGJpQh6hgMM');
 
     // brks.forEach((brk) async {
-    //   await brrep.setBreakingType(brk);
+    //   await brrep.setIssue(brk);
     // });
 
     log('object');

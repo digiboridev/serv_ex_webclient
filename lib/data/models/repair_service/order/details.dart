@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class RSOrderDetails extends Equatable {
   final String categoryId;
-  final List<String> breakingTypeIds;
+  final List<String> issueIds;
   final String description;
   final bool deviceWet;
   final String wetDescription;
@@ -14,7 +14,7 @@ class RSOrderDetails extends Equatable {
   final bool hasPassword; // TODO add password field
   const RSOrderDetails({
     required this.categoryId,
-    required this.breakingTypeIds,
+    required this.issueIds,
     required this.description,
     required this.deviceWet,
     required this.wetDescription,
@@ -27,7 +27,7 @@ class RSOrderDetails extends Equatable {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'categoryId': categoryId,
-      'breakingTypeIds': breakingTypeIds,
+      'issueIds': issueIds,
       'description': description,
       'deviceWet': deviceWet,
       'wetDescription': wetDescription,
@@ -41,7 +41,7 @@ class RSOrderDetails extends Equatable {
   factory RSOrderDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderDetails(
       categoryId: map['categoryId'] as String,
-      breakingTypeIds: List<String>.from((map['breakingTypeIds'] as List)),
+      issueIds: List<String>.from((map['issueIds'] as List)),
       description: map['description'] as String,
       deviceWet: map['deviceWet'] as bool,
       wetDescription: map['wetDescription'] as String,
@@ -63,7 +63,7 @@ class RSOrderDetails extends Equatable {
   List<Object> get props {
     return [
       categoryId,
-      breakingTypeIds,
+      issueIds,
       description,
       deviceWet,
       wetDescription,
@@ -76,7 +76,7 @@ class RSOrderDetails extends Equatable {
 
   RSOrderDetails copyWith({
     String? categoryId,
-    List<String>? breakingTypeIds,
+    List<String>? issueIds,
     String? description,
     bool? deviceWet,
     String? wetDescription,
@@ -87,7 +87,7 @@ class RSOrderDetails extends Equatable {
   }) {
     return RSOrderDetails(
       categoryId: categoryId ?? this.categoryId,
-      breakingTypeIds: breakingTypeIds ?? this.breakingTypeIds,
+      issueIds: issueIds ?? this.issueIds,
       description: description ?? this.description,
       deviceWet: deviceWet ?? this.deviceWet,
       wetDescription: wetDescription ?? this.wetDescription,

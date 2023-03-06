@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/breaking_types_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/issues_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
@@ -22,8 +22,8 @@ final rsCategoriesRepositoryProvider = Provider<RSCategoriesRepository>((ref) {
   return RSCategoriesRepositoryImpl();
 });
 
-final rsBreakingTypesRepositoryProvider = Provider<RSBreakingTypesRepository>((ref) {
-  return RSBreakingTypesRepositoryImpl();
+final rsIssuesRepositoryProvider = Provider<RSIssuesRepository>((ref) {
+  return RSIssuesRepositoryImpl();
 });
 
 final rsOrdersRepositoryProvider = Provider<RSOrdersRepository>((ref) {

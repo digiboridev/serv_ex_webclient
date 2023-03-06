@@ -1,25 +1,25 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
-import 'package:serv_expert_webclient/data/models/repair_service/breaking_type.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/issue.dart';
 
-abstract class RSBreakingTypesRepository {
-  Future<List<RSBreakingType>> breakingTypes({String? categoryId});
-  Future<RSBreakingType> breakingType(String id);
+abstract class RSIssuesRepository {
+  Future<List<RSIssue>> issues({String? categoryId});
+  Future<RSIssue> issue(String id);
 }
 
-class RSBreakingTypesRepositoryImpl implements RSBreakingTypesRepository {
+class RSIssuesRepositoryImpl implements RSIssuesRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('rs_issues');
 
   @override
-  Future<List<RSBreakingType>> breakingTypes({String? categoryId}) async {
+  Future<List<RSIssue>> issues({String? categoryId}) async {
     try {
       Query query = _ref;
 
-      // query = query.where('categoryId', isEqualTo: categoryId, isNull: categoryId == null);
+      query = query.where('categoryId', isEqualTo: categoryId, isNull: categoryId == null);
 
       QuerySnapshot snapshot = await query.get();
-      return snapshot.docs.map((e) => RSBreakingType.fromMap(e.data() as Map<String, dynamic>)).toList();
+      return snapshot.docs.map((e) => RSIssue.fromMap(e.data() as Map<String, dynamic>)).toList();
     } catch (e) {
       if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);
@@ -30,11 +30,11 @@ class RSBreakingTypesRepositoryImpl implements RSBreakingTypesRepository {
   }
 
   @override
-  Future<RSBreakingType> breakingType(String id) async {
+  Future<RSIssue> issue(String id) async {
     try {
       DocumentSnapshot snapshot = await _ref.doc(id).get();
-      if (!snapshot.exists) throw UnexistedResource('RSBreakingType with id $id does not exist');
-      return RSBreakingType.fromMap(snapshot.data() as Map<String, dynamic>);
+      if (!snapshot.exists) throw UnexistedResource('RSIssue with id $id does not exist');
+      return RSIssue.fromMap(snapshot.data() as Map<String, dynamic>);
     } catch (e) {
       if (e is FirebaseException && e.code == 'permission-denied') {
         throw PermissionDenied(e.message!);

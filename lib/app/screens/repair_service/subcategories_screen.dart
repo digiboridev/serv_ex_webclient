@@ -24,7 +24,7 @@ class RSSubCategoriesScreen extends ConsumerStatefulWidget {
 
 class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
   onCategoryTap(RSCategory category) {
-    context.router.navigate(RSBreakingTypesScreenRoute(categoryId: category.id));
+    context.router.navigate(RSIssuesScreenRoute(categoryId: category.id));
   }
 
   @override

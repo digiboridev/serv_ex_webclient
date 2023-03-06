@@ -171,14 +171,14 @@ class AppRouter extends _i26.RootStackRouter {
         ),
       );
     },
-    RSBreakingTypesScreenRoute.name: (routeData) {
+    RSIssuesScreenRoute.name: (routeData) {
       final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSBreakingTypesScreenRouteArgs>(
-          orElse: () => RSBreakingTypesScreenRouteArgs(
+      final args = routeData.argsAs<RSIssuesScreenRouteArgs>(
+          orElse: () => RSIssuesScreenRouteArgs(
               categoryId: queryParams.optString('categoryId')));
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i15.RSBreakingTypesScreen(
+        child: _i15.RSIssuesScreen(
           key: args.key,
           categoryId: args.categoryId,
         ),
@@ -354,8 +354,8 @@ class AppRouter extends _i26.RootStackRouter {
               guards: [contributorGuard],
             ),
             _i26.RouteConfig(
-              RSBreakingTypesScreenRoute.name,
-              path: 'rs_breaking_types',
+              RSIssuesScreenRoute.name,
+              path: 'rs_issues',
               parent: App.name,
               guards: [contributorGuard],
             ),
@@ -739,27 +739,26 @@ class RSSubCategoriesScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i15.RSBreakingTypesScreen]
-class RSBreakingTypesScreenRoute
-    extends _i26.PageRouteInfo<RSBreakingTypesScreenRouteArgs> {
-  RSBreakingTypesScreenRoute({
+/// [_i15.RSIssuesScreen]
+class RSIssuesScreenRoute extends _i26.PageRouteInfo<RSIssuesScreenRouteArgs> {
+  RSIssuesScreenRoute({
     _i27.Key? key,
     required String? categoryId,
   }) : super(
-          RSBreakingTypesScreenRoute.name,
-          path: 'rs_breaking_types',
-          args: RSBreakingTypesScreenRouteArgs(
+          RSIssuesScreenRoute.name,
+          path: 'rs_issues',
+          args: RSIssuesScreenRouteArgs(
             key: key,
             categoryId: categoryId,
           ),
           rawQueryParams: {'categoryId': categoryId},
         );
 
-  static const String name = 'RSBreakingTypesScreenRoute';
+  static const String name = 'RSIssuesScreenRoute';
 }
 
-class RSBreakingTypesScreenRouteArgs {
-  const RSBreakingTypesScreenRouteArgs({
+class RSIssuesScreenRouteArgs {
+  const RSIssuesScreenRouteArgs({
     this.key,
     required this.categoryId,
   });
@@ -770,7 +769,7 @@ class RSBreakingTypesScreenRouteArgs {
 
   @override
   String toString() {
-    return 'RSBreakingTypesScreenRouteArgs{key: $key, categoryId: $categoryId}';
+    return 'RSIssuesScreenRouteArgs{key: $key, categoryId: $categoryId}';
   }
 }
 

@@ -60,7 +60,7 @@ import 'package:serv_expert_webclient/app/screens/repair_service/subcategories_s
         // AutoRoute(path: 'service_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'rs_categories', page: RSCategoriesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'rs_subcategories', page: RSSubCategoriesScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'rs_breaking_types', page: RSBreakingTypesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'rs_issues', page: RSIssuesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'rs_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
