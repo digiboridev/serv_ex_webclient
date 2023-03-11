@@ -1,12 +1,3 @@
-class UnexistedResource implements Exception {
-  final String message;
-
-  const UnexistedResource([this.message = '']);
-
-  @override
-  String toString() => 'UnexistedResource: $message';
-}
-
 class PermissionDenied implements Exception {
   final String message;
 
@@ -23,6 +14,24 @@ class Unauthorized implements Exception {
 
   @override
   String toString() => 'Unauthorized: $message';
+}
+
+class UnexistedResource implements Exception {
+  final String message;
+
+  const UnexistedResource([this.message = '']);
+
+  @override
+  String toString() => 'UnexistedResource: $message';
+}
+
+class InvalidArgument implements Exception {
+  final String message;
+
+  const InvalidArgument([this.message = '']);
+
+  @override
+  String toString() => 'InvalidArgument: $message';
 }
 
 class UnknownException implements Exception {

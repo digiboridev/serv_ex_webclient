@@ -4,7 +4,7 @@ import 'package:serv_expert_webclient/auth/components/company_member_dialog.dart
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/models/user/app_user.dart';
-import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
@@ -14,8 +14,8 @@ import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 final userDataProvider = FutureProvider.autoDispose.family<AppUser, String>((ref, appUserId) async {
-  AppUsersRepository appUsersRepository = ref.read(appUsersRepositoryProvider);
-  return appUsersRepository.appUserById(id: appUserId);
+  UserRepository userRepository = ref.read(userRepositoryProvider);
+  return userRepository.appUser(userId: appUserId);
 });
 
 class AuthCompanyMembers extends ConsumerStatefulWidget {

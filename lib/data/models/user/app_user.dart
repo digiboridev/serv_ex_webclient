@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
-import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 
 class AppUser extends Equatable {
   final String id;
@@ -9,33 +8,15 @@ class AppUser extends Equatable {
   final String lastName;
   final String phone;
   final String email;
-  final List<AppUserContact> contacts;
-  AppUser({
+  final DateTime createdAt;
+  const AppUser({
     required this.id,
     required this.firstName,
     required this.lastName,
     required this.phone,
     required this.email,
-    List<AppUserContact>? contacts,
-  }) : contacts = contacts ?? [];
-
-  AppUser copyWith({
-    String? id,
-    String? firstName,
-    String? lastName,
-    String? phone,
-    String? email,
-    List<AppUserContact>? contacts,
-  }) {
-    return AppUser(
-      id: id ?? this.id,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      phone: phone ?? this.phone,
-      email: email ?? this.email,
-      contacts: contacts ?? this.contacts,
-    );
-  }
+    required this.createdAt,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -44,7 +25,7 @@ class AppUser extends Equatable {
       'lastName': lastName,
       'phone': phone,
       'email': email,
-      'contacts': contacts.map((x) => x.toMap()).toList(),
+      'createdAt': createdAt.millisecondsSinceEpoch,
     };
   }
 
@@ -55,7 +36,7 @@ class AppUser extends Equatable {
       lastName: map['lastName'] as String,
       phone: map['phone'] as String,
       email: map['email'] as String,
-      contacts: List<AppUserContact>.from(map['contacts'].map((x) => AppUserContact.fromMap(x as Map<String, dynamic>))),
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
     );
   }
 
@@ -74,7 +55,7 @@ class AppUser extends Equatable {
       lastName,
       phone,
       email,
-      contacts,
+      createdAt,
     ];
   }
 }

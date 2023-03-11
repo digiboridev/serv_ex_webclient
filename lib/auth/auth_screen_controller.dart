@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
+import 'package:serv_expert_webclient/data/dto/repair_service/new_contact.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
-import 'package:serv_expert_webclient/data/models/user/app_user.dart';
-import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
-import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
@@ -12,15 +11,15 @@ import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
 class AuthScreenController extends StateNotifier<AuthScreenState> {
   AuthScreenController({
     required AuthService authService,
-    required AppUsersRepository appUsersRepository,
+    required UserRepository userRepository,
     required CompaniesRepository companiesRepository,
   })  : _authService = authService,
-        _appUsersRepository = appUsersRepository,
+        _userRepository = userRepository,
         _companiesRepository = companiesRepository,
         super(const ASSLoading());
 
   final AuthService _authService;
-  final AppUsersRepository _appUsersRepository;
+  final UserRepository _userRepository;
   final CompaniesRepository _companiesRepository;
 
   Future updateState() async {
@@ -40,7 +39,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
       state = const ASSUnauthorized();
     } else {
       try {
-        await _appUsersRepository.appUserById(id: _authService.uid!, forceNetwork: true);
+        await _userRepository.appUser(userId: _authService.uid!, forceNetwork: true);
         state = const ASSAuthorized();
       } on UnexistedResource {
         state = ASSAppUserDetails(
@@ -124,8 +123,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      AppUser newAppUser = AppUser(id: _authService.uid!, firstName: firstName, lastName: lastName, email: email, phone: phone);
-      await _appUsersRepository.setAppUser(newAppUser);
+      await _userRepository.submitUserdetails(firstName: firstName, lastName: lastName, email: email, phone: phone);
       log('submitAppUserDetails($firstName, $lastName, $email, $phone) submitted');
 
       state = const ASSAppUserContacts();
@@ -135,7 +133,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     }
   }
 
-  submitAppUserContacts({required List<AppUserContact> contacts}) async {
+  submitAppUserContacts({required List<NewContactDTO> contacts}) async {
     AuthScreenState currentState = state;
     if (currentState is! ASSAppUserContacts) throw Exception('Wrong state');
     if (currentState.busy) throw Exception('Controller is busy');
@@ -145,9 +143,10 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      await _appUsersRepository.updateAppUserContacts(id: _authService.uid!, contacts: contacts);
-      log('submitAppUserContacts($contacts) submitted');
-
+      if (contacts.isNotEmpty) {
+        await _userRepository.submitUserContacts(contacts: contacts);
+        log('submitAppUserContacts($contacts) submitted');
+      }
       state = const ASSCompanyCreate();
     } catch (e) {
       log(e);

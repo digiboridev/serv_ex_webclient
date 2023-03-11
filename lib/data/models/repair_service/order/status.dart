@@ -25,7 +25,7 @@ class RSOrderStatusesDetails extends Equatable {
   final String? closedSuscessfullyDetails;
   final String? closedByOfferRejectedDetails;
   final String? closedWithoutRepairDetails;
-  final String? canceledDetails;
+  final RSOCancellDetails? cancellDetails;
   const RSOrderStatusesDetails({
     this.acceptedDetails,
     this.onDiagnosticDetails,
@@ -36,7 +36,7 @@ class RSOrderStatusesDetails extends Equatable {
     this.closedSuscessfullyDetails,
     this.closedByOfferRejectedDetails,
     this.closedWithoutRepairDetails,
-    this.canceledDetails,
+    this.cancellDetails,
   });
 
   RSOrderStatusesDetails copyWith({
@@ -49,7 +49,7 @@ class RSOrderStatusesDetails extends Equatable {
     String? closedSuscessfullyDetails,
     String? closedByOfferRejectedDetails,
     String? closedWithoutRepairDetails,
-    String? canceledDetails,
+    RSOCancellDetails? cancellDetails,
   }) {
     return RSOrderStatusesDetails(
       acceptedDetails: acceptedDetails ?? this.acceptedDetails,
@@ -61,7 +61,7 @@ class RSOrderStatusesDetails extends Equatable {
       closedSuscessfullyDetails: closedSuscessfullyDetails ?? this.closedSuscessfullyDetails,
       closedByOfferRejectedDetails: closedByOfferRejectedDetails ?? this.closedByOfferRejectedDetails,
       closedWithoutRepairDetails: closedWithoutRepairDetails ?? this.closedWithoutRepairDetails,
-      canceledDetails: canceledDetails ?? this.canceledDetails,
+      cancellDetails: cancellDetails ?? this.cancellDetails,
     );
   }
 
@@ -76,7 +76,7 @@ class RSOrderStatusesDetails extends Equatable {
       'closedSuscessfullyDetails': closedSuscessfullyDetails,
       'closedByOfferRejectedDetails': closedByOfferRejectedDetails,
       'closedWithoutRepairDetails': closedWithoutRepairDetails,
-      'canceledDetails': canceledDetails,
+      'canceledDetails': cancellDetails?.toMap(),
     };
   }
 
@@ -91,7 +91,7 @@ class RSOrderStatusesDetails extends Equatable {
       closedSuscessfullyDetails: map['closedSuscessfullyDetails'] != null ? map['closedSuscessfullyDetails'] as String : null,
       closedByOfferRejectedDetails: map['closedByOfferRejectedDetails'] != null ? map['closedByOfferRejectedDetails'] as String : null,
       closedWithoutRepairDetails: map['closedWithoutRepairDetails'] != null ? map['closedWithoutRepairDetails'] as String : null,
-      canceledDetails: map['canceledDetails'] != null ? map['canceledDetails'] as String : null,
+      cancellDetails: map['canceledDetails'] != null ? RSOCancellDetails.fromMap(map['canceledDetails'] as Map<String, dynamic>) : null,
     );
   }
 
@@ -114,7 +114,7 @@ class RSOrderStatusesDetails extends Equatable {
       closedSuscessfullyDetails ?? '',
       closedByOfferRejectedDetails ?? '',
       closedWithoutRepairDetails ?? '',
-      canceledDetails ?? '',
+      cancellDetails ?? '',
     ];
   }
 }
@@ -127,12 +127,14 @@ class RSOrderAcceptDetails extends Equatable {
   final String conditionDescription;
   final bool diagnosticRequired;
   final String deviceImage;
+  final String employeeId;
   const RSOrderAcceptDetails({
     required this.deviceName,
     required this.problemDescription,
     required this.conditionDescription,
     required this.diagnosticRequired,
     required this.deviceImage,
+    required this.employeeId,
   });
 
   Map<String, dynamic> toMap() {
@@ -142,6 +144,7 @@ class RSOrderAcceptDetails extends Equatable {
       'conditionDescription': conditionDescription,
       'diagnosticRequired': diagnosticRequired,
       'deviceImage': deviceImage,
+      'employeeId': employeeId,
     };
   }
 
@@ -152,6 +155,7 @@ class RSOrderAcceptDetails extends Equatable {
       conditionDescription: map['conditionDescription'] as String,
       diagnosticRequired: map['diagnosticRequired'] as bool,
       deviceImage: map['deviceImage'] as String,
+      employeeId: map['employeeId'] as String,
     );
   }
 
@@ -170,6 +174,69 @@ class RSOrderAcceptDetails extends Equatable {
       conditionDescription,
       diagnosticRequired,
       deviceImage,
+      employeeId,
     ];
   }
+}
+
+// Order Cancellation Details
+
+enum RSOCancellationReasons {
+  notAvailable,
+  notInterested,
+  notWorking,
+  notWorthRepair,
+  other,
+}
+
+enum RSOCancelledActor {
+  customer,
+  employee,
+}
+
+class RSOCancellDetails extends Equatable {
+  RSOCancellDetails({
+    required this.reason,
+    this.description = '',
+    required this.actor,
+    this.employeeId = '',
+  })  : assert(!(reason == RSOCancellationReasons.other && description.isEmpty)),
+        assert(!(actor == RSOCancelledActor.employee && employeeId.isEmpty));
+
+  /// The reason for cancellation
+  final RSOCancellationReasons reason;
+
+  /// The description of the cancellation reason, if the reason is [RSOCancellationReasons.other] then this field is required
+  final String description;
+
+  /// The actor who cancelled the order, if its [RSOCancelledActor.employee] then the [employeeId] is required
+  final RSOCancelledActor actor;
+
+  /// The id of the employee who cancelled the order
+  final String employeeId;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'reason': reason.name,
+      'description': description,
+      'actor': actor.name,
+      'employeeId': employeeId,
+    };
+  }
+
+  factory RSOCancellDetails.fromMap(Map<String, dynamic> map) {
+    return RSOCancellDetails(
+      reason: RSOCancellationReasons.values.byName(map['reason'] as String),
+      description: map['description'] as String,
+      actor: RSOCancelledActor.values.byName(map['actor'] as String),
+      employeeId: map['employeeId'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory RSOCancellDetails.fromJson(String source) => RSOCancellDetails.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  List<Object> get props => [reason, description, actor, employeeId];
 }

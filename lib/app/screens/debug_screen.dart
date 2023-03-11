@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
+import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/issues_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
@@ -148,6 +150,28 @@ class SB extends ConsumerWidget {
     // });
 
     log('object');
+
+    try {
+      final result = await FirebaseFunctions.instance.httpsCallable('userDetailsSubmit').call(
+        {
+          'firstName': 'string',
+          'lastName': 'string',
+          'phoneNumber': 'string',
+          'email': 'string',
+        },
+      );
+      log(result);
+    } catch (e, s) {
+      log(e, stackTrace: s);
+
+      if (e is FirebaseFunctionsException && e.code == 'unauthenticated') {
+        throw Unauthorized(e.message ?? 'Unauthorized');
+      }
+      if (e is FirebaseFunctionsException && e.code == 'invalid-argument') {
+        throw InvalidArgument(e.message ?? 'Invalid argument');
+      }
+      throw UnknownException(e.toString());
+    }
   }
 
   @override

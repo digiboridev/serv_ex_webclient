@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/data/models/user/app_user.dart';
-import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/utils/validators.dart';
 
 final userByEmailOrPhoneProvider = FutureProvider.autoDispose.family<AppUser, String>((ref, searchString) async {
-  AppUsersRepository appUsersRepository = ref.read(appUsersRepositoryProvider);
-  return appUsersRepository.findAppUserByEmailOrPhone(searchString);
+  UserRepository userRepository = ref.read(userRepositoryProvider);
+  return userRepository.findAppUserByEmailOrPhone(searchString);
 });
 
 class AddMemberDialog extends ConsumerStatefulWidget {

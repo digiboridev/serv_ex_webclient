@@ -109,7 +109,7 @@ class _CompanyRegistrationSubpageState extends ConsumerState<AuthCompanyCreate> 
                 horizontal: whenLayout<double>(mobile: 16.ms, tablet: 24.ts),
                 vertical: whenLayout<double>(mobile: 12.ms, tablet: 18.ts),
               ),
-              onTap: onContinue,
+              onTap: onSkip,
             ),
           ),
           const MinSpacer(

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/data/reposiotories/app_users_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
@@ -13,10 +13,10 @@ import 'package:serv_expert_webclient/auth/auth_screen_state.dart';
 
 final authScreenControllerProvider = StateNotifierProvider.autoDispose<AuthScreenController, AuthScreenState>((ref) {
   AuthService authService = ref.read(authServiceProvider);
-  AppUsersRepository appUsersRepository = ref.read(appUsersRepositoryProvider);
+  UserRepository userRepository = ref.read(userRepositoryProvider);
   CompaniesRepository companiesRepository = ref.read(companiesRepositoryProvider);
 
-  return AuthScreenController(authService: authService, appUsersRepository: appUsersRepository, companiesRepository: companiesRepository);
+  return AuthScreenController(authService: authService, userRepository: userRepository, companiesRepository: companiesRepository);
 });
 
 class AuthScreen extends ConsumerStatefulWidget {

@@ -15,4 +15,12 @@ class NewContactDTO {
     if (phone.isEmpty) return false;
     return true;
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'firstName': firstName,
+      'lastName': lastName,
+      'phone': phone,
+    };
+  }
 }

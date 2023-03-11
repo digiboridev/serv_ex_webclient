@@ -24,17 +24,7 @@ class _AuthAppUserContactsState extends ConsumerState<AuthAppUserContacts> {
   List<NewContactDTO> editableContacts = [];
 
   onContinue() {
-    List<AppUserContact> clientContacts = editableContacts
-        .map(
-          (e) => AppUserContact(
-            firstName: e.firstName,
-            lastName: e.lastName,
-            phone: e.phone,
-          ),
-        )
-        .toList();
-
-    ref.read(authScreenControllerProvider.notifier).submitAppUserContacts(contacts: clientContacts);
+    ref.read(authScreenControllerProvider.notifier).submitAppUserContacts(contacts: editableContacts);
   }
 
   onAddContact() async {
