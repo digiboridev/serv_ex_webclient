@@ -16,22 +16,6 @@ class Company extends Equatable {
     required this.membersIds,
   });
 
-  Company copyWith({
-    String? id,
-    String? publicId,
-    String? name,
-    String? email,
-    List<String>? membersIds,
-  }) {
-    return Company(
-      id: id ?? this.id,
-      publicId: publicId ?? this.publicId,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      membersIds: membersIds ?? this.membersIds,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,

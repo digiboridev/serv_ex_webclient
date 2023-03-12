@@ -18,12 +18,12 @@ abstract class UserRepository {
 
 class UserRepositoryImpl implements UserRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('app_users');
+  final FirebaseFunctions _funcRef = FirebaseFunctions.instanceFor(region: 'europe-west1');
 
   @override
   Future submitUserdetails({required String firstName, required String lastName, required String email, required String phone}) async {
     try {
-      HttpsCallable c = FirebaseFunctions.instance.httpsCallable('userDetailsSubmit');
-      await c.call({'firstName': firstName, 'lastName': lastName, 'email': email, 'phone': phone});
+      await _funcRef.httpsCallable('userDetailsSubmit').call({'firstName': firstName, 'lastName': lastName, 'email': email, 'phone': phone});
     } catch (e) {
       if (e is FirebaseFunctionsException && e.code == 'unauthenticated') {
         throw Unauthorized(e.message ?? 'Unauthorized');
@@ -38,8 +38,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future submitUserContacts({required List<NewContactDTO> contacts}) async {
     try {
-      HttpsCallable c = FirebaseFunctions.instance.httpsCallable('userContactsSubmit');
-      await c.call({'contacts': contacts.map((e) => e.toMap()).toList()});
+      await _funcRef.httpsCallable('userContactsSubmit').call({'contacts': contacts.map((e) => e.toMap()).toList()});
     } catch (e) {
       if (e is FirebaseFunctionsException && e.code == 'unauthenticated') {
         throw Unauthorized(e.message ?? 'Unauthorized');

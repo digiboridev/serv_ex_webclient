@@ -152,12 +152,9 @@ class SB extends ConsumerWidget {
     log('object');
 
     try {
-      final result = await FirebaseFunctions.instance.httpsCallable('userDetailsSubmit').call(
+      final result = await FirebaseFunctions.instanceFor(region: 'europe-west1').httpsCallable('userDetailsSubmit').call(
         {
           'firstName': 'string',
-          'lastName': 'string',
-          'phoneNumber': 'string',
-          'email': 'string',
         },
       );
       log(result);

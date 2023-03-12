@@ -164,8 +164,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      Company company =
-          await _companiesRepository.createCompany(publicId: publicId, companyName: companyName, companyEmail: companyEmail, memberId: _authService.uid!);
+      Company company = await _companiesRepository.createCompany(publicId: publicId, name: companyName, email: companyEmail);
       log('submitCompanyCreate($publicId, $companyName, $companyEmail) submitted');
       state = ASSCompanyMembers(companyId: company.id, membersIds: company.membersIds);
     } catch (e) {

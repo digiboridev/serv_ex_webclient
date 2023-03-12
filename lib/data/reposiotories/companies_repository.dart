@@ -1,56 +1,35 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 
 abstract class CompaniesRepository {
-  Future<Company> createCompany({
-    required String publicId,
-    required String companyName,
-    required String companyEmail,
-    required String memberId,
-  });
-
+  Future<Company> createCompany({required String publicId, required String name, required String email});
   Future updateCompanyMembers({required String companyId, required List<String> membersIds});
-
   Future<Company> companyById({required String id, bool forceNetwork = false});
-
   Future<List<Company>> companiesByMemberId({required String memberId, bool forceNetwork = false});
-
   Stream<List<Company>> companiesByMemberIdStream({required String memberId});
 }
 
 class CompaniesRepositoryImpl implements CompaniesRepository {
   CollectionReference get _ref => FirebaseFirestore.instance.collection('companies');
+  final FirebaseFunctions _funcRef = FirebaseFunctions.instanceFor(region: 'europe-west1');
 
   @override
-  Future<Company> createCompany({
-    required String publicId,
-    required String companyName,
-    required String companyEmail,
-    required String memberId,
-  }) async {
+  Future<Company> createCompany({required String publicId, required String name, required String email}) async {
     try {
-      String id = _ref.doc().id;
-
-      Company newCompany = Company(
-        id: id,
-        publicId: publicId,
-        name: companyName,
-        email: companyEmail,
-        membersIds: [memberId],
-      );
-
-      await _ref.doc(id).set(newCompany.toMap());
-
-      return newCompany;
+      var result = await _funcRef.httpsCallable('companyCreate').call({'publicId': publicId, 'name': name, 'email': email});
+      return Company.fromMap(result.data['data'] as Map<String, dynamic>);
     } catch (e) {
-      if (e is FirebaseException && e.code == 'permission-denied') {
-        throw PermissionDenied(e.message!);
-      } else {
-        throw UnknownException(e.toString());
+      if (e is FirebaseFunctionsException && e.code == 'unauthenticated') {
+        throw Unauthorized(e.message ?? 'Unauthorized');
       }
+      if (e is FirebaseFunctionsException && e.code == 'invalid-argument') {
+        throw InvalidArgument(e.message ?? 'Invalid argument');
+      }
+      throw UnknownException(e.toString());
     }
   }
 
