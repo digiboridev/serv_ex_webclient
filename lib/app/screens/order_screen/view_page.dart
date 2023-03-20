@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/order_provider.dart';
+import 'package:serv_expert_webclient/app/screens/order_screen/components/confirmed_offer_details.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/offer_details.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/offer_form.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/order_accept_details.dart';
@@ -256,14 +257,18 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Column offerConfirmedContent(RSOrder order) {
+    RSOrderConfirmedOfferDetails confirmedOfferDetails = order.statusesDetails.confirmedOfferDetails!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        RepairPartsTable(
-          parts: order.statusesDetails.confirmedOfferDetails!.parts,
-          showSelection: true,
-        ),
         SizedBox(height: 16),
+        ConfirmedOfferDetails(order: order),
+        SizedBox(height: 16),
+        if (confirmedOfferDetails.paymentRequired) ...[
+          const SizedBox(height: 16),
+          SizedBox(width: 546, child: RegularButton(onTap: () {}, text: 'Pay')),
+        ],
         const SizedBox(height: 16),
         SizedBox(width: 546, child: RegularButton(onTap: cancellOrder, text: 'Cancel order', color: AppColors.red)),
         const SizedBox(height: 32),
@@ -277,7 +282,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       children: [
         SizedBox(height: 16),
         if (onlyView)
-          Align(alignment: Alignment.centerLeft, child: OfferDetails(order: order))
+          OfferDetails(order: order)
         else
           OfferForm(
             offerSentDetails: order.statusesDetails.offerSentDetails!,

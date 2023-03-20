@@ -229,7 +229,7 @@ class RepairPartsTable extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               margin: EdgeInsets.symmetric(vertical: 4),
               child: Text(
-                'Note: ${part.note}',
+                'Note: ${subpart.note}',
                 textAlign: TextAlign.start,
               ),
             ),

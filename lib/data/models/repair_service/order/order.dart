@@ -4,12 +4,24 @@ import 'package:serv_expert_webclient/data/models/repair_service/order/customer_
 import 'package:serv_expert_webclient/data/models/repair_service/order/details.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
 
+enum PaymentStatus {
+  notPaid,
+  paid,
+}
+
+enum DeviceLocation {
+  client,
+  laboratory,
+}
+
 class RSOrder extends Equatable {
   final String id;
   final RSOrderCustomerInfo customerInfo;
   final RSOrderDetails details;
   final RSOrderStatus status;
   final RSOrderStatusesDetails statusesDetails;
+  final PaymentStatus paymentStatus;
+  final DeviceLocation deviceLocation;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -19,6 +31,8 @@ class RSOrder extends Equatable {
     required this.details,
     required this.status,
     required this.statusesDetails,
+    required this.paymentStatus,
+    required this.deviceLocation,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -29,6 +43,8 @@ class RSOrder extends Equatable {
     RSOrderDetails? details,
     RSOrderStatus? status,
     RSOrderStatusesDetails? statusesDetails,
+    PaymentStatus? paymentStatus,
+    DeviceLocation? deviceLocation,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -38,6 +54,8 @@ class RSOrder extends Equatable {
       details: details ?? this.details,
       status: status ?? this.status,
       statusesDetails: statusesDetails ?? this.statusesDetails,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      deviceLocation: deviceLocation ?? this.deviceLocation,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -50,6 +68,8 @@ class RSOrder extends Equatable {
       'details': details.toMap(),
       'status': status.name,
       'statusesDetails': statusesDetails.toMap(),
+      'paymentStatus': paymentStatus.name,
+      'deviceLocation': deviceLocation.name,
       'createdAt': createdAt.millisecondsSinceEpoch,
       'updatedAt': updatedAt.millisecondsSinceEpoch,
     };
@@ -62,6 +82,8 @@ class RSOrder extends Equatable {
       details: RSOrderDetails.fromMap(map['details'] as Map<String, dynamic>),
       status: RSOrderStatus.values.byName(map['status'] as String),
       statusesDetails: RSOrderStatusesDetails.fromMap(map['statusesDetails'] as Map<String, dynamic>),
+      paymentStatus: PaymentStatus.values.byName(map['paymentStatus'] as String),
+      deviceLocation: DeviceLocation.values.byName(map['deviceLocation'] as String),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
     );
@@ -82,6 +104,8 @@ class RSOrder extends Equatable {
       details,
       status,
       statusesDetails,
+      paymentStatus,
+      deviceLocation,
       createdAt,
       updatedAt,
     ];

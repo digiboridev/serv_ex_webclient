@@ -32,6 +32,8 @@ class RSOrdersService {
       ),
       status: RSOrderStatus.newOrder,
       statusesDetails: const RSOrderStatusesDetails(),
+      paymentStatus: PaymentStatus.notPaid,
+      deviceLocation: DeviceLocation.client,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
