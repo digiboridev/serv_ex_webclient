@@ -17,7 +17,7 @@ class RegularButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
   }) : super(key: key);
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String text;
   final Color color;
   final Color? borderColor;

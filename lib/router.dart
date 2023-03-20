@@ -1,15 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/providers/repair_service/order_provider.dart';
 import 'package:serv_expert_webclient/app/screens/companies/companies_screen.dart';
 import 'package:serv_expert_webclient/app/screens/home/home_wrapper.dart';
 import 'package:serv_expert_webclient/app/screens/home/services_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order_screen/cancel_page.dart';
+import 'package:serv_expert_webclient/app/screens/order_screen/loader.dart';
+import 'package:serv_expert_webclient/app/screens/order_screen/view_page.dart';
 import 'package:serv_expert_webclient/app/screens/orders/orders_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order/order_details_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order/order_has_password_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order/order_password_type_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order/order_submitted_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order/order_waranty_screen.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_wrapper.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
@@ -25,7 +31,6 @@ import 'package:serv_expert_webclient/auth/pages/confirm_phone.dart';
 import 'package:serv_expert_webclient/auth/pages/success.dart';
 import 'package:serv_expert_webclient/auth/pages/company_members.dart';
 import 'package:serv_expert_webclient/app/screens/contributor_select_screen.dart';
-import 'package:serv_expert_webclient/app/screens/debug_screen.dart';
 import 'package:serv_expert_webclient/app/screens/profile/profile_screen.dart';
 import 'package:serv_expert_webclient/app/screens/home/repair_service/breaking_types_screen.dart';
 import 'package:serv_expert_webclient/app/screens/home/repair_service/categories_screen.dart';
@@ -72,12 +77,22 @@ import 'package:serv_expert_webclient/app/screens/home/repair_service/subcategor
         AutoRoute(path: 'profile', page: ProfileScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'companies', page: CompaniesScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'orders', page: OrdersScreen, guards: [ContributorGuard]),
+        AutoRoute(
+          name: 'orderScreen',
+          path: 'order/:orderId',
+          page: OrderScreenLoader,
+          children: [
+            RedirectRoute(path: '', redirectTo: 'view'),
+            AutoRoute(path: 'view', page: OrderScreenViewPage),
+            AutoRoute(path: 'cancell', page: OrderCancellPage, guards: [OrderCancellGuard]),
+          ],
+        ),
         AutoRoute(path: 'rs_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_passtypes', page: RSOrderPasswordTypeScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_submitted', page: RSOrderSubmittedScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'b', page: SB),
+        // AutoRoute(path: 'b', page: SB),
       ],
     ),
   ],
@@ -136,6 +151,29 @@ class ServiceOrderGuard extends AutoRouteGuard {
       } else {
         router.replace(const App());
       }
+    } else {
+      resolver.next(true);
+    }
+  }
+}
+
+class OrderCancellGuard extends AutoRouteGuard {
+  WidgetRef ref;
+  OrderCancellGuard({
+    required this.ref,
+  });
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    String orderId = router.routeData.pathParams.getString('orderId');
+
+    /// Make sure that the order is loaded before navigating to the cancell page
+    RSOrder order = ref.watch(rsOrderStreamProvider(orderId)).value!;
+
+    // Protect to navigate to the cancell page if the order is already closed or cancelled
+    if (order.status == RSOrderStatus.canceled || order.status == RSOrderStatus.closed) {
+      resolver.next(false);
+      router.replace(OrderScreenViewPageRoute());
     } else {
       resolver.next(true);
     }

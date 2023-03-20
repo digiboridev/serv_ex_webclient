@@ -2,6 +2,7 @@
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/details.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 
@@ -48,6 +49,31 @@ class RSOrdersService {
 
     RSOrder newOrder = order.copyWith(
       status: RSOrderStatus.canceled,
+      statusesDetails: newStatusesDetails,
+      updatedAt: DateTime.now(),
+    );
+
+    await _ordersRepository.setOrder(newOrder);
+  }
+
+  Future confirmOffer({required String orderId, required List<RepairPart> parts}) async {
+    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    if (order.status != RSOrderStatus.offerSent) throw Exception('Invalid order status');
+
+    RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
+      confirmedOfferDetails: RSOrderConfirmedOfferDetails(
+        confirmationSkipped: false,
+        employeeId: null,
+        parts: parts,
+        noteForClient: order.statusesDetails.offerSentDetails!.noteForClient,
+        noteForEmployee: order.statusesDetails.offerSentDetails!.noteForEmployee,
+        afterDiagnostic: order.statusesDetails.offerSentDetails!.afterDiagnostic,
+        paymentRequired: order.statusesDetails.offerSentDetails!.paymentRequired,
+      ),
+    );
+
+    RSOrder newOrder = order.copyWith(
+      status: RSOrderStatus.confirmedOffer,
       statusesDetails: newStatusesDetails,
       updatedAt: DateTime.now(),
     );

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/auth/components/new_contact_dialog.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_contact.dart';
-import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';

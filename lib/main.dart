@@ -36,6 +36,7 @@ class _TheAppState extends ConsumerState<TheApp> {
       appGuard: AppGuard(ref: ref),
       contributorGuard: ContributorGuard(ref: ref),
       serviceOrderGuard: ServiceOrderGuard(ref: ref),
+      orderCancellGuard: OrderCancellGuard(ref: ref),
     );
   }
 

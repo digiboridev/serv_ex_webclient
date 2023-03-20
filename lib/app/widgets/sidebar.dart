@@ -41,7 +41,11 @@ class _SidebarState extends ConsumerState<Sidebar> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  context.router.navigate(const Home());
+                  if (context.router.isPathActive('home')) {
+                    context.router.navigate(const Home());
+                  } else {
+                    context.router.replace(const Home());
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -95,7 +99,11 @@ class _SidebarState extends ConsumerState<Sidebar> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  context.router.replace(const OrdersScreenRoute());
+                  if (context.router.isPathActive('order')) {
+                    context.router.navigate(const OrdersScreenRoute());
+                  } else {
+                    context.router.replace(const OrdersScreenRoute());
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
