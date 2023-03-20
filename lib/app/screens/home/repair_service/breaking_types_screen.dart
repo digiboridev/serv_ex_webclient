@@ -6,6 +6,8 @@ import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/issues_provider.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
+import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/issue.dart';
@@ -29,7 +31,7 @@ class RSIssuesScreen extends ConsumerWidget {
         color: Colors.white,
         child: Column(
           children: [
-            const Header(),
+            // const Header(),
             const SizedBox(
               height: 32,
             ),
@@ -160,8 +162,15 @@ class _IssueSelectionState extends ConsumerState<IssueSelection> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.1),
+            offset: const Offset(0, 4),
+            blurRadius: 8,
+          ),
+        ],
       ),
       child: Row(
         children: [

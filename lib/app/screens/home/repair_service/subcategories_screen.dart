@@ -5,6 +5,7 @@ import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/categories_provider.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
+import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
@@ -38,7 +39,6 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
         color: Colors.white,
         child: Column(
           children: [
-            const Header(),
             SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
             cetegoryName(),
             SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),

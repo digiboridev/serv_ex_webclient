@@ -4,18 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/app/widgets/header.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/headline.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+class ServicesScreen extends ConsumerStatefulWidget {
+  const ServicesScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ServicesScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+class _ServicesScreenState extends ConsumerState<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     MediaQuery.of(context);
@@ -25,7 +24,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: FillableScrollableWrapper(
         child: Column(
           children: [
-            const Header(),
             SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
             const Headline(
               text: 'HOME SCREEN',

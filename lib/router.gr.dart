@@ -15,23 +15,21 @@ import 'package:auto_route/auto_route.dart' as _i26;
 import 'package:flutter/material.dart' as _i27;
 
 import 'app/app_wrapper.dart' as _i2;
+import 'app/screens/companies/companies_screen.dart' as _i14;
 import 'app/screens/contributor_select_screen.dart' as _i11;
-import 'app/screens/debug_screen.dart' as _i22;
-import 'app/screens/home_screen.dart' as _i12;
-import 'app/screens/profile/profile_screen.dart' as _i21;
-import 'app/screens/profile/subpages/companies_info.dart' as _i24;
-import 'app/screens/profile/subpages/orders.dart' as _i25;
-import 'app/screens/profile/subpages/user_info.dart' as _i23;
-import 'app/screens/repair_service/breaking_types_screen.dart' as _i15;
-import 'app/screens/repair_service/categories_screen.dart' as _i13;
-import 'app/screens/repair_service/order/order_details_screen.dart' as _i16;
-import 'app/screens/repair_service/order/order_has_password_screen.dart'
-    as _i18;
-import 'app/screens/repair_service/order/order_password_type_screen.dart'
-    as _i19;
-import 'app/screens/repair_service/order/order_submitted_screen.dart' as _i20;
-import 'app/screens/repair_service/order/order_waranty_screen.dart' as _i17;
-import 'app/screens/repair_service/subcategories_screen.dart' as _i14;
+import 'app/screens/debug_screen.dart' as _i21;
+import 'app/screens/home/home_wrapper.dart' as _i12;
+import 'app/screens/home/repair_service/breaking_types_screen.dart' as _i25;
+import 'app/screens/home/repair_service/categories_screen.dart' as _i23;
+import 'app/screens/home/repair_service/subcategories_screen.dart' as _i24;
+import 'app/screens/home/services_screen.dart' as _i22;
+import 'app/screens/order/order_details_screen.dart' as _i16;
+import 'app/screens/order/order_has_password_screen.dart' as _i18;
+import 'app/screens/order/order_password_type_screen.dart' as _i19;
+import 'app/screens/order/order_submitted_screen.dart' as _i20;
+import 'app/screens/order/order_waranty_screen.dart' as _i17;
+import 'app/screens/orders/orders_screen.dart' as _i15;
+import 'app/screens/profile/profile_screen.dart' as _i13;
 import 'auth/auth_screen.dart' as _i1;
 import 'auth/pages/company_members.dart' as _i8;
 import 'auth/pages/company_registration.dart' as _i7;
@@ -146,42 +144,28 @@ class AppRouter extends _i26.RootStackRouter {
         child: const _i11.ContributorSelectScreen(),
       );
     },
-    HomeScreenRoute.name: (routeData) {
+    Home.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i12.HomeScreen(),
+        child: const _i12.HomeWrapper(),
       );
     },
-    RSCategoriesScreenRoute.name: (routeData) {
+    ProfileScreenRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i13.RSCategoriesScreen(),
+        child: const _i13.ProfileScreen(),
       );
     },
-    RSSubCategoriesScreenRoute.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSSubCategoriesScreenRouteArgs>(
-          orElse: () => RSSubCategoriesScreenRouteArgs(
-              categoryId: queryParams.optString('categoryId')));
+    CompaniesScreenRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i14.RSSubCategoriesScreen(
-          key: args.key,
-          categoryId: args.categoryId,
-        ),
+        child: const _i14.CompaniesScreen(),
       );
     },
-    RSIssuesScreenRoute.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSIssuesScreenRouteArgs>(
-          orElse: () => RSIssuesScreenRouteArgs(
-              categoryId: queryParams.optString('categoryId')));
+    OrdersScreenRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i15.RSIssuesScreen(
-          key: args.key,
-          categoryId: args.categoryId,
-        ),
+        child: const _i15.OrdersScreen(),
       );
     },
     RSOrderDetailsScreenRoute.name: (routeData) {
@@ -230,34 +214,48 @@ class AppRouter extends _i26.RootStackRouter {
         child: const _i20.RSOrderSubmittedScreen(),
       );
     },
-    ProfileScreenRoute.name: (routeData) {
-      return _i26.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i21.ProfileScreen(),
-      );
-    },
     SBRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i22.SB(),
+        child: const _i21.SB(),
       );
     },
-    AppUserInfoPageRoute.name: (routeData) {
+    ServicesScreenRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i23.AppUserInfoPage(),
+        child: const _i22.ServicesScreen(),
       );
     },
-    CompaniesInfoPageRoute.name: (routeData) {
+    RSCategoriesScreenRoute.name: (routeData) {
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i24.CompaniesInfoPage(),
+        child: const _i23.RSCategoriesScreen(),
       );
     },
-    OrdersPageRoute.name: (routeData) {
+    RSSubCategoriesScreenRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<RSSubCategoriesScreenRouteArgs>(
+          orElse: () => RSSubCategoriesScreenRouteArgs(
+              categoryId: queryParams.optString('categoryId')));
       return _i26.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i25.OrdersPage(),
+        child: _i24.RSSubCategoriesScreen(
+          key: args.key,
+          categoryId: args.categoryId,
+        ),
+      );
+    },
+    RSIssuesScreenRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<RSIssuesScreenRouteArgs>(
+          orElse: () => RSIssuesScreenRouteArgs(
+              categoryId: queryParams.optString('categoryId')));
+      return _i26.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i25.RSIssuesScreen(
+          key: args.key,
+          categoryId: args.categoryId,
+        ),
       );
     },
   };
@@ -336,26 +334,55 @@ class AppRouter extends _i26.RootStackRouter {
               parent: App.name,
             ),
             _i26.RouteConfig(
-              HomeScreenRoute.name,
+              Home.name,
               path: 'home',
               parent: App.name,
               guards: [contributorGuard],
+              children: [
+                _i26.RouteConfig(
+                  '#redirect',
+                  path: '',
+                  parent: Home.name,
+                  redirectTo: 'services',
+                  fullMatch: true,
+                ),
+                _i26.RouteConfig(
+                  ServicesScreenRoute.name,
+                  path: 'services',
+                  parent: Home.name,
+                ),
+                _i26.RouteConfig(
+                  RSCategoriesScreenRoute.name,
+                  path: 'rs_categories',
+                  parent: Home.name,
+                ),
+                _i26.RouteConfig(
+                  RSSubCategoriesScreenRoute.name,
+                  path: 'rs_subcategories',
+                  parent: Home.name,
+                ),
+                _i26.RouteConfig(
+                  RSIssuesScreenRoute.name,
+                  path: 'rs_issues',
+                  parent: Home.name,
+                ),
+              ],
             ),
             _i26.RouteConfig(
-              RSCategoriesScreenRoute.name,
-              path: 'rs_categories',
+              ProfileScreenRoute.name,
+              path: 'profile',
               parent: App.name,
               guards: [contributorGuard],
             ),
             _i26.RouteConfig(
-              RSSubCategoriesScreenRoute.name,
-              path: 'rs_subcategories',
+              CompaniesScreenRoute.name,
+              path: 'companies',
               parent: App.name,
               guards: [contributorGuard],
             ),
             _i26.RouteConfig(
-              RSIssuesScreenRoute.name,
-              path: 'rs_issues',
+              OrdersScreenRoute.name,
+              path: 'orders',
               parent: App.name,
               guards: [contributorGuard],
             ),
@@ -400,36 +427,6 @@ class AppRouter extends _i26.RootStackRouter {
               path: 'rs_order_submitted',
               parent: App.name,
               guards: [contributorGuard],
-            ),
-            _i26.RouteConfig(
-              ProfileScreenRoute.name,
-              path: 'profile',
-              parent: App.name,
-              guards: [contributorGuard],
-              children: [
-                _i26.RouteConfig(
-                  '#redirect',
-                  path: '',
-                  parent: ProfileScreenRoute.name,
-                  redirectTo: 'user_info',
-                  fullMatch: true,
-                ),
-                _i26.RouteConfig(
-                  AppUserInfoPageRoute.name,
-                  path: 'user_info',
-                  parent: ProfileScreenRoute.name,
-                ),
-                _i26.RouteConfig(
-                  CompaniesInfoPageRoute.name,
-                  path: 'companies_info',
-                  parent: ProfileScreenRoute.name,
-                ),
-                _i26.RouteConfig(
-                  OrdersPageRoute.name,
-                  path: 'orders',
-                  parent: ProfileScreenRoute.name,
-                ),
-              ],
             ),
             _i26.RouteConfig(
               SBRoute.name,
@@ -679,98 +676,52 @@ class ContributorSelectScreenRoute extends _i26.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.HomeScreen]
-class HomeScreenRoute extends _i26.PageRouteInfo<void> {
-  const HomeScreenRoute()
+/// [_i12.HomeWrapper]
+class Home extends _i26.PageRouteInfo<void> {
+  const Home({List<_i26.PageRouteInfo>? children})
       : super(
-          HomeScreenRoute.name,
+          Home.name,
           path: 'home',
+          initialChildren: children,
         );
 
-  static const String name = 'HomeScreenRoute';
+  static const String name = 'Home';
 }
 
 /// generated route for
-/// [_i13.RSCategoriesScreen]
-class RSCategoriesScreenRoute extends _i26.PageRouteInfo<void> {
-  const RSCategoriesScreenRoute()
+/// [_i13.ProfileScreen]
+class ProfileScreenRoute extends _i26.PageRouteInfo<void> {
+  const ProfileScreenRoute()
       : super(
-          RSCategoriesScreenRoute.name,
-          path: 'rs_categories',
+          ProfileScreenRoute.name,
+          path: 'profile',
         );
 
-  static const String name = 'RSCategoriesScreenRoute';
+  static const String name = 'ProfileScreenRoute';
 }
 
 /// generated route for
-/// [_i14.RSSubCategoriesScreen]
-class RSSubCategoriesScreenRoute
-    extends _i26.PageRouteInfo<RSSubCategoriesScreenRouteArgs> {
-  RSSubCategoriesScreenRoute({
-    _i27.Key? key,
-    required String? categoryId,
-  }) : super(
-          RSSubCategoriesScreenRoute.name,
-          path: 'rs_subcategories',
-          args: RSSubCategoriesScreenRouteArgs(
-            key: key,
-            categoryId: categoryId,
-          ),
-          rawQueryParams: {'categoryId': categoryId},
+/// [_i14.CompaniesScreen]
+class CompaniesScreenRoute extends _i26.PageRouteInfo<void> {
+  const CompaniesScreenRoute()
+      : super(
+          CompaniesScreenRoute.name,
+          path: 'companies',
         );
 
-  static const String name = 'RSSubCategoriesScreenRoute';
-}
-
-class RSSubCategoriesScreenRouteArgs {
-  const RSSubCategoriesScreenRouteArgs({
-    this.key,
-    required this.categoryId,
-  });
-
-  final _i27.Key? key;
-
-  final String? categoryId;
-
-  @override
-  String toString() {
-    return 'RSSubCategoriesScreenRouteArgs{key: $key, categoryId: $categoryId}';
-  }
+  static const String name = 'CompaniesScreenRoute';
 }
 
 /// generated route for
-/// [_i15.RSIssuesScreen]
-class RSIssuesScreenRoute extends _i26.PageRouteInfo<RSIssuesScreenRouteArgs> {
-  RSIssuesScreenRoute({
-    _i27.Key? key,
-    required String? categoryId,
-  }) : super(
-          RSIssuesScreenRoute.name,
-          path: 'rs_issues',
-          args: RSIssuesScreenRouteArgs(
-            key: key,
-            categoryId: categoryId,
-          ),
-          rawQueryParams: {'categoryId': categoryId},
+/// [_i15.OrdersScreen]
+class OrdersScreenRoute extends _i26.PageRouteInfo<void> {
+  const OrdersScreenRoute()
+      : super(
+          OrdersScreenRoute.name,
+          path: 'orders',
         );
 
-  static const String name = 'RSIssuesScreenRoute';
-}
-
-class RSIssuesScreenRouteArgs {
-  const RSIssuesScreenRouteArgs({
-    this.key,
-    required this.categoryId,
-  });
-
-  final _i27.Key? key;
-
-  final String? categoryId;
-
-  @override
-  String toString() {
-    return 'RSIssuesScreenRouteArgs{key: $key, categoryId: $categoryId}';
-  }
+  static const String name = 'OrdersScreenRoute';
 }
 
 /// generated route for
@@ -926,20 +877,7 @@ class RSOrderSubmittedScreenRoute extends _i26.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i21.ProfileScreen]
-class ProfileScreenRoute extends _i26.PageRouteInfo<void> {
-  const ProfileScreenRoute({List<_i26.PageRouteInfo>? children})
-      : super(
-          ProfileScreenRoute.name,
-          path: 'profile',
-          initialChildren: children,
-        );
-
-  static const String name = 'ProfileScreenRoute';
-}
-
-/// generated route for
-/// [_i22.SB]
+/// [_i21.SB]
 class SBRoute extends _i26.PageRouteInfo<void> {
   const SBRoute()
       : super(
@@ -951,37 +889,96 @@ class SBRoute extends _i26.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i23.AppUserInfoPage]
-class AppUserInfoPageRoute extends _i26.PageRouteInfo<void> {
-  const AppUserInfoPageRoute()
+/// [_i22.ServicesScreen]
+class ServicesScreenRoute extends _i26.PageRouteInfo<void> {
+  const ServicesScreenRoute()
       : super(
-          AppUserInfoPageRoute.name,
-          path: 'user_info',
+          ServicesScreenRoute.name,
+          path: 'services',
         );
 
-  static const String name = 'AppUserInfoPageRoute';
+  static const String name = 'ServicesScreenRoute';
 }
 
 /// generated route for
-/// [_i24.CompaniesInfoPage]
-class CompaniesInfoPageRoute extends _i26.PageRouteInfo<void> {
-  const CompaniesInfoPageRoute()
+/// [_i23.RSCategoriesScreen]
+class RSCategoriesScreenRoute extends _i26.PageRouteInfo<void> {
+  const RSCategoriesScreenRoute()
       : super(
-          CompaniesInfoPageRoute.name,
-          path: 'companies_info',
+          RSCategoriesScreenRoute.name,
+          path: 'rs_categories',
         );
 
-  static const String name = 'CompaniesInfoPageRoute';
+  static const String name = 'RSCategoriesScreenRoute';
 }
 
 /// generated route for
-/// [_i25.OrdersPage]
-class OrdersPageRoute extends _i26.PageRouteInfo<void> {
-  const OrdersPageRoute()
-      : super(
-          OrdersPageRoute.name,
-          path: 'orders',
+/// [_i24.RSSubCategoriesScreen]
+class RSSubCategoriesScreenRoute
+    extends _i26.PageRouteInfo<RSSubCategoriesScreenRouteArgs> {
+  RSSubCategoriesScreenRoute({
+    _i27.Key? key,
+    required String? categoryId,
+  }) : super(
+          RSSubCategoriesScreenRoute.name,
+          path: 'rs_subcategories',
+          args: RSSubCategoriesScreenRouteArgs(
+            key: key,
+            categoryId: categoryId,
+          ),
+          rawQueryParams: {'categoryId': categoryId},
         );
 
-  static const String name = 'OrdersPageRoute';
+  static const String name = 'RSSubCategoriesScreenRoute';
+}
+
+class RSSubCategoriesScreenRouteArgs {
+  const RSSubCategoriesScreenRouteArgs({
+    this.key,
+    required this.categoryId,
+  });
+
+  final _i27.Key? key;
+
+  final String? categoryId;
+
+  @override
+  String toString() {
+    return 'RSSubCategoriesScreenRouteArgs{key: $key, categoryId: $categoryId}';
+  }
+}
+
+/// generated route for
+/// [_i25.RSIssuesScreen]
+class RSIssuesScreenRoute extends _i26.PageRouteInfo<RSIssuesScreenRouteArgs> {
+  RSIssuesScreenRoute({
+    _i27.Key? key,
+    required String? categoryId,
+  }) : super(
+          RSIssuesScreenRoute.name,
+          path: 'rs_issues',
+          args: RSIssuesScreenRouteArgs(
+            key: key,
+            categoryId: categoryId,
+          ),
+          rawQueryParams: {'categoryId': categoryId},
+        );
+
+  static const String name = 'RSIssuesScreenRoute';
+}
+
+class RSIssuesScreenRouteArgs {
+  const RSIssuesScreenRouteArgs({
+    this.key,
+    required this.categoryId,
+  });
+
+  final _i27.Key? key;
+
+  final String? categoryId;
+
+  @override
+  String toString() {
+    return 'RSIssuesScreenRouteArgs{key: $key, categoryId: $categoryId}';
+  }
 }

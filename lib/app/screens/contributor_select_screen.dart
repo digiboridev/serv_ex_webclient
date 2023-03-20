@@ -28,12 +28,12 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
 
   onAppUserSelect(AppUser appUser) {
     ref.read(contributorControllerProvider.notifier).setAppUserContributor(appUser: appUser);
-    context.router.navigate(const HomeScreenRoute());
+    context.router.navigate(const Home());
   }
 
   onCompanySelect(Company company) {
     ref.read(contributorControllerProvider.notifier).setCompanyContributor(company: company);
-    context.router.navigate(const HomeScreenRoute());
+    context.router.navigate(const Home());
   }
 
   @override
@@ -50,20 +50,20 @@ class _ContributorSelectScreenState extends ConsumerState<ContributorSelectScree
     return FillableScrollableWrapper(
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-              onPressed: onLogout,
-              child: Text(
-                'Logout',
-                style: TextStyle(
-                  fontSize: whenLayout<double>(mobile: 14.ms, tablet: 18.ts),
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-          ),
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //   alignment: Alignment.centerLeft,
+          //   child: TextButton(
+          //     onPressed: onLogout,
+          //     child: Text(
+          //       'Logout',
+          //       style: TextStyle(
+          //         fontSize: whenLayout<double>(mobile: 14.ms, tablet: 18.ts),
+          //         color: AppColors.primary,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           MinSpacer(minHeight: whenLayout<double>(mobile: 32.ms, tablet: 48.ts)),
           const Headline(text: 'CONTRIBUTOR CHOOSE'),
           SizedBox(height: whenLayout<double>(mobile: 40.ms, tablet: 72.ts)),

@@ -1,9 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/global_providers.dart';
+import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
+import 'package:serv_expert_webclient/data/models/user/app_user.dart';
+import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
-import 'package:serv_expert_webclient/router.gr.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -13,189 +14,86 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  final _innerRouterKey = GlobalKey<AutoRouterState>();
-
   @override
   Widget build(BuildContext context) {
+    AppUser appUser = ref.read(currentAppUserStreamProvider).value!;
+
+    return SidebarWrapper(
+      child: Container(
+        color: Colors.white,
+        child: FillableScrollableWrapper(
+          child: Column(
+            children: [
+              header(),
+              info(appUser),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget info(AppUser appUser) {
     return Container(
-      color: Colors.white,
-      child: Row(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.1),
+            offset: const Offset(0, 4),
+            blurRadius: 8,
+          ),
+        ],
+      ),
+      child: Column(
         children: [
-          menu(context),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+          Row(
+            children: const [
+              Text('Info', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('Name:'),
+              const SizedBox(
+                width: 4,
               ),
-              clipBehavior: Clip.hardEdge,
-              child: AutoRouter(
-                key: _innerRouterKey,
+              Text('${appUser.firstName} ${appUser.lastName}'),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('Email:'),
+              const SizedBox(
+                width: 4,
               ),
-            ),
-          )
+              Text(appUser.email),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('Phone:'),
+              const SizedBox(
+                width: 4,
+              ),
+              Text(appUser.phone),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Widget menu(BuildContext context) {
+  Widget header() {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.deepPurple.withOpacity(0.05),
-        border: Border(
-          right: BorderSide(
-            color: Colors.deepPurple.withOpacity(0.25),
-            width: 1,
-          ),
-        ),
-      ),
-      width: 200,
-      child: FillableScrollableWrapper(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              Material(
-                borderRadius: BorderRadius.circular(8),
-                child: InkWell(
-                  onTap: () {
-                    context.router.replace(const AppUserInfoPageRoute());
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.person),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          'User',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Material(
-                borderRadius: BorderRadius.circular(8),
-                child: InkWell(
-                  onTap: () {
-                    context.router.replace(const CompaniesInfoPageRoute());
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.business_center),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          'Companies',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Material(
-                borderRadius: BorderRadius.circular(8),
-                child: InkWell(
-                  onTap: () {
-                    context.router.replace(const OrdersPageRoute());
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.money_off_csred_sharp),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          'Orders',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Material(
-                    borderRadius: BorderRadius.circular(8),
-                    clipBehavior: Clip.hardEdge,
-                    child: IconButton(
-                      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                      icon: const Icon(
-                        Icons.home,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        context.router.navigate(const HomeScreenRoute());
-                      },
-                    ),
-                  ),
-                  Material(
-                    borderRadius: BorderRadius.circular(8),
-                    clipBehavior: Clip.hardEdge,
-                    child: InkWell(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        ref.read(authServiceProvider).signOut();
-                        context.router.replaceAll([const AuthScreenRoute()]);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(
-                            color: Colors.deepPurple,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-            ],
-          ),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: const [
+          Text('Profile', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+        ],
       ),
     );
   }

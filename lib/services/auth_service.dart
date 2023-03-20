@@ -1,4 +1,6 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:serv_expert_webclient/data/exceptions.dart';
 
 abstract class AuthService {
   /// Returns true if user is authorized
@@ -27,6 +29,9 @@ abstract class AuthService {
 
   /// Sign in with Google
   Future signInWithGoogle();
+
+  // Sign in with login and password
+  Future signInWithCustomJWT({required String login, required String password});
 
   /// Reload user data
   Future<void> reload();
@@ -84,6 +89,23 @@ class FireAuthServiceImpl implements AuthService {
     googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
     return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+  }
+
+  @override
+  Future signInWithCustomJWT({required String login, required String password}) async {
+    try {
+      var result = await FirebaseFunctions.instanceFor(region: 'europe-west1').httpsCallable('auth_custom_jwt').call({
+        'login': login,
+        'password': password,
+      });
+
+      await FirebaseAuth.instance.signInWithCustomToken(result.data['token']);
+    } catch (e) {
+      if (e is FirebaseFunctionsException && e.code == 'invalid-argument') {
+        throw InvalidArgument(e.message ?? 'Invalid argument');
+      }
+      throw UnknownException(e.toString());
+    }
   }
 
   @override

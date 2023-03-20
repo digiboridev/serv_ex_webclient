@@ -1,12 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/screens/profile/subpages/orders.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order/order_details_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order/order_has_password_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order/order_password_type_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order/order_submitted_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/order/order_waranty_screen.dart';
+import 'package:serv_expert_webclient/app/screens/companies/companies_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/home_wrapper.dart';
+import 'package:serv_expert_webclient/app/screens/home/services_screen.dart';
+import 'package:serv_expert_webclient/app/screens/orders/orders_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_details_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_has_password_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_password_type_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_submitted_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_waranty_screen.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/app_wrapper.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
@@ -23,13 +26,10 @@ import 'package:serv_expert_webclient/auth/pages/success.dart';
 import 'package:serv_expert_webclient/auth/pages/company_members.dart';
 import 'package:serv_expert_webclient/app/screens/contributor_select_screen.dart';
 import 'package:serv_expert_webclient/app/screens/debug_screen.dart';
-import 'package:serv_expert_webclient/app/screens/home_screen.dart';
 import 'package:serv_expert_webclient/app/screens/profile/profile_screen.dart';
-import 'package:serv_expert_webclient/app/screens/profile/subpages/user_info.dart';
-import 'package:serv_expert_webclient/app/screens/profile/subpages/companies_info.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/breaking_types_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/categories_screen.dart';
-import 'package:serv_expert_webclient/app/screens/repair_service/subcategories_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/repair_service/breaking_types_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/repair_service/categories_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/repair_service/subcategories_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route,Screen',
@@ -56,27 +56,27 @@ import 'package:serv_expert_webclient/app/screens/repair_service/subcategories_s
       children: [
         RedirectRoute(path: '', redirectTo: 'home'),
         AutoRoute(path: 'contributor_select', page: ContributorSelectScreen),
-        AutoRoute(path: 'home', page: HomeScreen, guards: [ContributorGuard]),
-        // AutoRoute(path: 'service_vendors', page: RepairServiceVendorsScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'rs_categories', page: RSCategoriesScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'rs_subcategories', page: RSSubCategoriesScreen, guards: [ContributorGuard]),
-        AutoRoute(path: 'rs_issues', page: RSIssuesScreen, guards: [ContributorGuard]),
+        AutoRoute(
+          name: 'home',
+          path: 'home',
+          page: HomeWrapper,
+          guards: [ContributorGuard],
+          children: [
+            RedirectRoute(path: '', redirectTo: 'services'),
+            AutoRoute(path: 'services', page: ServicesScreen),
+            AutoRoute(path: 'rs_categories', page: RSCategoriesScreen),
+            AutoRoute(path: 'rs_subcategories', page: RSSubCategoriesScreen),
+            AutoRoute(path: 'rs_issues', page: RSIssuesScreen),
+          ],
+        ),
+        AutoRoute(path: 'profile', page: ProfileScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'companies', page: CompaniesScreen, guards: [ContributorGuard]),
+        AutoRoute(path: 'orders', page: OrdersScreen, guards: [ContributorGuard]),
         AutoRoute(path: 'rs_order_details', page: RSOrderDetailsScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_passtypes', page: RSOrderPasswordTypeScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_submitted', page: RSOrderSubmittedScreen, guards: [ContributorGuard]),
-        AutoRoute(
-          path: 'profile',
-          page: ProfileScreen,
-          guards: [ContributorGuard],
-          children: [
-            RedirectRoute(path: '', redirectTo: 'user_info'),
-            AutoRoute(path: 'user_info', page: AppUserInfoPage),
-            AutoRoute(path: 'companies_info', page: CompaniesInfoPage),
-            AutoRoute(path: 'orders', page: OrdersPage),
-          ],
-        ),
         AutoRoute(path: 'b', page: SB),
       ],
     ),

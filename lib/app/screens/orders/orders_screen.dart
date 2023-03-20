@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
+import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
+import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
+import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
@@ -18,31 +20,33 @@ final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) {
   }
 });
 
-class OrdersPage extends ConsumerStatefulWidget {
-  const OrdersPage({super.key});
+class OrdersScreen extends ConsumerStatefulWidget {
+  const OrdersScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _OrdersPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _OrdersScreenState();
 }
 
-class _OrdersPageState extends ConsumerState<OrdersPage> {
+class _OrdersScreenState extends ConsumerState<OrdersScreen> {
   @override
   Widget build(BuildContext context) {
     AsyncValue<List<RSOrder>> ordersState = ref.watch(ordersStreamProvider);
 
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          header(),
-          Expanded(
-            child: ordersState.when(
-              data: (orders) => ordersList(orders),
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Center(child: Text(error.toString())),
+    return SidebarWrapper(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            header(),
+            Expanded(
+              child: ordersState.when(
+                data: (orders) => ordersList(orders),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(child: Text(error.toString())),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -58,12 +62,15 @@ class _OrdersPageState extends ConsumerState<OrdersPage> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.deepPurple.withOpacity(0.05),
-        border: Border.all(
-          color: Colors.deepPurple.withOpacity(0.25),
-          width: 1,
-        ),
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.1),
+            offset: const Offset(0, 4),
+            blurRadius: 8,
+          ),
+        ],
       ),
       child: Column(
         children: [

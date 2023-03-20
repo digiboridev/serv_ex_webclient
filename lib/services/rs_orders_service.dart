@@ -5,6 +5,7 @@ import 'package:serv_expert_webclient/data/models/repair_service/order/order.dar
 import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 
+// TODO move to backend
 class RSOrdersService {
   final RSOrdersRepository _ordersRepository;
   RSOrdersService({
@@ -12,8 +13,6 @@ class RSOrdersService {
   }) : _ordersRepository = ordersRepository;
 
   Future createOrder({required RSNewOrderDTO order}) async {
-    // TODO move to backend
-
     if (order.validate() == false) throw Exception('Invalid order');
 
     RSOrder newOrder = RSOrder(
@@ -33,6 +32,23 @@ class RSOrdersService {
       status: RSOrderStatus.newOrder,
       statusesDetails: const RSOrderStatusesDetails(),
       createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
+    await _ordersRepository.setOrder(newOrder);
+  }
+
+  Future cancelOrder({required String orderId, required RSOCancellDetails details}) async {
+    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    if (order.status == RSOrderStatus.canceled) throw Exception('Order already canceled');
+
+    RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
+      cancellDetails: details,
+    );
+
+    RSOrder newOrder = order.copyWith(
+      status: RSOrderStatus.canceled,
+      statusesDetails: newStatusesDetails,
       updatedAt: DateTime.now(),
     );
 

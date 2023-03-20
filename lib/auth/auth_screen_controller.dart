@@ -76,6 +76,25 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     }
   }
 
+  signinWithCustomJWT({required String login, required String password}) async {
+    AuthScreenState currentState = state;
+    if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
+    if (currentState.busy) throw Exception('Controller is busy');
+
+    log('signinWithLP()');
+
+    state = const ASSUnauthorized(busy: true);
+
+    try {
+      await _authService.signInWithCustomJWT(login: login, password: password);
+      log('signinWithLP() signed in');
+      await updateState();
+    } catch (e) {
+      log(e);
+      state = ASSUnauthorized(error: e.toString());
+    }
+  }
+
   signInWithGoogle() async {
     AuthScreenState currentState = state;
     if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
