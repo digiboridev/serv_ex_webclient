@@ -5,11 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
+import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 class OfferForm extends StatefulWidget {
-  const OfferForm({required this.offerSentDetails, required this.onAgree, required this.onDecline, super.key});
-  final RSOrderOfferSentDetails offerSentDetails;
+  const OfferForm({required this.offerCreatedDetails, required this.onAgree, required this.onDecline, super.key});
+  final RSOrderOfferCreatedDetails offerCreatedDetails;
   final Function(List<RepairPart>) onAgree;
   final Function() onDecline;
 
@@ -23,15 +24,15 @@ class _OfferFormState extends State<OfferForm> {
   @override
   void initState() {
     super.initState();
-    parts = widget.offerSentDetails.parts;
+    parts = widget.offerCreatedDetails.parts;
   }
 
   @override
   void didUpdateWidget(covariant OfferForm oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.offerSentDetails != widget.offerSentDetails) {
-      parts = widget.offerSentDetails.parts;
+    if (oldWidget.offerCreatedDetails != widget.offerCreatedDetails) {
+      parts = widget.offerCreatedDetails.parts;
     }
   }
 
@@ -88,7 +89,7 @@ class _OfferFormState extends State<OfferForm> {
         Row(
           children: [
             Text(
-              'Employee name: ',
+              'Employee nickname: ',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 22,
@@ -96,7 +97,7 @@ class _OfferFormState extends State<OfferForm> {
               ),
             ),
             Text(
-              widget.offerSentDetails.fantomasName,
+              widget.offerCreatedDetails.employeeNick,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 22,
@@ -108,7 +109,7 @@ class _OfferFormState extends State<OfferForm> {
         SizedBox(height: 16),
         partsTableHeader(),
         SizedBox(height: 16),
-        ...widget.offerSentDetails.parts.map((part) {
+        ...widget.offerCreatedDetails.parts.map((part) {
           return Column(
             children: [
               PartTile(
@@ -163,7 +164,7 @@ class _OfferFormState extends State<OfferForm> {
               ),
             ),
             Text(
-              widget.offerSentDetails.noteForClient,
+              widget.offerCreatedDetails.noteForClient,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 22,
@@ -172,7 +173,7 @@ class _OfferFormState extends State<OfferForm> {
             ),
           ],
         ),
-        SizedBox(height: 32),
+        MinSpacer(minHeight: 32),
         SizedBox(
           width: 546,
           child: RegularButton(

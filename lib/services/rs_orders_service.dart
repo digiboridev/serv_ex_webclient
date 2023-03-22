@@ -60,23 +60,106 @@ class RSOrdersService {
 
   Future confirmOffer({required String orderId, required List<RepairPart> parts}) async {
     RSOrder order = await _ordersRepository.orderById(id: orderId);
-    if (order.status != RSOrderStatus.offerSent) throw Exception('Invalid order status');
+    if (order.status != RSOrderStatus.offerCreated) throw Exception('Invalid order status');
 
     RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
       confirmedOfferDetails: RSOrderConfirmedOfferDetails(
         confirmationSkipped: false,
-        employeeId: null,
         parts: parts,
-        noteForClient: order.statusesDetails.offerSentDetails!.noteForClient,
-        noteForEmployee: order.statusesDetails.offerSentDetails!.noteForEmployee,
-        afterDiagnostic: order.statusesDetails.offerSentDetails!.afterDiagnostic,
-        paymentRequired: order.statusesDetails.offerSentDetails!.paymentRequired,
       ),
     );
 
     RSOrder newOrder = order.copyWith(
       status: RSOrderStatus.confirmedOffer,
       statusesDetails: newStatusesDetails,
+      updatedAt: DateTime.now(),
+    );
+
+    await _ordersRepository.setOrder(newOrder);
+  }
+
+  Future declineOffer({required String orderId}) async {
+    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    if (order.status != RSOrderStatus.offerCreated) throw Exception('Invalid order status');
+
+    if (order.statusesDetails.offerCreatedDetails!.afterDiagnostic) {
+      RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
+        declinedOfferDetails: RSOrderDeclinedOfferDetails(afterDiagnostic: true),
+      );
+
+      RSOrder newOrder = order.copyWith(
+        status: RSOrderStatus.declinedOffer,
+        statusesDetails: newStatusesDetails,
+        updatedAt: DateTime.now(),
+      );
+
+      await _ordersRepository.setOrder(newOrder);
+    } else {
+      RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
+        declinedOfferDetails: RSOrderDeclinedOfferDetails(afterDiagnostic: false),
+        workFinishedDetails: RSOrderWorkFinishedDetails(
+          finishedAfter: FinishedAfterType.offer,
+          paymentRequired: false,
+          signRequested: false,
+          sign: '',
+        ),
+      );
+
+      RSOrder newOrder = order.copyWith(
+        status: RSOrderStatus.workFinished,
+        statusesDetails: newStatusesDetails,
+        updatedAt: DateTime.now(),
+      );
+
+      await _ordersRepository.setOrder(newOrder);
+    }
+  }
+
+  Future payForDiagnostic({required String orderId}) async {
+    RSOrder order = await _ordersRepository.orderById(id: orderId);
+
+    if (order.status == RSOrderStatus.declinedOffer) {
+      RSOrderDeclinedOfferDetails declinedOfferDetails = order.statusesDetails.declinedOfferDetails!;
+      if (declinedOfferDetails.afterDiagnostic == false) throw Exception('Invalid order state');
+
+      RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
+        workFinishedDetails: RSOrderWorkFinishedDetails(
+          finishedAfter: FinishedAfterType.offer,
+          paymentRequired: false,
+          signRequested: false,
+          sign: '',
+        ),
+      );
+
+      RSOrder newOrder = order.copyWith(
+        status: RSOrderStatus.workFinished,
+        statusesDetails: newStatusesDetails,
+        paymentStatus: PaymentStatus.paid,
+        updatedAt: DateTime.now(),
+      );
+
+      await _ordersRepository.setOrder(newOrder);
+    } else if (order.status == RSOrderStatus.workFinished) {
+      RSOrderWorkFinishedDetails workFinishedDetails = order.statusesDetails.workFinishedDetails!;
+      if (!workFinishedDetails.paymentRequired || (workFinishedDetails.finishedAfter != FinishedAfterType.diagnistic)) throw Exception('Invalid order state');
+
+      RSOrder newOrder = order.copyWith(
+        paymentStatus: PaymentStatus.paid,
+        updatedAt: DateTime.now(),
+      );
+
+      await _ordersRepository.setOrder(newOrder);
+    } else {
+      throw Exception('Invalid order status');
+    }
+  }
+
+  Future payForOffer({required String orderId}) async {
+    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    if (order.statusesDetails.confirmedOfferDetails == null) throw Exception('Invalid order state');
+
+    RSOrder newOrder = order.copyWith(
+      paymentStatus: PaymentStatus.paid,
       updatedAt: DateTime.now(),
     );
 

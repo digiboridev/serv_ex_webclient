@@ -7,7 +7,7 @@ enum RSOrderStatus {
   newOrder,
   accepted,
   onDiagnostic,
-  offerSent,
+  offerCreated,
   confirmedOffer,
   declinedOffer,
   waitingForParts,
@@ -20,7 +20,7 @@ enum RSOrderStatus {
 class RSOrderStatusesDetails extends Equatable {
   final RSOrderAcceptDetails? acceptedDetails;
   final RSOrderDiagnosticDetails? onDiagnosticDetails;
-  final RSOrderOfferSentDetails? offerSentDetails;
+  final RSOrderOfferCreatedDetails? offerCreatedDetails;
   final RSOrderConfirmedOfferDetails? confirmedOfferDetails;
   final RSOrderDeclinedOfferDetails? declinedOfferDetails;
   final RSOrderWaitingForPartsDetails? waitingForPartsDetails;
@@ -31,7 +31,7 @@ class RSOrderStatusesDetails extends Equatable {
   const RSOrderStatusesDetails({
     this.acceptedDetails,
     this.onDiagnosticDetails,
-    this.offerSentDetails,
+    this.offerCreatedDetails,
     this.confirmedOfferDetails,
     this.declinedOfferDetails,
     this.waitingForPartsDetails,
@@ -44,7 +44,7 @@ class RSOrderStatusesDetails extends Equatable {
   RSOrderStatusesDetails copyWith({
     RSOrderAcceptDetails? acceptedDetails,
     RSOrderDiagnosticDetails? onDiagnosticDetails,
-    RSOrderOfferSentDetails? offerSentDetails,
+    RSOrderOfferCreatedDetails? offerCreatedDetails,
     RSOrderConfirmedOfferDetails? confirmedOfferDetails,
     RSOrderDeclinedOfferDetails? declinedOfferDetails,
     RSOrderWaitingForPartsDetails? waitingForPartsDetails,
@@ -56,7 +56,7 @@ class RSOrderStatusesDetails extends Equatable {
     return RSOrderStatusesDetails(
       acceptedDetails: acceptedDetails ?? this.acceptedDetails,
       onDiagnosticDetails: onDiagnosticDetails ?? this.onDiagnosticDetails,
-      offerSentDetails: offerSentDetails ?? this.offerSentDetails,
+      offerCreatedDetails: offerCreatedDetails ?? this.offerCreatedDetails,
       confirmedOfferDetails: confirmedOfferDetails ?? this.confirmedOfferDetails,
       declinedOfferDetails: declinedOfferDetails ?? this.declinedOfferDetails,
       waitingForPartsDetails: waitingForPartsDetails ?? this.waitingForPartsDetails,
@@ -71,7 +71,7 @@ class RSOrderStatusesDetails extends Equatable {
     return <String, dynamic>{
       'acceptedDetails': acceptedDetails?.toMap(),
       'onDiagnosticDetails': onDiagnosticDetails?.toMap(),
-      'offerSentDetails': offerSentDetails?.toMap(),
+      'offerCreatedDetails': offerCreatedDetails?.toMap(),
       'confirmedOfferDetails': confirmedOfferDetails?.toMap(),
       'declinedOfferDetails': declinedOfferDetails?.toMap(),
       'waitingForPartsDetails': waitingForPartsDetails?.toMap(),
@@ -86,7 +86,7 @@ class RSOrderStatusesDetails extends Equatable {
     return RSOrderStatusesDetails(
       acceptedDetails: map['acceptedDetails'] != null ? RSOrderAcceptDetails.fromMap(map['acceptedDetails'] as Map<String, dynamic>) : null,
       onDiagnosticDetails: map['onDiagnosticDetails'] != null ? RSOrderDiagnosticDetails.fromMap(map['onDiagnosticDetails'] as Map<String, dynamic>) : null,
-      offerSentDetails: map['offerSentDetails'] != null ? RSOrderOfferSentDetails.fromMap(map['offerSentDetails'] as Map<String, dynamic>) : null,
+      offerCreatedDetails: map['offerCreatedDetails'] != null ? RSOrderOfferCreatedDetails.fromMap(map['offerCreatedDetails'] as Map<String, dynamic>) : null,
       confirmedOfferDetails:
           map['confirmedOfferDetails'] != null ? RSOrderConfirmedOfferDetails.fromMap(map['confirmedOfferDetails'] as Map<String, dynamic>) : null,
       declinedOfferDetails:
@@ -112,7 +112,7 @@ class RSOrderStatusesDetails extends Equatable {
     return [
       acceptedDetails ?? '',
       onDiagnosticDetails ?? '',
-      offerSentDetails ?? '',
+      offerCreatedDetails ?? '',
       confirmedOfferDetails ?? '',
       declinedOfferDetails ?? '',
       waitingForPartsDetails ?? '',
@@ -287,39 +287,47 @@ class RSOrderDiagnosticDetails extends Equatable {
 
 // Offer sent Details
 
-class RSOrderOfferSentDetails extends Equatable {
+class RSOrderOfferCreatedDetails extends Equatable {
   final String employeeId;
+  final String employeeNick;
   final List<RepairPart> parts;
-  final bool paymentRequired;
-  final String fantomasName;
+  final bool confirmationRequired;
+  final bool withPayment;
+  final bool prepayRequired;
   final String noteForClient;
   final String noteForEmployee;
   final bool afterDiagnostic;
 
-  const RSOrderOfferSentDetails({
+  const RSOrderOfferCreatedDetails({
     required this.employeeId,
+    required this.employeeNick,
     required this.parts,
-    required this.paymentRequired,
-    required this.fantomasName,
+    required this.confirmationRequired,
+    required this.withPayment,
+    required this.prepayRequired,
     required this.noteForClient,
     required this.noteForEmployee,
     required this.afterDiagnostic,
   });
 
-  RSOrderOfferSentDetails copyWith({
+  RSOrderOfferCreatedDetails copyWith({
     String? employeeId,
+    String? employeeNick,
     List<RepairPart>? parts,
-    bool? paymentRequired,
-    String? fantomasName,
+    bool? confirmationRequired,
+    bool? withPayment,
+    bool? prepayRequired,
     String? noteForClient,
     String? noteForEmployee,
     bool? afterDiagnostic,
   }) {
-    return RSOrderOfferSentDetails(
+    return RSOrderOfferCreatedDetails(
       employeeId: employeeId ?? this.employeeId,
+      employeeNick: employeeNick ?? this.employeeNick,
       parts: parts ?? this.parts,
-      paymentRequired: paymentRequired ?? this.paymentRequired,
-      fantomasName: fantomasName ?? this.fantomasName,
+      confirmationRequired: confirmationRequired ?? this.confirmationRequired,
+      withPayment: withPayment ?? this.withPayment,
+      prepayRequired: prepayRequired ?? this.prepayRequired,
       noteForClient: noteForClient ?? this.noteForClient,
       noteForEmployee: noteForEmployee ?? this.noteForEmployee,
       afterDiagnostic: afterDiagnostic ?? this.afterDiagnostic,
@@ -329,25 +337,29 @@ class RSOrderOfferSentDetails extends Equatable {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'employeeId': employeeId,
+      'employeeNick': employeeNick,
       'parts': parts.map((x) => x.toMap()).toList(),
-      'paymentRequired': paymentRequired,
-      'fantomasName': fantomasName,
+      'confirmationRequired': confirmationRequired,
+      'withPayment': withPayment,
+      'prepayRequired': prepayRequired,
       'noteForClient': noteForClient,
       'noteForEmployee': noteForEmployee,
       'afterDiagnostic': afterDiagnostic,
     };
   }
 
-  factory RSOrderOfferSentDetails.fromMap(Map<String, dynamic> map) {
-    return RSOrderOfferSentDetails(
+  factory RSOrderOfferCreatedDetails.fromMap(Map<String, dynamic> map) {
+    return RSOrderOfferCreatedDetails(
       employeeId: map['employeeId'] as String,
+      employeeNick: map['employeeNick'] as String,
       parts: List<RepairPart>.from(
         (map['parts'] as List).map<RepairPart>(
           (x) => RepairPart.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      paymentRequired: map['paymentRequired'] as bool,
-      fantomasName: map['fantomasName'] as String,
+      confirmationRequired: map['confirmationRequired'] as bool,
+      withPayment: map['withPayment'] as bool,
+      prepayRequired: map['prepayRequired'] as bool,
       noteForClient: map['noteForClient'] as String,
       noteForEmployee: map['noteForEmployee'] as String,
       afterDiagnostic: map['afterDiagnostic'] as bool,
@@ -356,7 +368,7 @@ class RSOrderOfferSentDetails extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory RSOrderOfferSentDetails.fromJson(String source) => RSOrderOfferSentDetails.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RSOrderOfferCreatedDetails.fromJson(String source) => RSOrderOfferCreatedDetails.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
@@ -365,9 +377,11 @@ class RSOrderOfferSentDetails extends Equatable {
   List<Object> get props {
     return [
       employeeId,
+      employeeNick,
       parts,
-      paymentRequired,
-      fantomasName,
+      confirmationRequired,
+      withPayment,
+      prepayRequired,
       noteForClient,
       noteForEmployee,
       afterDiagnostic,
@@ -379,68 +393,38 @@ class RSOrderOfferSentDetails extends Equatable {
 
 class RSOrderConfirmedOfferDetails extends Equatable {
   final bool confirmationSkipped;
-  final String? employeeId;
   final List<RepairPart> parts;
-  final String noteForClient;
-  final String noteForEmployee;
-  final bool afterDiagnostic;
-  final bool paymentRequired;
 
   const RSOrderConfirmedOfferDetails({
     required this.confirmationSkipped,
-    required this.employeeId,
     required this.parts,
-    required this.noteForClient,
-    required this.noteForEmployee,
-    required this.afterDiagnostic,
-    required this.paymentRequired,
   });
 
   RSOrderConfirmedOfferDetails copyWith({
     bool? confirmationSkipped,
-    String? employeeId,
     List<RepairPart>? parts,
-    String? noteForClient,
-    String? noteForEmployee,
-    bool? afterDiagnostic,
-    bool? paymentRequired,
   }) {
     return RSOrderConfirmedOfferDetails(
       confirmationSkipped: confirmationSkipped ?? this.confirmationSkipped,
-      employeeId: employeeId ?? this.employeeId,
       parts: parts ?? this.parts,
-      noteForClient: noteForClient ?? this.noteForClient,
-      noteForEmployee: noteForEmployee ?? this.noteForEmployee,
-      afterDiagnostic: afterDiagnostic ?? this.afterDiagnostic,
-      paymentRequired: paymentRequired ?? this.paymentRequired,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'confirmationSkipped': confirmationSkipped,
-      'employeeId': employeeId,
       'parts': parts.map((x) => x.toMap()).toList(),
-      'noteForClient': noteForClient,
-      'noteForEmployee': noteForEmployee,
-      'afterDiagnostic': afterDiagnostic,
-      'paymentRequired': paymentRequired,
     };
   }
 
   factory RSOrderConfirmedOfferDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderConfirmedOfferDetails(
       confirmationSkipped: map['confirmationSkipped'] as bool,
-      employeeId: map['employeeId'] != null ? map['employeeId'] as String : null,
       parts: List<RepairPart>.from(
         (map['parts'] as List).map<RepairPart>(
           (x) => RepairPart.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      noteForClient: map['noteForClient'] as String,
-      noteForEmployee: map['noteForEmployee'] as String,
-      afterDiagnostic: map['afterDiagnostic'] as bool,
-      paymentRequired: map['paymentRequired'] as bool,
     );
   }
 
@@ -452,17 +436,7 @@ class RSOrderConfirmedOfferDetails extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props {
-    return [
-      confirmationSkipped,
-      employeeId ?? 0,
-      parts,
-      noteForClient,
-      noteForEmployee,
-      afterDiagnostic,
-      paymentRequired,
-    ];
-  }
+  List<Object> get props => [confirmationSkipped, parts];
 }
 
 // Declined offer details
@@ -583,31 +557,37 @@ class RSOrderInProgressDetails extends Equatable {
 }
 
 // Finished details
+
+enum FinishedAfterType {
+  diagnistic,
+  offer,
+}
+
 class RSOrderWorkFinishedDetails extends Equatable {
-  final String employeeId;
+  final String? employeeId;
+  final FinishedAfterType finishedAfter;
   final bool paymentRequired;
-  final bool withoutRepair;
   final bool signRequested;
   final String sign;
   const RSOrderWorkFinishedDetails({
-    required this.employeeId,
+    this.employeeId,
+    required this.finishedAfter,
     required this.paymentRequired,
-    required this.withoutRepair,
     required this.signRequested,
     required this.sign,
   });
 
   RSOrderWorkFinishedDetails copyWith({
     String? employeeId,
+    FinishedAfterType? finishedAfter,
     bool? paymentRequired,
-    bool? withoutRepair,
     bool? signRequested,
     String? sign,
   }) {
     return RSOrderWorkFinishedDetails(
       employeeId: employeeId ?? this.employeeId,
+      finishedAfter: finishedAfter ?? this.finishedAfter,
       paymentRequired: paymentRequired ?? this.paymentRequired,
-      withoutRepair: withoutRepair ?? this.withoutRepair,
       signRequested: signRequested ?? this.signRequested,
       sign: sign ?? this.sign,
     );
@@ -616,8 +596,8 @@ class RSOrderWorkFinishedDetails extends Equatable {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'employeeId': employeeId,
+      'finishedAfter': finishedAfter.name,
       'paymentRequired': paymentRequired,
-      'withoutRepair': withoutRepair,
       'signRequested': signRequested,
       'sign': sign,
     };
@@ -625,9 +605,9 @@ class RSOrderWorkFinishedDetails extends Equatable {
 
   factory RSOrderWorkFinishedDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderWorkFinishedDetails(
-      employeeId: map['employeeId'] as String,
+      employeeId: map['employeeId'] as String?,
+      finishedAfter: FinishedAfterType.values.byName(map['finishedAfter'] as String),
       paymentRequired: map['paymentRequired'] as bool,
-      withoutRepair: map['withoutRepair'] as bool,
       signRequested: map['signRequested'] as bool,
       sign: map['sign'] as String,
     );
@@ -643,9 +623,9 @@ class RSOrderWorkFinishedDetails extends Equatable {
   @override
   List<Object> get props {
     return [
-      employeeId,
+      employeeId ?? '',
+      finishedAfter,
       paymentRequired,
-      withoutRepair,
       signRequested,
       sign,
     ];

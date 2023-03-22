@@ -28,6 +28,19 @@ class ConfirmedOfferDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          children: [
+            Text(
+              'Employee nickname: ',
+              style: TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              order.statusesDetails.offerCreatedDetails!.employeeNick,
+              style: TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+        SizedBox(height: 32),
         RepairPartsTable(
           parts: order.statusesDetails.confirmedOfferDetails!.parts,
           showSelection: true,
@@ -58,7 +71,7 @@ class ConfirmedOfferDetails extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Payment required:',
+              'With payment:',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
@@ -68,7 +81,29 @@ class ConfirmedOfferDetails extends StatelessWidget {
               width: 8,
             ),
             Text(
-              order.statusesDetails.confirmedOfferDetails!.paymentRequired ? 'Yes' : 'No',
+              order.statusesDetails.offerCreatedDetails!.withPayment ? 'Yes' : 'No',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        Row(
+          children: [
+            Text(
+              'Prepay reuired:',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              order.statusesDetails.offerCreatedDetails!.prepayRequired ? 'Yes' : 'No',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
@@ -90,7 +125,7 @@ class ConfirmedOfferDetails extends StatelessWidget {
               width: 8,
             ),
             Text(
-              order.statusesDetails.confirmedOfferDetails!.noteForClient,
+              order.statusesDetails.offerCreatedDetails!.noteForClient,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
@@ -112,7 +147,7 @@ class ConfirmedOfferDetails extends StatelessWidget {
               width: 8,
             ),
             Text(
-              order.statusesDetails.confirmedOfferDetails!.noteForEmployee,
+              order.statusesDetails.offerCreatedDetails!.noteForEmployee,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,

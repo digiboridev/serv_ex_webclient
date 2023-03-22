@@ -13,7 +13,7 @@ class OfferDetails extends StatelessWidget {
 
   double get totalCost {
     double total = 0;
-    for (var part in order.statusesDetails.confirmedOfferDetails!.parts) {
+    for (var part in order.statusesDetails.offerCreatedDetails!.parts) {
       total += part.price;
       for (var subpart in part.subparts) {
         total += subpart.price;
@@ -33,13 +33,13 @@ class OfferDetails extends StatelessWidget {
               style: TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
             Text(
-              order.statusesDetails.offerSentDetails!.fantomasName,
+              order.statusesDetails.offerCreatedDetails!.employeeNick,
               style: TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ],
         ),
         SizedBox(height: 32),
-        RepairPartsTable(parts: order.statusesDetails.offerSentDetails!.parts),
+        RepairPartsTable(parts: order.statusesDetails.offerCreatedDetails!.parts),
         SizedBox(height: 16),
         Row(
           children: [
@@ -66,7 +66,7 @@ class OfferDetails extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Payment required:',
+              'With Payment:',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
@@ -76,7 +76,51 @@ class OfferDetails extends StatelessWidget {
               width: 8,
             ),
             Text(
-              order.statusesDetails.offerSentDetails!.paymentRequired ? 'Yes' : 'No',
+              order.statusesDetails.offerCreatedDetails!.withPayment ? 'Yes' : 'No',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        Row(
+          children: [
+            Text(
+              'Prepay required:',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              order.statusesDetails.offerCreatedDetails!.prepayRequired ? 'Yes' : 'No',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        Row(
+          children: [
+            Text(
+              'Confirmation required:',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              order.statusesDetails.offerCreatedDetails!.confirmationRequired ? 'Yes' : 'No',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
@@ -98,7 +142,7 @@ class OfferDetails extends StatelessWidget {
               width: 8,
             ),
             Text(
-              order.statusesDetails.offerSentDetails!.noteForClient,
+              order.statusesDetails.offerCreatedDetails!.noteForClient,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
@@ -120,7 +164,7 @@ class OfferDetails extends StatelessWidget {
               width: 8,
             ),
             Text(
-              order.statusesDetails.offerSentDetails!.noteForEmployee,
+              order.statusesDetails.offerCreatedDetails!.noteForEmployee,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,

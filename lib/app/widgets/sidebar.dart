@@ -117,9 +117,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 ),
               ),
             ),
-            MinSpacer(
-              minHeight: 32,
-            ),
+            MinSpacer(minHeight: 32),
             Material(
               color: Colors.transparent,
               child: InkWell(
@@ -139,6 +137,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 ),
               ),
             ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
