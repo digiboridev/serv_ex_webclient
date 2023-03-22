@@ -8,6 +8,7 @@ import 'package:serv_expert_webclient/app/screens/order_screen/components/offer_
 import 'package:serv_expert_webclient/app/screens/order_screen/components/offer_form.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/order_accept_details.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/order_details_info.dart';
+import 'package:serv_expert_webclient/app/screens/order_screen/components/sign_form.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
@@ -74,6 +75,17 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     setState(() => busy = true);
     try {
       await ref.read(rsOrdersServiceProvider).payForOffer(orderId: widget.orderId);
+    } catch (e, s) {
+      log(e, stackTrace: s);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
+    if (mounted) setState(() => busy = false);
+  }
+
+  sendSignature(String sign) async {
+    setState(() => busy = true);
+    try {
+      await ref.read(rsOrdersServiceProvider).sendSignature(orderId: widget.orderId, sign: sign);
     } catch (e, s) {
       log(e, stackTrace: s);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
@@ -393,8 +405,15 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return SizedBox();
   }
 
-  Column workFinishedContent(RSOrder order) {
+  Widget workFinishedContent(RSOrder order) {
     RSOrderWorkFinishedDetails workFinishedDetails = order.statusesDetails.workFinishedDetails!;
+
+    if (workFinishedDetails.signRequested) {
+      return SignForm(
+        onSubmit: sendSignature,
+        sign: workFinishedDetails.sign,
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

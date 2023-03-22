@@ -28,7 +28,7 @@ class LoadingWrapper extends StatelessWidget {
               sigmaY: 5.0,
             ),
             child: Container(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withOpacity(0.01),
               alignment: Alignment.center,
               child: const CircularProgressIndicator(),
             ),

@@ -101,7 +101,6 @@ class RSOrdersService {
           finishedAfter: FinishedAfterType.offer,
           paymentRequired: false,
           signRequested: false,
-          sign: '',
         ),
       );
 
@@ -127,7 +126,6 @@ class RSOrdersService {
           finishedAfter: FinishedAfterType.offer,
           paymentRequired: false,
           signRequested: false,
-          sign: '',
         ),
       );
 
@@ -160,6 +158,25 @@ class RSOrdersService {
 
     RSOrder newOrder = order.copyWith(
       paymentStatus: PaymentStatus.paid,
+      updatedAt: DateTime.now(),
+    );
+
+    await _ordersRepository.setOrder(newOrder);
+  }
+
+  Future sendSignature({required String orderId, required String sign}) async {
+    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    if (order.status != RSOrderStatus.workFinished) throw Exception('Invalid order state');
+    if (order.statusesDetails.workFinishedDetails!.signRequested == false) throw Exception('Invalid order state');
+
+    RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
+      workFinishedDetails: order.statusesDetails.workFinishedDetails!.copyWith(
+        sign: sign,
+      ),
+    );
+
+    RSOrder newOrder = order.copyWith(
+      statusesDetails: newStatusesDetails,
       updatedAt: DateTime.now(),
     );
 

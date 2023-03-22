@@ -568,13 +568,13 @@ class RSOrderWorkFinishedDetails extends Equatable {
   final FinishedAfterType finishedAfter;
   final bool paymentRequired;
   final bool signRequested;
-  final String sign;
+  final String? sign;
   const RSOrderWorkFinishedDetails({
     this.employeeId,
     required this.finishedAfter,
     required this.paymentRequired,
     required this.signRequested,
-    required this.sign,
+    this.sign,
   });
 
   RSOrderWorkFinishedDetails copyWith({
@@ -609,7 +609,7 @@ class RSOrderWorkFinishedDetails extends Equatable {
       finishedAfter: FinishedAfterType.values.byName(map['finishedAfter'] as String),
       paymentRequired: map['paymentRequired'] as bool,
       signRequested: map['signRequested'] as bool,
-      sign: map['sign'] as String,
+      sign: map['sign'] as String?,
     );
   }
 
@@ -627,7 +627,7 @@ class RSOrderWorkFinishedDetails extends Equatable {
       finishedAfter,
       paymentRequired,
       signRequested,
-      sign,
+      sign ?? 0,
     ];
   }
 }
