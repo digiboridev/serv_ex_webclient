@@ -164,14 +164,14 @@ class RSOrdersService {
     await _ordersRepository.setOrder(newOrder);
   }
 
-  Future sendSignature({required String orderId, required String sign}) async {
+  Future sendSignature({required String orderId, required RSOrderSign signnature}) async {
     RSOrder order = await _ordersRepository.orderById(id: orderId);
     if (order.status != RSOrderStatus.workFinished) throw Exception('Invalid order state');
     if (order.statusesDetails.workFinishedDetails!.signRequested == false) throw Exception('Invalid order state');
 
     RSOrderStatusesDetails newStatusesDetails = order.statusesDetails.copyWith(
       workFinishedDetails: order.statusesDetails.workFinishedDetails!.copyWith(
-        sign: sign,
+        signnature: signnature,
       ),
     );
 

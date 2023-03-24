@@ -9,6 +9,7 @@ import 'package:serv_expert_webclient/app/screens/order_screen/components/offer_
 import 'package:serv_expert_webclient/app/screens/order_screen/components/order_accept_details.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/order_details_info.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/components/sign_form.dart';
+import 'package:serv_expert_webclient/app/screens/order_screen/components/sign_view.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
@@ -82,10 +83,10 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     if (mounted) setState(() => busy = false);
   }
 
-  sendSignature(String sign) async {
+  sendSignature(RSOrderSign signnature) async {
     setState(() => busy = true);
     try {
-      await ref.read(rsOrdersServiceProvider).sendSignature(orderId: widget.orderId, sign: sign);
+      await ref.read(rsOrdersServiceProvider).sendSignature(orderId: widget.orderId, signnature: signnature);
     } catch (e, s) {
       log(e, stackTrace: s);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
@@ -343,6 +344,41 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         ),
       );
     }
+
+    if (order.status == RSOrderStatus.closed) {
+      return SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            GestureDetector(
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+            ),
+            if (order.statusesDetails.offerCreatedDetails != null)
+              GestureDetector(
+                child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOrderStatus.offerCreated),
+                onTap: () => setState(() => showPrevStatus = RSOrderStatus.offerCreated),
+              ),
+            if (order.statusesDetails.confirmedOfferDetails != null)
+              GestureDetector(
+                child: StatusTile(text: 'Offer confirmed', active: showPrevStatus == RSOrderStatus.confirmedOffer),
+                onTap: () => setState(() => showPrevStatus = RSOrderStatus.confirmedOffer),
+              ),
+            if (order.statusesDetails.declinedOfferDetails != null)
+              GestureDetector(
+                child: StatusTile(text: 'Offer declined', active: showPrevStatus == RSOrderStatus.declinedOffer),
+                onTap: () => setState(() => showPrevStatus = RSOrderStatus.declinedOffer),
+              ),
+            GestureDetector(
+              child: StatusTile(text: 'Closed', active: showPrevStatus == null),
+              onTap: () => setState(() => showPrevStatus = null),
+            ),
+          ],
+        ),
+      );
+    }
     return SizedBox();
   }
 
@@ -359,6 +395,10 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
 
     if (showPrevStatus == RSOrderStatus.confirmedOffer) {
       return offerConfirmedContent(order, onlyView: true);
+    }
+
+    if (showPrevStatus == RSOrderStatus.declinedOffer) {
+      return offerDeclinedContent(order, onlyView: true);
     }
 
     // actual status view
@@ -402,7 +442,26 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       return workFinishedContent(order);
     }
 
+    if (order.status == RSOrderStatus.closed) {
+      return closedContent(order);
+    }
+
     return SizedBox();
+  }
+
+  Column closedContent(RSOrder order) {
+    RSOrderClosedDetails closedDetails = order.statusesDetails.closedDetails!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: 32),
+        SignView(
+          signnature: closedDetails.signnature,
+        ),
+        const SizedBox(height: 32),
+      ],
+    );
   }
 
   Widget workFinishedContent(RSOrder order) {
@@ -411,7 +470,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     if (workFinishedDetails.signRequested) {
       return SignForm(
         onSubmit: sendSignature,
-        sign: workFinishedDetails.sign,
+        signnature: workFinishedDetails.signnature,
       );
     }
 
@@ -481,7 +540,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     );
   }
 
-  Column offerDeclinedContent(RSOrder order) {
+  Column offerDeclinedContent(RSOrder order, {bool onlyView = false}) {
     RSOrderDeclinedOfferDetails declinedOfferDetails = order.statusesDetails.declinedOfferDetails!;
 
     return Column(
@@ -489,10 +548,11 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       children: [
         SizedBox(height: 32),
         OfferDetails(order: order),
-        if (declinedOfferDetails.afterDiagnostic) ...[
-          MinSpacer(minHeight: 32),
-          SizedBox(width: 546, child: RegularButton(onTap: onPayForDiagnostic, text: 'Pay for diagnostic')),
-        ],
+        if (!onlyView)
+          if (declinedOfferDetails.afterDiagnostic) ...[
+            MinSpacer(minHeight: 32),
+            SizedBox(width: 546, child: RegularButton(onTap: onPayForDiagnostic, text: 'Pay for diagnostic')),
+          ],
         const SizedBox(height: 32),
       ],
     );

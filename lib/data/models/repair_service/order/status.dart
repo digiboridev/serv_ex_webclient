@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
+
 import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
 
 enum RSOrderStatus {
@@ -563,18 +565,61 @@ enum FinishedAfterType {
   offer,
 }
 
+class RSOrderSign extends Equatable {
+  final String namePath;
+  final String signPath;
+  const RSOrderSign({
+    required this.namePath,
+    required this.signPath,
+  });
+
+  RSOrderSign copyWith({
+    String? namePath,
+    String? signPath,
+  }) {
+    return RSOrderSign(
+      namePath: namePath ?? this.namePath,
+      signPath: signPath ?? this.signPath,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'namePath': namePath,
+      'signPath': signPath,
+    };
+  }
+
+  factory RSOrderSign.fromMap(Map<String, dynamic> map) {
+    return RSOrderSign(
+      namePath: map['namePath'] as String,
+      signPath: map['signPath'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory RSOrderSign.fromJson(String source) => RSOrderSign.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object> get props => [namePath, signPath];
+}
+
 class RSOrderWorkFinishedDetails extends Equatable {
   final String? employeeId;
   final FinishedAfterType finishedAfter;
   final bool paymentRequired;
   final bool signRequested;
-  final String? sign;
+  final RSOrderSign? signnature;
   const RSOrderWorkFinishedDetails({
     this.employeeId,
     required this.finishedAfter,
     required this.paymentRequired,
     required this.signRequested,
-    this.sign,
+    this.signnature,
   });
 
   RSOrderWorkFinishedDetails copyWith({
@@ -582,14 +627,14 @@ class RSOrderWorkFinishedDetails extends Equatable {
     FinishedAfterType? finishedAfter,
     bool? paymentRequired,
     bool? signRequested,
-    String? sign,
+    RSOrderSign? signnature,
   }) {
     return RSOrderWorkFinishedDetails(
       employeeId: employeeId ?? this.employeeId,
       finishedAfter: finishedAfter ?? this.finishedAfter,
       paymentRequired: paymentRequired ?? this.paymentRequired,
       signRequested: signRequested ?? this.signRequested,
-      sign: sign ?? this.sign,
+      signnature: signnature ?? this.signnature,
     );
   }
 
@@ -599,17 +644,17 @@ class RSOrderWorkFinishedDetails extends Equatable {
       'finishedAfter': finishedAfter.name,
       'paymentRequired': paymentRequired,
       'signRequested': signRequested,
-      'sign': sign,
+      'signnature': signnature?.toMap(),
     };
   }
 
   factory RSOrderWorkFinishedDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderWorkFinishedDetails(
-      employeeId: map['employeeId'] as String?,
+      employeeId: map['employeeId'] != null ? map['employeeId'] as String : null,
       finishedAfter: FinishedAfterType.values.byName(map['finishedAfter'] as String),
       paymentRequired: map['paymentRequired'] as bool,
       signRequested: map['signRequested'] as bool,
-      sign: map['sign'] as String?,
+      signnature: map['signnature'] != null ? RSOrderSign.fromMap(map['signnature'] as Map<String, dynamic>) : null,
     );
   }
 
@@ -623,11 +668,11 @@ class RSOrderWorkFinishedDetails extends Equatable {
   @override
   List<Object> get props {
     return [
-      employeeId ?? '',
+      employeeId ?? 0,
       finishedAfter,
       paymentRequired,
       signRequested,
-      sign ?? 0,
+      signnature ?? 0,
     ];
   }
 }
@@ -636,34 +681,34 @@ class RSOrderWorkFinishedDetails extends Equatable {
 
 class RSOrderClosedDetails extends Equatable {
   final String employeeId;
-  final String sign;
+  final RSOrderSign signnature;
 
   const RSOrderClosedDetails({
     required this.employeeId,
-    required this.sign,
+    required this.signnature,
   });
 
   RSOrderClosedDetails copyWith({
     String? employeeId,
-    String? sign,
+    RSOrderSign? signnature,
   }) {
     return RSOrderClosedDetails(
       employeeId: employeeId ?? this.employeeId,
-      sign: sign ?? this.sign,
+      signnature: signnature ?? this.signnature,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'employeeId': employeeId,
-      'sign': sign,
+      'signnature': signnature.toMap(),
     };
   }
 
   factory RSOrderClosedDetails.fromMap(Map<String, dynamic> map) {
     return RSOrderClosedDetails(
       employeeId: map['employeeId'] as String,
-      sign: map['sign'] as String,
+      signnature: RSOrderSign.fromMap(map['signnature'] as Map<String, dynamic>),
     );
   }
 
@@ -675,5 +720,5 @@ class RSOrderClosedDetails extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [employeeId, sign];
+  List<Object> get props => [employeeId, signnature];
 }
