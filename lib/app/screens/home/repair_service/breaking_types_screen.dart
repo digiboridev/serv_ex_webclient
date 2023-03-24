@@ -137,9 +137,6 @@ class _IssueSelectionState extends ConsumerState<IssueSelection> {
           minHeight: 32,
         ),
         nextButton(),
-        const MinSpacer(
-          minHeight: 32,
-        ),
       ],
     );
   }

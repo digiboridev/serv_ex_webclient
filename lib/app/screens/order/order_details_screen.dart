@@ -64,46 +64,26 @@ class _RSOrderDetailsScreenState extends ConsumerState<RSOrderDetailsScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 32,
-              ),
+              const SizedBox(height: 32),
               const Text(
                 'ORDER',
                 style: AppTextStyles.headline,
               ),
-              const SizedBox(
-                height: 32,
-              ),
+              const SizedBox(height: 32),
               descriptionField(),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               deviceWetRadio(),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               wetDescriptionField(),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               deviceAccesoriesRadio(),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               accesoriesDescriptionField(),
-              const SizedBox(
-                height: 16,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const MinSpacer(
-                minHeight: 32,
-              ),
+              const SizedBox(height: 16),
+              const SizedBox(height: 16),
+              const MinSpacer(minHeight: 32),
               nextButton(),
-              const MinSpacer(
-                minHeight: 32,
-              ),
+              const SizedBox(height: 32),
             ],
           ),
         ),
