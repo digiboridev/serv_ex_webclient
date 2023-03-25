@@ -218,16 +218,16 @@ class OrderDetailsInfo extends StatelessWidget {
               fontSize: 22,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
-            'Device password:',
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
           if (order.details.password != null) ...[
+            SizedBox(height: 16),
+            Text(
+              'Device password:',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             if (order.details.password is PatternPassword)
               Container(
                 margin: EdgeInsets.only(top: 16),
