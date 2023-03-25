@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:equatable/equatable.dart';
-
 class RepairPartDTO {
   final String name;
   final DateTime date;

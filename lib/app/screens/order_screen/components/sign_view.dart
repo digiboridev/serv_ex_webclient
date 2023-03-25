@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hand_signature/signature.dart';
-import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/sign.dart';
 import 'package:serv_expert_webclient/widgets/headline.dart';
 
 class SignView extends ConsumerStatefulWidget {

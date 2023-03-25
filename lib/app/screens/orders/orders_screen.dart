@@ -100,7 +100,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                 const SizedBox(
                   width: 4,
                 ),
-                Text(order.status.name),
+                Text(order.status.currentStatus.name),
               ],
             ),
             Row(

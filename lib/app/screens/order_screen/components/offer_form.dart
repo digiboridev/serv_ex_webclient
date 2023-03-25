@@ -1,10 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
-import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/offer_created.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
@@ -277,7 +276,9 @@ class _PartTileState extends State<PartTile> {
               children: [
                 SizedBox(width: 8),
                 GestureDetector(
-                    onTap: () => widget.onPartSelect(widget.part), child: Icon(widget.part.selected ? Icons.check_box : Icons.check_box_outline_blank)),
+                  onTap: () => widget.onPartSelect(widget.part),
+                  child: Icon(widget.part.selected ? Icons.check_box : Icons.check_box_outline_blank),
+                ),
                 SizedBox(width: 8),
                 Container(
                   width: 1,

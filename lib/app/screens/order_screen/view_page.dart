@@ -14,7 +14,12 @@ import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/sign.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/closed.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/declined_offer.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/offer_created.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/work_finished.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
@@ -33,7 +38,7 @@ class OrderScreenViewPage extends ConsumerStatefulWidget {
 
 class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   bool busy = false;
-  RSOrderStatus? showPrevStatus;
+  RSOStatusType? showPrevStatus;
 
   cancellOrder() {
     context.router.navigate(OrderCancellPageRoute());
@@ -159,7 +164,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Widget statuses(RSOrder order) {
-    if (order.status == RSOrderStatus.newOrder) {
+    if (order.status.currentStatus == RSOStatusType.newOrder) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -171,7 +176,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         ),
       );
     }
-    if (order.status == RSOrderStatus.canceled) {
+    if (order.status.currentStatus == RSOStatusType.canceled) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -184,7 +189,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.accepted) {
+    if (order.status.currentStatus == RSOStatusType.accepted) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -197,7 +202,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.onDiagnostic) {
+    if (order.status.currentStatus == RSOStatusType.onDiagnostic) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -211,7 +216,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.offerCreated) {
+    if (order.status.currentStatus == RSOStatusType.offerCreated) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -219,8 +224,8 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
           runSpacing: 8,
           children: [
             GestureDetector(
-              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOStatusType.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.accepted),
             ),
             GestureDetector(
               child: StatusTile(text: 'Offer created', active: showPrevStatus == null),
@@ -231,7 +236,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.confirmedOffer) {
+    if (order.status.currentStatus == RSOStatusType.confirmedOffer) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -239,12 +244,12 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
           runSpacing: 8,
           children: [
             GestureDetector(
-              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOStatusType.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.accepted),
             ),
             GestureDetector(
-              child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOrderStatus.offerCreated),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.offerCreated),
+              child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOStatusType.offerCreated),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.offerCreated),
             ),
             GestureDetector(
               child: StatusTile(text: 'Offer confirmed', active: showPrevStatus == null),
@@ -255,7 +260,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.declinedOffer) {
+    if (order.status.currentStatus == RSOStatusType.declinedOffer) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -263,12 +268,12 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
           runSpacing: 8,
           children: [
             GestureDetector(
-              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOStatusType.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.accepted),
             ),
             GestureDetector(
-              child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOrderStatus.offerCreated),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.offerCreated),
+              child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOStatusType.offerCreated),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.offerCreated),
             ),
             GestureDetector(
               child: StatusTile(text: 'Offer declined', active: showPrevStatus == null),
@@ -279,7 +284,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.waitingForParts || order.status == RSOrderStatus.inProgress) {
+    if (order.status.currentStatus == RSOStatusType.waitingForParts || order.status.currentStatus == RSOStatusType.inProgress) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -287,23 +292,23 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
           runSpacing: 8,
           children: [
             GestureDetector(
-              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOStatusType.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.accepted),
             ),
             GestureDetector(
-              child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOrderStatus.offerCreated),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.offerCreated),
+              child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOStatusType.offerCreated),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.offerCreated),
             ),
             GestureDetector(
-              child: StatusTile(text: 'Offer confirmed', active: showPrevStatus == RSOrderStatus.confirmedOffer),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.confirmedOffer),
+              child: StatusTile(text: 'Offer confirmed', active: showPrevStatus == RSOStatusType.confirmedOffer),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.confirmedOffer),
             ),
-            if (order.status == RSOrderStatus.waitingForParts)
+            if (order.status.currentStatus == RSOStatusType.waitingForParts)
               GestureDetector(
                 child: StatusTile(text: 'Wait for parts', active: showPrevStatus == null),
                 onTap: () => setState(() => showPrevStatus = null),
               ),
-            if (order.status == RSOrderStatus.inProgress)
+            if (order.status.currentStatus == RSOStatusType.inProgress)
               GestureDetector(
                 child: StatusTile(text: 'Work in progress', active: showPrevStatus == null),
                 onTap: () => setState(() => showPrevStatus = null),
@@ -313,7 +318,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.workFinished) {
+    if (order.status.currentStatus == RSOStatusType.workFinished) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -321,20 +326,20 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
           runSpacing: 8,
           children: [
             GestureDetector(
-              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOStatusType.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.accepted),
             ),
-            if (order.statusesDetails.workFinishedDetails!.finishedAfter == FinishedAfterType.offer) ...[
+            if (order.status.workFinishedDetails!.finishedAfter == FinishedAfterType.offer) ...[
               GestureDetector(
-                child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOrderStatus.offerCreated),
-                onTap: () => setState(() => showPrevStatus = RSOrderStatus.offerCreated),
+                child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOStatusType.offerCreated),
+                onTap: () => setState(() => showPrevStatus = RSOStatusType.offerCreated),
               ),
               GestureDetector(
                 child: StatusTile(text: 'Work finished', active: showPrevStatus == null),
                 onTap: () => setState(() => showPrevStatus = null),
               ),
             ],
-            if (order.statusesDetails.workFinishedDetails!.finishedAfter == FinishedAfterType.diagnistic) ...[
+            if (order.status.workFinishedDetails!.finishedAfter == FinishedAfterType.diagnistic) ...[
               GestureDetector(
                 child: StatusTile(text: 'Work finished, after diagnostic', active: showPrevStatus == null),
                 onTap: () => setState(() => showPrevStatus = null),
@@ -345,7 +350,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       );
     }
 
-    if (order.status == RSOrderStatus.closed) {
+    if (order.status.currentStatus == RSOStatusType.closed) {
       return SizedBox(
         width: double.infinity,
         child: Wrap(
@@ -353,23 +358,23 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
           runSpacing: 8,
           children: [
             GestureDetector(
-              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOrderStatus.accepted),
-              onTap: () => setState(() => showPrevStatus = RSOrderStatus.accepted),
+              child: StatusTile(text: 'Accepted order', active: showPrevStatus == RSOStatusType.accepted),
+              onTap: () => setState(() => showPrevStatus = RSOStatusType.accepted),
             ),
-            if (order.statusesDetails.offerCreatedDetails != null)
+            if (order.status.offerCreatedDetails != null)
               GestureDetector(
-                child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOrderStatus.offerCreated),
-                onTap: () => setState(() => showPrevStatus = RSOrderStatus.offerCreated),
+                child: StatusTile(text: 'Offer created', active: showPrevStatus == RSOStatusType.offerCreated),
+                onTap: () => setState(() => showPrevStatus = RSOStatusType.offerCreated),
               ),
-            if (order.statusesDetails.confirmedOfferDetails != null)
+            if (order.status.confirmedOfferDetails != null)
               GestureDetector(
-                child: StatusTile(text: 'Offer confirmed', active: showPrevStatus == RSOrderStatus.confirmedOffer),
-                onTap: () => setState(() => showPrevStatus = RSOrderStatus.confirmedOffer),
+                child: StatusTile(text: 'Offer confirmed', active: showPrevStatus == RSOStatusType.confirmedOffer),
+                onTap: () => setState(() => showPrevStatus = RSOStatusType.confirmedOffer),
               ),
-            if (order.statusesDetails.declinedOfferDetails != null)
+            if (order.status.declinedOfferDetails != null)
               GestureDetector(
-                child: StatusTile(text: 'Offer declined', active: showPrevStatus == RSOrderStatus.declinedOffer),
-                onTap: () => setState(() => showPrevStatus = RSOrderStatus.declinedOffer),
+                child: StatusTile(text: 'Offer declined', active: showPrevStatus == RSOStatusType.declinedOffer),
+                onTap: () => setState(() => showPrevStatus = RSOStatusType.declinedOffer),
               ),
             GestureDetector(
               child: StatusTile(text: 'Closed', active: showPrevStatus == null),
@@ -385,64 +390,64 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   Widget body(RSOrder order) {
     // previous status view
 
-    if (showPrevStatus == RSOrderStatus.accepted) {
+    if (showPrevStatus == RSOStatusType.accepted) {
       return acceptedOrderContent(order, onlyView: true);
     }
 
-    if (showPrevStatus == RSOrderStatus.offerCreated) {
+    if (showPrevStatus == RSOStatusType.offerCreated) {
       return offerCreatedOrderContent(order, onlyView: true);
     }
 
-    if (showPrevStatus == RSOrderStatus.confirmedOffer) {
+    if (showPrevStatus == RSOStatusType.confirmedOffer) {
       return offerConfirmedContent(order, onlyView: true);
     }
 
-    if (showPrevStatus == RSOrderStatus.declinedOffer) {
+    if (showPrevStatus == RSOStatusType.declinedOffer) {
       return offerDeclinedContent(order, onlyView: true);
     }
 
     // actual status view
 
-    if (order.status == RSOrderStatus.newOrder) {
+    if (order.status.currentStatus == RSOStatusType.newOrder) {
       return newOrderContent(order);
     }
-    if (order.status == RSOrderStatus.canceled) {
+    if (order.status.currentStatus == RSOStatusType.canceled) {
       return canceledOrderContent(order);
     }
 
-    if (order.status == RSOrderStatus.accepted) {
+    if (order.status.currentStatus == RSOStatusType.accepted) {
       return acceptedOrderContent(order);
     }
 
-    if (order.status == RSOrderStatus.onDiagnostic) {
+    if (order.status.currentStatus == RSOStatusType.onDiagnostic) {
       return onDiagnosticOrderContent(order);
     }
 
-    if (order.status == RSOrderStatus.offerCreated) {
+    if (order.status.currentStatus == RSOStatusType.offerCreated) {
       return offerCreatedOrderContent(order);
     }
 
-    if (order.status == RSOrderStatus.confirmedOffer) {
+    if (order.status.currentStatus == RSOStatusType.confirmedOffer) {
       return offerConfirmedContent(order);
     }
 
-    if (order.status == RSOrderStatus.declinedOffer) {
+    if (order.status.currentStatus == RSOStatusType.declinedOffer) {
       return offerDeclinedContent(order);
     }
 
-    if (order.status == RSOrderStatus.waitingForParts) {
+    if (order.status.currentStatus == RSOStatusType.waitingForParts) {
       return waitForPartsContent(order);
     }
 
-    if (order.status == RSOrderStatus.inProgress) {
+    if (order.status.currentStatus == RSOStatusType.inProgress) {
       return inProgressContent(order);
     }
 
-    if (order.status == RSOrderStatus.workFinished) {
+    if (order.status.currentStatus == RSOStatusType.workFinished) {
       return workFinishedContent(order);
     }
 
-    if (order.status == RSOrderStatus.closed) {
+    if (order.status.currentStatus == RSOStatusType.closed) {
       return closedContent(order);
     }
 
@@ -450,7 +455,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Column closedContent(RSOrder order) {
-    RSOrderClosedDetails closedDetails = order.statusesDetails.closedDetails!;
+    RSOrderClosedDetails closedDetails = order.status.closedDetails!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -465,7 +470,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Widget workFinishedContent(RSOrder order) {
-    RSOrderWorkFinishedDetails workFinishedDetails = order.statusesDetails.workFinishedDetails!;
+    RSOrderWorkFinishedDetails workFinishedDetails = order.status.workFinishedDetails!;
 
     if (workFinishedDetails.signRequested) {
       return SignForm(
@@ -505,7 +510,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Column inProgressContent(RSOrder order) {
-    RSOrderOfferCreatedDetails offerCreatedDetails = order.statusesDetails.offerCreatedDetails!;
+    RSOrderOfferCreatedDetails offerCreatedDetails = order.status.offerCreatedDetails!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -523,7 +528,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Column waitForPartsContent(RSOrder order) {
-    RSOrderOfferCreatedDetails offerCreatedDetails = order.statusesDetails.offerCreatedDetails!;
+    RSOrderOfferCreatedDetails offerCreatedDetails = order.status.offerCreatedDetails!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -541,7 +546,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Column offerDeclinedContent(RSOrder order, {bool onlyView = false}) {
-    RSOrderDeclinedOfferDetails declinedOfferDetails = order.statusesDetails.declinedOfferDetails!;
+    RSOrderDeclinedOfferDetails declinedOfferDetails = order.status.declinedOfferDetails!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -559,7 +564,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
   }
 
   Column offerConfirmedContent(RSOrder order, {bool onlyView = false}) {
-    RSOrderOfferCreatedDetails offerCreatedDetails = order.statusesDetails.offerCreatedDetails!;
+    RSOrderOfferCreatedDetails offerCreatedDetails = order.status.offerCreatedDetails!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -602,7 +607,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         else
           Expanded(
             child: OfferForm(
-              offerCreatedDetails: order.statusesDetails.offerCreatedDetails!,
+              offerCreatedDetails: order.status.offerCreatedDetails!,
               onAgree: onOfferAgree,
               onDecline: onOfferDecline,
             ),
@@ -619,7 +624,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         const SizedBox(height: 16),
         Align(alignment: Alignment.centerLeft, child: OrderDetailsInfo(order: order)),
         const SizedBox(height: 16),
-        Align(alignment: Alignment.centerLeft, child: OrderAcceptDetails(acceptDetails: order.statusesDetails.acceptedDetails!)),
+        Align(alignment: Alignment.centerLeft, child: OrderAcceptDetails(acceptDetails: order.status.acceptedDetails!)),
         const SizedBox(height: 32),
       ],
     );
@@ -631,7 +636,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       children: [
         Align(alignment: Alignment.centerLeft, child: OrderDetailsInfo(order: order)),
         const SizedBox(height: 16),
-        Align(alignment: Alignment.centerLeft, child: OrderAcceptDetails(acceptDetails: order.statusesDetails.acceptedDetails!)),
+        Align(alignment: Alignment.centerLeft, child: OrderAcceptDetails(acceptDetails: order.status.acceptedDetails!)),
         const SizedBox(height: 32),
       ],
     );

@@ -174,7 +174,7 @@ class OrderCancellGuard extends AutoRouteGuard {
     RSOrder order = ref.watch(rsOrderStreamProvider(orderId)).value!;
 
     // Protect to navigate to the cancell page if the order is already closed or cancelled
-    if (order.status == RSOrderStatus.canceled || order.status == RSOrderStatus.closed) {
+    if (order.status.currentStatus == RSOStatusType.canceled || order.status.currentStatus == RSOStatusType.closed) {
       resolver.next(false);
       router.replace(OrderScreenViewPageRoute());
     } else {

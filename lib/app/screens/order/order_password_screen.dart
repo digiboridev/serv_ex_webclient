@@ -91,10 +91,7 @@ class _RSOrderPasswordScreenState extends ConsumerState<RSOrderPasswordScreen> {
                 ),
               ),
               if (widget.newOrder.passwordType == DevicePasswordType.numeric)
-                Expanded(
-                    child: NumericForm(
-                  onSubmit: onPasswordSubmitted,
-                ))
+                Expanded(child: NumericForm(onSubmit: onPasswordSubmitted))
               else if (widget.newOrder.passwordType == DevicePasswordType.pattern)
                 Expanded(child: PatternForm(onSubmit: onPatternSubmitted))
               else
