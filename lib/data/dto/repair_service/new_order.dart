@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 
 enum DevicePasswordType {
-  graphic,
+  pattern,
   numeric,
 }
 

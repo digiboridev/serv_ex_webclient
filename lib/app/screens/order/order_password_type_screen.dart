@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_password_screen.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
@@ -29,31 +30,7 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
 
   onChoose(DevicePasswordType type) async {
     RSNewOrderDTO newOrder = widget.newOrder..passwordType = type;
-    log(newOrder);
-
-    RSOrdersService ordersService = ref.read(rsOrdersServiceProvider);
-
-    setState(() => busy = true);
-
-    try {
-      await ordersService.createOrder(order: newOrder);
-      if (mounted) {
-        context.router.navigate(const RSOrderSubmittedScreenRoute());
-      }
-    } catch (e) {
-      log(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-          action: SnackBarAction(
-            label: 'Dismiss',
-            onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-          ),
-        ),
-      );
-    }
-
-    setState(() => busy = false);
+    context.router.navigate(RSOrderPasswordScreenRoute(newOrder: newOrder));
   }
 
   @override
@@ -90,7 +67,7 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
                 spacing: 16,
                 runSpacing: 16,
                 children: [
-                  graphicTile(),
+                  patternTile(),
                   numericTile(),
                 ],
               ),
@@ -104,7 +81,7 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
     );
   }
 
-  Widget graphicTile() {
+  Widget patternTile() {
     return Container(
       width: 300,
       height: 100,
@@ -117,9 +94,9 @@ class _RSOrderPasswordTypeScreenState extends ConsumerState<RSOrderPasswordTypeS
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () => onChoose(DevicePasswordType.graphic),
+          onTap: () => onChoose(DevicePasswordType.pattern),
           child: const Center(
-            child: Text('Graphic', style: TextStyle(color: Colors.white, fontSize: 24)),
+            child: Text('Pattern', style: TextStyle(color: Colors.white, fontSize: 24)),
           ),
         ),
       ),

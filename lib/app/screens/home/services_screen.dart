@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/app/widgets/pattern_lock_test.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
@@ -29,6 +30,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
               text: 'HOME SCREEN',
             ),
             SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
+            // Expanded(child: PatternLockTest()),
             Expanded(
               child: Wrap(
                 alignment: WrapAlignment.center,

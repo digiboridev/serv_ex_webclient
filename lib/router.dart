@@ -5,6 +5,7 @@ import 'package:serv_expert_webclient/app/providers/repair_service/order_provide
 import 'package:serv_expert_webclient/app/screens/companies/companies_screen.dart';
 import 'package:serv_expert_webclient/app/screens/home/home_wrapper.dart';
 import 'package:serv_expert_webclient/app/screens/home/services_screen.dart';
+import 'package:serv_expert_webclient/app/screens/order/order_password_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/cancel_page.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/loader.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/view_page.dart';
@@ -91,6 +92,8 @@ import 'package:serv_expert_webclient/app/screens/home/repair_service/subcategor
         AutoRoute(path: 'rs_order_waranty', page: RSOrderWarantyScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_haspass', page: RSOrderHasPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
         AutoRoute(path: 'rs_order_passtypes', page: RSOrderPasswordTypeScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+        AutoRoute(path: 'rs_order_password', page: RSOrderPasswordScreen, guards: [ContributorGuard, ServiceOrderGuard]),
+
         AutoRoute(path: 'rs_order_submitted', page: RSOrderSubmittedScreen, guards: [ContributorGuard]),
         // AutoRoute(path: 'b', page: SB),
       ],

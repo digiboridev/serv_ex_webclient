@@ -568,7 +568,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         ConfirmedOfferDetails(order: order),
         SizedBox(height: 16),
         if (!onlyView)
-          if (order.paymentStatus != PaymentStatus.paid) ...[
+          if (order.paymentStatus != PaymentStatus.paid && offerCreatedDetails.withPayment) ...[
             MinSpacer(minHeight: 32),
             if (offerCreatedDetails.prepayRequired)
               SizedBox(
@@ -577,8 +577,8 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
                   onTap: onPayForOffer,
                   text: 'Prepay',
                 ),
-              ),
-            if (offerCreatedDetails.withPayment)
+              )
+            else
               SizedBox(
                 width: 546,
                 child: RegularButton(
