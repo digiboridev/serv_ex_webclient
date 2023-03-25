@@ -221,7 +221,7 @@ class _AppUserDetailsSubpageState extends ConsumerState<AuthAppUserDetails> {
       initialValue: emailValue,
       enabled: isEmailVerified ? false : true,
       keyboardType: TextInputType.emailAddress,
-      maxLength: 20,
+      maxLength: 30,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (value == null || value.isEmpty) {
