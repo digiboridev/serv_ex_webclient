@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/device_password.dart';
 
 enum DevicePasswordType {
   pattern,
@@ -19,6 +20,7 @@ class RSNewOrderDTO {
   bool? hasWaranty;
   bool? hasPassword;
   DevicePasswordType? passwordType;
+  DevicePassword? password;
 
   RSNewOrderDTO({
     this.customerInfo,
@@ -32,6 +34,7 @@ class RSNewOrderDTO {
     this.hasWaranty,
     this.hasPassword,
     this.passwordType,
+    this.password,
   });
 
   bool validate() {
@@ -45,7 +48,8 @@ class RSNewOrderDTO {
     if (accesoriesIncluded! && (accesoriesDescription == null || accesoriesDescription!.isEmpty)) return false;
     if (hasWaranty == null) return false;
     if (hasPassword == null) return false;
-    if (hasPassword! && passwordType == null) return false;
+    if (hasPassword! && (passwordType == null || password == null)) return false;
+
     return true;
   }
 
@@ -62,6 +66,7 @@ class RSNewOrderDTO {
       'hasWaranty': hasWaranty,
       'hasPassword': hasPassword,
       'passwordType': passwordType?.name,
+      'password': password?.toMap(),
     };
   }
 

@@ -2,11 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/widgets/pattern_lock/pattern_lock.dart';
+import 'package:serv_expert_webclient/app/widgets/pattern_lock.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/core/text_styles.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/device_password.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/services/rs_orders_service.dart';
@@ -30,29 +31,9 @@ class RSOrderPasswordScreen extends ConsumerStatefulWidget {
 class _RSOrderPasswordScreenState extends ConsumerState<RSOrderPasswordScreen> {
   bool busy = false;
 
-  onPasswordSubmitted(String password) async {
+  onSubmitted(DevicePassword password) async {
     if (busy) return;
-    RSNewOrderDTO newOrder = widget.newOrder;
-    RSOrdersService ordersService = ref.read(rsOrdersServiceProvider);
-
-    setState(() => busy = true);
-
-    try {
-      await ordersService.createOrder(order: newOrder);
-      if (mounted) {
-        context.router.navigate(const RSOrderSubmittedScreenRoute());
-      }
-    } catch (e) {
-      log(e);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-    }
-
-    setState(() => busy = false);
-  }
-
-  onPatternSubmitted(List<int> points) async {
-    if (busy) return;
-    RSNewOrderDTO newOrder = widget.newOrder;
+    RSNewOrderDTO newOrder = widget.newOrder..password = password;
     RSOrdersService ordersService = ref.read(rsOrdersServiceProvider);
 
     setState(() => busy = true);
@@ -91,9 +72,9 @@ class _RSOrderPasswordScreenState extends ConsumerState<RSOrderPasswordScreen> {
                 ),
               ),
               if (widget.newOrder.passwordType == DevicePasswordType.numeric)
-                Expanded(child: NumericForm(onSubmit: onPasswordSubmitted))
+                Expanded(child: NumericForm(onSubmit: onSubmitted))
               else if (widget.newOrder.passwordType == DevicePasswordType.pattern)
-                Expanded(child: PatternForm(onSubmit: onPatternSubmitted))
+                Expanded(child: PatternForm(onSubmit: onSubmitted))
               else
                 const SizedBox(),
             ],
@@ -107,7 +88,7 @@ class _RSOrderPasswordScreenState extends ConsumerState<RSOrderPasswordScreen> {
 class PatternForm extends ConsumerStatefulWidget {
   const PatternForm({required this.onSubmit, super.key});
 
-  final Function(List<int> points) onSubmit;
+  final Function(DevicePassword password) onSubmit;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _PatternFormState();
 }
@@ -117,7 +98,9 @@ class _PatternFormState extends ConsumerState<PatternForm> {
 
   reset() => setState(() => points = []);
 
-  submit() => widget.onSubmit(points);
+  submit() {
+    widget.onSubmit(DevicePassword.pattern(dimensions: 3, points: points));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +158,7 @@ class _PatternFormState extends ConsumerState<PatternForm> {
 class NumericForm extends ConsumerStatefulWidget {
   const NumericForm({required this.onSubmit, super.key});
 
-  final Function(String password) onSubmit;
+  final Function(DevicePassword password) onSubmit;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _NumericFormState();
@@ -186,7 +169,9 @@ class _NumericFormState extends ConsumerState<NumericForm> {
 
   bool get ready => password.length >= 4 && password.length <= 8 && password.contains(RegExp(r'[0-9]'));
 
-  onSubmit() => widget.onSubmit(password);
+  onSubmit() {
+    widget.onSubmit(DevicePassword.numeric(password: password));
+  }
 
   @override
   Widget build(BuildContext context) {

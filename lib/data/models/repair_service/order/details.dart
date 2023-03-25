@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/device_password.dart';
 
 class RSOrderDetails extends Equatable {
   final String categoryId;
@@ -11,7 +12,7 @@ class RSOrderDetails extends Equatable {
   final bool accesoriesIncluded;
   final String accesoriesDescription;
   final bool hasWaranty;
-  final bool hasPassword; // TODO add password field
+  final DevicePassword? password;
   const RSOrderDetails({
     required this.categoryId,
     required this.issueIds,
@@ -21,7 +22,7 @@ class RSOrderDetails extends Equatable {
     required this.accesoriesIncluded,
     required this.accesoriesDescription,
     required this.hasWaranty,
-    required this.hasPassword,
+    this.password,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,7 +35,7 @@ class RSOrderDetails extends Equatable {
       'accesoriesIncluded': accesoriesIncluded,
       'accesoriesDescription': accesoriesDescription,
       'hasWaranty': hasWaranty,
-      'hasPassword': hasPassword,
+      'password': password?.toMap(),
     };
   }
 
@@ -48,7 +49,7 @@ class RSOrderDetails extends Equatable {
       accesoriesIncluded: map['accesoriesIncluded'] as bool,
       accesoriesDescription: map['accesoriesDescription'] as String,
       hasWaranty: map['hasWaranty'] as bool,
-      hasPassword: map['hasPassword'] as bool,
+      password: map['password'] != null ? DevicePassword.fromMap(map['password'] as Map<String, dynamic>) : null,
     );
   }
 
@@ -70,31 +71,7 @@ class RSOrderDetails extends Equatable {
       accesoriesIncluded,
       accesoriesDescription,
       hasWaranty,
-      hasPassword,
+      password ?? 0,
     ];
-  }
-
-  RSOrderDetails copyWith({
-    String? categoryId,
-    List<String>? issueIds,
-    String? description,
-    bool? deviceWet,
-    String? wetDescription,
-    bool? accesoriesIncluded,
-    String? accesoriesDescription,
-    bool? hasWaranty,
-    bool? hasPassword,
-  }) {
-    return RSOrderDetails(
-      categoryId: categoryId ?? this.categoryId,
-      issueIds: issueIds ?? this.issueIds,
-      description: description ?? this.description,
-      deviceWet: deviceWet ?? this.deviceWet,
-      wetDescription: wetDescription ?? this.wetDescription,
-      accesoriesIncluded: accesoriesIncluded ?? this.accesoriesIncluded,
-      accesoriesDescription: accesoriesDescription ?? this.accesoriesDescription,
-      hasWaranty: hasWaranty ?? this.hasWaranty,
-      hasPassword: hasPassword ?? this.hasPassword,
-    );
   }
 }

@@ -33,7 +33,7 @@ class RSOrdersService {
         accesoriesIncluded: order.accesoriesIncluded!,
         accesoriesDescription: order.accesoriesDescription!,
         hasWaranty: order.hasWaranty!,
-        hasPassword: order.hasPassword!,
+        password: order.password,
       ),
       status: RSOStatus(currentStatus: RSOStatusType.newOrder),
       paymentStatus: PaymentStatus.notPaid,

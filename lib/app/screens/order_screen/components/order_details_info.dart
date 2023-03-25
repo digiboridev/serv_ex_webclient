@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
 import 'package:serv_expert_webclient/app/providers/repair_service/issue_provider.dart';
+import 'package:serv_expert_webclient/app/widgets/pattern_lock.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/issue.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/device_password.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 
 class OrderDetailsInfo extends StatelessWidget {
@@ -200,6 +202,54 @@ class OrderDetailsInfo extends StatelessWidget {
                 ),
               ],
             ),
+          SizedBox(height: 16),
+          Text(
+            'Has waranty:',
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            order.details.hasWaranty ? 'Yes' : 'No',
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 22,
+            ),
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Device password:',
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (order.details.password != null) ...[
+            if (order.details.password is PatternPassword)
+              Container(
+                margin: EdgeInsets.only(top: 16),
+                height: 200,
+                width: 200,
+                child: PatternLock(
+                  onlyView: true,
+                  dimension: (order.details.password as PatternPassword).dimensions,
+                  initialPoints: (order.details.password as PatternPassword).points,
+                  relativePadding: 0.1,
+                  onInputComplete: (v) {},
+                ),
+              ),
+            if (order.details.password is NumericPassword)
+              Text(
+                (order.details.password as NumericPassword).password,
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: 22,
+                ),
+              ),
+          ],
           SizedBox(height: 32),
         ],
       ),
