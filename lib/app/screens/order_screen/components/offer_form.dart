@@ -87,7 +87,7 @@ class _OfferFormState extends State<OfferForm> {
       children: [
         Row(
           children: [
-            Text(
+            const Text(
               'Employee nickname: ',
               style: TextStyle(
                 color: AppColors.black,
@@ -97,7 +97,7 @@ class _OfferFormState extends State<OfferForm> {
             ),
             Text(
               widget.offerCreatedDetails.employeeNick,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -105,9 +105,9 @@ class _OfferFormState extends State<OfferForm> {
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         partsTableHeader(),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ...widget.offerCreatedDetails.parts.map((part) {
           return Column(
             children: [
@@ -125,14 +125,14 @@ class _OfferFormState extends State<OfferForm> {
                     ),
                   )
                   .toList(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           );
         }).toList(),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'Total: ',
               style: TextStyle(
                 color: AppColors.black,
@@ -140,10 +140,10 @@ class _OfferFormState extends State<OfferForm> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               totalPrice().toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -151,10 +151,10 @@ class _OfferFormState extends State<OfferForm> {
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'Note for client: ',
               style: TextStyle(
                 color: AppColors.black,
@@ -164,7 +164,7 @@ class _OfferFormState extends State<OfferForm> {
             ),
             Text(
               widget.offerCreatedDetails.noteForClient,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -172,7 +172,7 @@ class _OfferFormState extends State<OfferForm> {
             ),
           ],
         ),
-        MinSpacer(minHeight: 32),
+        const MinSpacer(minHeight: 32),
         SizedBox(
           width: 546,
           child: RegularButton(
@@ -181,7 +181,7 @@ class _OfferFormState extends State<OfferForm> {
             color: validForAgree ? AppColors.primary : AppColors.gray,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         SizedBox(
           width: 546,
           child: RegularButton(
@@ -196,11 +196,11 @@ class _OfferFormState extends State<OfferForm> {
 
   Widget partsTableHeader() {
     return Row(
-      children: [
+      children: const [
         SizedBox(width: 40),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'Name',
               textAlign: TextAlign.start,
@@ -264,7 +264,7 @@ class _PartTileState extends State<PartTile> {
       children: [
         Container(
           height: 50,
-          margin: EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
             color: AppColors.backgroundTable,
             borderRadius: BorderRadius.circular(8),
@@ -274,12 +274,12 @@ class _PartTileState extends State<PartTile> {
             child: Row(
               // crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 GestureDetector(
                   onTap: () => widget.onPartSelect(widget.part),
                   child: Icon(widget.part.selected ? Icons.check_box : Icons.check_box_outline_blank),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Container(
                   width: 1,
                   height: double.infinity,
@@ -329,7 +329,7 @@ class _PartTileState extends State<PartTile> {
                   onTap: () {
                     setState(() => showNote = true);
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                     width: 60,
                     child: Icon(Icons.comment, color: AppColors.primary),
                   ),
@@ -339,14 +339,14 @@ class _PartTileState extends State<PartTile> {
           ),
         ),
         if (showNote) ...[
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           SizedBox(
             width: 546,
             child: noteField(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
         ]
@@ -408,7 +408,7 @@ class _SubpartTileState extends State<SubpartTile> {
       children: [
         Container(
           height: 50,
-          margin: EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
             color: AppColors.backgroundTable,
             borderRadius: BorderRadius.circular(8),
@@ -418,9 +418,9 @@ class _SubpartTileState extends State<SubpartTile> {
             child: Row(
               // crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Icon(widget.part.selected ? Icons.check_box : Icons.check_box_outline_blank),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Container(
                   width: 1,
                   height: double.infinity,
@@ -470,7 +470,7 @@ class _SubpartTileState extends State<SubpartTile> {
                   onTap: () {
                     setState(() => showNote = true);
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                     width: 60,
                     child: Icon(Icons.comment, color: AppColors.primary),
                   ),
@@ -480,14 +480,14 @@ class _SubpartTileState extends State<SubpartTile> {
           ),
         ),
         if (showNote) ...[
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           SizedBox(
             width: 546,
             child: noteField(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
         ]

@@ -50,7 +50,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.home_outlined, color: AppColors.black),
                       SizedBox(width: 8),
                       Expanded(child: Text('Home', style: TextStyle(color: AppColors.black))),
@@ -68,7 +68,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.person_2_outlined, color: AppColors.black),
                       SizedBox(width: 8),
                       Expanded(child: Text('Profile', style: TextStyle(color: AppColors.black))),
@@ -86,7 +86,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.corporate_fare, color: AppColors.black),
                       SizedBox(width: 8),
                       Expanded(child: Text('Companies', style: TextStyle(color: AppColors.black))),
@@ -108,7 +108,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.production_quantity_limits, color: AppColors.black),
                       SizedBox(width: 8),
                       Expanded(child: Text('Orders', style: TextStyle(color: AppColors.black))),
@@ -117,7 +117,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 ),
               ),
             ),
-            MinSpacer(minHeight: 32),
+            const MinSpacer(minHeight: 32),
             Material(
               color: Colors.transparent,
               child: InkWell(
@@ -128,7 +128,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.logout_outlined, color: AppColors.black),
                       SizedBox(width: 8),
                       Expanded(child: Text('Signout', style: TextStyle(color: AppColors.black))),
@@ -151,7 +151,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
         return Row(
           children: [
             if (contributorState is CSUnassigned)
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Unassigned',
                   style: TextStyle(color: AppColors.black, fontWeight: FontWeight.w600),
@@ -164,11 +164,11 @@ class _SidebarState extends ConsumerState<Sidebar> {
                   children: [
                     Text(
                       contributorState.name,
-                      style: TextStyle(color: AppColors.black, fontWeight: FontWeight.w600, overflow: TextOverflow.ellipsis),
+                      style: const TextStyle(color: AppColors.black, fontWeight: FontWeight.w600, overflow: TextOverflow.ellipsis),
                     ),
                     Text(
                       contributorState is CSAssignedAsCompany ? 'company' : 'personal',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.gray,
                       ),
                     ),
@@ -181,7 +181,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
                 onTap: () {
                   context.router.navigate(const ContributorSelectScreenRoute());
                 },
-                child: Icon(Icons.swap_horiz_sharp, color: AppColors.gray),
+                child: const Icon(Icons.swap_horiz_sharp, color: AppColors.gray),
               ),
             ),
           ],

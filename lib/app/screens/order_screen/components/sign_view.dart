@@ -52,10 +52,10 @@ class _SignFormState extends ConsumerState<SignView> {
       width: double.infinity,
       child: Column(
         children: [
-          Headline(text: 'Signature'),
-          SizedBox(height: 32),
-          Text('Name'),
-          SizedBox(height: 8),
+          const Headline(text: 'Signature'),
+          const SizedBox(height: 32),
+          const Text('Name'),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -76,9 +76,9 @@ class _SignFormState extends ConsumerState<SignView> {
               ),
             ],
           ),
-          SizedBox(height: 16),
-          Text('Signature'),
-          SizedBox(height: 8),
+          const SizedBox(height: 16),
+          const Text('Signature'),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [

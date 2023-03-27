@@ -121,7 +121,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
               orderId(order),
               const SizedBox(height: 16),
               paidAndLocation(order),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               statuses(order),
               const SizedBox(height: 16),
               Expanded(child: body(order)),
@@ -139,10 +139,10 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         spacing: 8,
         runSpacing: 8,
         children: [
-          if (order.deviceLocation == DeviceLocation.client) StatusTile(text: 'At Client', active: false),
-          if (order.deviceLocation == DeviceLocation.laboratory) StatusTile(text: 'At laboratory', active: false),
-          if (order.paymentStatus == PaymentStatus.paid) StatusTile(text: 'Paid', active: false),
-          if (order.paymentStatus == PaymentStatus.notPaid) StatusTile(text: 'Paid\'nt', active: false),
+          if (order.deviceLocation == DeviceLocation.client) const StatusTile(text: 'At Client', active: false),
+          if (order.deviceLocation == DeviceLocation.laboratory) const StatusTile(text: 'At laboratory', active: false),
+          if (order.paymentStatus == PaymentStatus.paid) const StatusTile(text: 'Paid', active: false),
+          if (order.paymentStatus == PaymentStatus.notPaid) const StatusTile(text: 'Paid\'nt', active: false),
         ],
       ),
     );
@@ -384,7 +384,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         ),
       );
     }
-    return SizedBox();
+    return const SizedBox();
   }
 
   Widget body(RSOrder order) {
@@ -451,7 +451,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       return closedContent(order);
     }
 
-    return SizedBox();
+    return const SizedBox();
   }
 
   Column closedContent(RSOrder order) {
@@ -460,7 +460,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         SignView(
           signnature: closedDetails.signnature,
         ),
@@ -482,10 +482,10 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 32),
-        MinSpacer(minHeight: 32),
-        Text('Finished'),
-        MinSpacer(minHeight: 32),
+        const SizedBox(height: 32),
+        const MinSpacer(minHeight: 32),
+        const Text('Finished'),
+        const MinSpacer(minHeight: 32),
         if (workFinishedDetails.paymentRequired && order.paymentStatus != PaymentStatus.paid) ...[
           if (workFinishedDetails.finishedAfter == FinishedAfterType.offer)
             SizedBox(
@@ -515,10 +515,10 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 32),
-        MinSpacer(minHeight: 32),
-        Text('Work in progress'),
-        MinSpacer(minHeight: 32),
+        const SizedBox(height: 32),
+        const MinSpacer(minHeight: 32),
+        const Text('Work in progress'),
+        const MinSpacer(minHeight: 32),
         if (offerCreatedDetails.withPayment && order.paymentStatus != PaymentStatus.paid) ...[
           SizedBox(width: 546, child: RegularButton(onTap: onPayForOffer, text: 'Pay for work')),
         ],
@@ -533,10 +533,10 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 32),
-        MinSpacer(minHeight: 32),
-        Text('Waiting for parts'),
-        MinSpacer(minHeight: 32),
+        const SizedBox(height: 32),
+        const MinSpacer(minHeight: 32),
+        const Text('Waiting for parts'),
+        const MinSpacer(minHeight: 32),
         if (offerCreatedDetails.withPayment && order.paymentStatus != PaymentStatus.paid) ...[
           SizedBox(width: 546, child: RegularButton(onTap: onPayForOffer, text: 'Pay for work')),
         ],
@@ -551,11 +551,11 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         OfferDetails(order: order),
         if (!onlyView)
           if (declinedOfferDetails.afterDiagnostic) ...[
-            MinSpacer(minHeight: 32),
+            const MinSpacer(minHeight: 32),
             SizedBox(width: 546, child: RegularButton(onTap: onPayForDiagnostic, text: 'Pay for diagnostic')),
           ],
         const SizedBox(height: 32),
@@ -569,12 +569,12 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ConfirmedOfferDetails(order: order),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         if (!onlyView)
           if (order.paymentStatus != PaymentStatus.paid && offerCreatedDetails.withPayment) ...[
-            MinSpacer(minHeight: 32),
+            const MinSpacer(minHeight: 32),
             if (offerCreatedDetails.prepayRequired)
               SizedBox(
                 width: 546,
@@ -601,7 +601,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         if (onlyView)
           OfferDetails(order: order)
         else
@@ -647,7 +647,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Align(alignment: Alignment.centerLeft, child: OrderDetailsInfo(order: order)),
-        MinSpacer(minHeight: 32),
+        const MinSpacer(minHeight: 32),
         SizedBox(width: 546, child: RegularButton(onTap: cancellOrder, text: 'Cancel order', color: AppColors.red)),
         const SizedBox(height: 32),
       ],

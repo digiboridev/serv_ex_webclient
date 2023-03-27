@@ -30,8 +30,8 @@ class OrderDetailsInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 32),
-          Text(
+          const SizedBox(height: 32),
+          const Text(
             'CLIENT',
             style: TextStyle(
               color: AppColors.black,
@@ -39,8 +39,8 @@ class OrderDetailsInfo extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Category:',
             style: TextStyle(
               color: AppColors.black,
@@ -54,17 +54,17 @@ class OrderDetailsInfo extends StatelessWidget {
               return categoryData.when(
                 data: (category) => Text(
                   category.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.black,
                     fontSize: 22,
                   ),
                 ),
-                loading: () => SizedBox(),
+                loading: () => const SizedBox(),
                 error: (error, stack) => GestureDetector(
                   onTap: () => ref.refresh(rsCategoryProvider(order.details.categoryId)),
                   child: Text(
                     'Error: $error',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 22,
                     ),
@@ -73,8 +73,8 @@ class OrderDetailsInfo extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Issues:',
             style: TextStyle(
               color: AppColors.black,
@@ -90,17 +90,17 @@ class OrderDetailsInfo extends StatelessWidget {
                 return issueData.when(
                   data: (issue) => Text(
                     issue.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 22,
                     ),
                   ),
-                  loading: () => SizedBox(),
+                  loading: () => const SizedBox(),
                   error: (error, stack) => GestureDetector(
                     onTap: () => ref.refresh(rsIssueProvider(issueId)),
                     child: Text(
                       'Error: $error',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.black,
                         fontSize: 22,
                       ),
@@ -110,8 +110,8 @@ class OrderDetailsInfo extends StatelessWidget {
               },
             );
           }).toList(),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Issue description:',
             style: TextStyle(
               color: AppColors.black,
@@ -121,13 +121,13 @@ class OrderDetailsInfo extends StatelessWidget {
           ),
           Text(
             order.details.description,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Device wet:',
             style: TextStyle(
               color: AppColors.black,
@@ -137,7 +137,7 @@ class OrderDetailsInfo extends StatelessWidget {
           ),
           Text(
             order.details.deviceWet ? 'Yes' : 'No',
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
@@ -146,8 +146,8 @@ class OrderDetailsInfo extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   'Device wet description:',
                   style: TextStyle(
                     color: AppColors.black,
@@ -157,15 +157,15 @@ class OrderDetailsInfo extends StatelessWidget {
                 ),
                 Text(
                   order.details.wetDescription,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.black,
                     fontSize: 22,
                   ),
                 ),
               ],
             ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Accesories included:',
             style: TextStyle(
               color: AppColors.black,
@@ -175,7 +175,7 @@ class OrderDetailsInfo extends StatelessWidget {
           ),
           Text(
             order.details.accesoriesIncluded ? 'Yes' : 'No',
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
@@ -184,8 +184,8 @@ class OrderDetailsInfo extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   'Accesories included description:',
                   style: TextStyle(
                     color: AppColors.black,
@@ -195,15 +195,15 @@ class OrderDetailsInfo extends StatelessWidget {
                 ),
                 Text(
                   order.details.accesoriesDescription,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.black,
                     fontSize: 22,
                   ),
                 ),
               ],
             ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Has waranty:',
             style: TextStyle(
               color: AppColors.black,
@@ -213,14 +213,14 @@ class OrderDetailsInfo extends StatelessWidget {
           ),
           Text(
             order.details.hasWaranty ? 'Yes' : 'No',
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
           ),
           if (order.details.password != null) ...[
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Device password:',
               style: TextStyle(
                 color: AppColors.black,
@@ -230,7 +230,7 @@ class OrderDetailsInfo extends StatelessWidget {
             ),
             if (order.details.password is PatternPassword)
               Container(
-                margin: EdgeInsets.only(top: 16),
+                margin: const EdgeInsets.only(top: 16),
                 height: 200,
                 width: 200,
                 child: PatternLock(
@@ -244,13 +244,13 @@ class OrderDetailsInfo extends StatelessWidget {
             if (order.details.password is NumericPassword)
               Text(
                 (order.details.password as NumericPassword).password,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.black,
                   fontSize: 22,
                 ),
               ),
           ],
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
         ],
       ),
     );

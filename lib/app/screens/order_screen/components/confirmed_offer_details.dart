@@ -30,25 +30,25 @@ class ConfirmedOfferDetails extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
+            const Text(
               'Employee nickname: ',
               style: TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
             Text(
               order.status.offerCreatedDetails!.employeeNick,
-              style: TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
+              style: const TextStyle(color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ],
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         RepairPartsTable(
           parts: order.status.confirmedOfferDetails!.parts,
           showSelection: true,
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'Total:',
               style: TextStyle(
                 color: AppColors.black,
@@ -56,10 +56,10 @@ class ConfirmedOfferDetails extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               totalCost.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -67,88 +67,88 @@ class ConfirmedOfferDetails extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'With payment:',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
               order.status.offerCreatedDetails!.withPayment ? 'Yes' : 'No',
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'Prepay reuired:',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
               order.status.offerCreatedDetails!.prepayRequired ? 'Yes' : 'No',
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'Note for client: ',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
               order.status.offerCreatedDetails!.noteForClient,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
-            Text(
+            const Text(
               'Note for employee: ',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
               order.status.offerCreatedDetails!.noteForEmployee,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.black,
                 fontSize: 18,
               ),

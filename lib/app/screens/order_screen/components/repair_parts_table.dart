@@ -15,13 +15,13 @@ class RepairPartsTable extends StatelessWidget {
     return Column(
       children: [
         partsTableHeader(),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ...parts.map((part) {
           return Column(
             children: [
               partTile(part),
               ...part.subparts.map((subpart) => subpartTile(part, subpart)).toList(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           );
         }).toList(),
@@ -32,30 +32,30 @@ class RepairPartsTable extends StatelessWidget {
   Widget partsTableHeader() {
     return Row(
       children: [
-        if (showSelection) SizedBox(width: 40),
-        Expanded(
+        if (showSelection) const SizedBox(width: 40),
+        const Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'Name',
               textAlign: TextAlign.start,
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 1,
         ),
-        SizedBox(
+        const SizedBox(
           width: 100,
           child: Text(
             'Date',
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 1,
         ),
-        SizedBox(
+        const SizedBox(
           width: 80,
           child: Text(
             'Price',
@@ -72,7 +72,7 @@ class RepairPartsTable extends StatelessWidget {
       children: [
         Container(
           height: 50,
-          margin: EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
             color: AppColors.backgroundTable,
             borderRadius: BorderRadius.circular(8),
@@ -83,9 +83,9 @@ class RepairPartsTable extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 if (showSelection) ...[
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Icon(part.selected ? Icons.check_box : Icons.check_box_outline_blank),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     width: 1,
                     height: double.infinity,
@@ -140,8 +140,8 @@ class RepairPartsTable extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.primary, width: 1),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              margin: EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              margin: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 'Note: ${part.note}',
                 textAlign: TextAlign.start,
@@ -158,7 +158,7 @@ class RepairPartsTable extends StatelessWidget {
       children: [
         Container(
           height: 50,
-          margin: EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
             color: AppColors.backgroundTable,
             borderRadius: BorderRadius.circular(8),
@@ -169,9 +169,9 @@ class RepairPartsTable extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 if (showSelection) ...[
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Icon(part.selected ? Icons.check_box : Icons.check_box_outline_blank),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     width: 1,
                     height: double.infinity,
@@ -226,8 +226,8 @@ class RepairPartsTable extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.primary, width: 1),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              margin: EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              margin: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 'Note: ${subpart.note}',
                 textAlign: TextAlign.start,

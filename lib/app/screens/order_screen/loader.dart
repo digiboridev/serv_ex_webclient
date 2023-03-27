@@ -19,7 +19,7 @@ class OrderScreenLoader extends ConsumerWidget {
       child: Container(
         color: Colors.white,
         child: orderData.when(
-          data: (order) => ClipRect(child: AutoRouter()),
+          data: (order) => const ClipRect(child: AutoRouter()),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stack) => Center(child: Text(error.toString())),
         ),

@@ -106,7 +106,7 @@ class _PatternFormState extends ConsumerState<PatternForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         const Text(
           'PATTERN PASSWORD',
           style: AppTextStyles.headline,
@@ -135,7 +135,7 @@ class _PatternFormState extends ConsumerState<PatternForm> {
             },
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         TextButton(
           onPressed: points.isNotEmpty ? reset : null,
           child: Text('RESET', style: TextStyle(fontWeight: FontWeight.w500, color: points.isNotEmpty ? AppColors.primary : AppColors.primaryDisabled)),
@@ -149,7 +149,7 @@ class _PatternFormState extends ConsumerState<PatternForm> {
             color: points.isNotEmpty ? AppColors.primary : AppColors.primaryDisabled,
           ),
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
       ],
     );
   }
@@ -177,7 +177,7 @@ class _NumericFormState extends ConsumerState<NumericForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         const Text(
           'NUMERIC PASSWORD',
           style: AppTextStyles.headline,
@@ -193,7 +193,7 @@ class _NumericFormState extends ConsumerState<NumericForm> {
             color: ready ? AppColors.primary : AppColors.primaryDisabled,
           ),
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
       ],
     );
   }

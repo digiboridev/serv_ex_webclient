@@ -23,8 +23,8 @@ class OrderAcceptDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 32),
-          Text(
+          const SizedBox(height: 32),
+          const Text(
             'ACCEPT DETAILS',
             style: TextStyle(
               color: AppColors.black,
@@ -32,8 +32,8 @@ class OrderAcceptDetails extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Device name:',
             style: TextStyle(
               color: AppColors.black,
@@ -43,13 +43,13 @@ class OrderAcceptDetails extends StatelessWidget {
           ),
           Text(
             acceptDetails.deviceName,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Problem description:',
             style: TextStyle(
               color: AppColors.black,
@@ -59,13 +59,13 @@ class OrderAcceptDetails extends StatelessWidget {
           ),
           Text(
             acceptDetails.problemDescription,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Condition:',
             style: TextStyle(
               color: AppColors.black,
@@ -75,13 +75,13 @@ class OrderAcceptDetails extends StatelessWidget {
           ),
           Text(
             acceptDetails.conditionDescription,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Diagnosis required:',
             style: TextStyle(
               color: AppColors.black,
@@ -91,12 +91,12 @@ class OrderAcceptDetails extends StatelessWidget {
           ),
           Text(
             acceptDetails.diagnosticRequired ? 'Yes' : 'No',
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
             ),
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
         ],
       ),
     );

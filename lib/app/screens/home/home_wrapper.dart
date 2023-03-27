@@ -13,6 +13,6 @@ class HomeWrapper extends ConsumerStatefulWidget {
 class _HomeWrapperState extends ConsumerState<HomeWrapper> {
   @override
   Widget build(BuildContext context) {
-    return SidebarWrapper(child: ClipRect(child: AutoRouter()));
+    return const SidebarWrapper(child: ClipRect(child: AutoRouter()));
   }
 }

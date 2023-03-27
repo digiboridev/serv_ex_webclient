@@ -38,7 +38,7 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
   onCancel() async {
     if (selectedReason == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Please select reason'),
         ),
       );
@@ -81,13 +81,13 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
               const SizedBox(height: 8),
               topBar,
               const SizedBox(height: 42),
-              SizedBox(width: double.infinity, child: Headline(text: 'Cancel order')),
+              const SizedBox(width: double.infinity, child: Headline(text: 'Cancel order')),
               const SizedBox(height: 20),
-              SizedBox(
+              const SizedBox(
                 width: double.infinity,
                 child: Text(
                   'Choose reason for cancellation',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.black60,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -98,7 +98,7 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
               reasonsList(),
               const SizedBox(height: 20),
               Align(alignment: Alignment.centerLeft, child: SizedBox(width: 546, child: descriptionField())),
-              MinSpacer(
+              const MinSpacer(
                 minHeight: 32,
               ),
               SizedBox(
@@ -106,7 +106,7 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
                 child: RegularButton(
                   onTap: () => onCancel(),
                   text: 'Cancel',
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.w400,
@@ -138,14 +138,14 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
       },
       onFieldSubmitted: (value) => onCancel(),
       onChanged: (value) => description = value,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w400,
         color: AppColors.black,
       ),
       decoration: InputDecoration(
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
         ),
@@ -170,7 +170,7 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
               value: selectedReason == reason,
               onChanged: (value) => onReasonSelected(reason),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
@@ -194,13 +194,13 @@ class _OrderCancellPageState extends ConsumerState<OrderCancellPage> {
             context.router.navigateBack();
           },
           text: 'Back',
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
           color: AppColors.red,
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           borderRadius: BorderRadius.circular(4),
         ),
         const Spacer(),

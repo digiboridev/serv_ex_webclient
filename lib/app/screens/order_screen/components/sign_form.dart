@@ -78,10 +78,10 @@ class _SignFormState extends ConsumerState<SignForm> {
       width: double.infinity,
       child: Column(
         children: [
-          Headline(text: 'Signature form'),
-          SizedBox(height: 32),
-          Text('Name'),
-          SizedBox(height: 8),
+          const Headline(text: 'Signature form'),
+          const SizedBox(height: 32),
+          const Text('Name'),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -98,12 +98,12 @@ class _SignFormState extends ConsumerState<SignForm> {
                   type: SignatureDrawType.shape,
                 ),
               ),
-              IconButton(onPressed: clearName, icon: Icon(Icons.refresh))
+              IconButton(onPressed: clearName, icon: const Icon(Icons.refresh))
             ],
           ),
-          SizedBox(height: 16),
-          Text('Signature'),
-          SizedBox(height: 8),
+          const SizedBox(height: 16),
+          const Text('Signature'),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -120,10 +120,10 @@ class _SignFormState extends ConsumerState<SignForm> {
                   type: SignatureDrawType.shape,
                 ),
               ),
-              IconButton(onPressed: clearSign, icon: Icon(Icons.refresh))
+              IconButton(onPressed: clearSign, icon: const Icon(Icons.refresh))
             ],
           ),
-          MinSpacer(
+          const MinSpacer(
             minHeight: 32,
           ),
           SizedBox(
@@ -134,7 +134,7 @@ class _SignFormState extends ConsumerState<SignForm> {
               color: canSubmit ? AppColors.primary : AppColors.gray,
             ),
           ),
-          SizedBox(height: 32)
+          const SizedBox(height: 32)
         ],
       ),
     );

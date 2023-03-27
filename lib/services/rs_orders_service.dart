@@ -35,7 +35,7 @@ class RSOrdersService {
         hasWaranty: order.hasWaranty!,
         password: order.password,
       ),
-      status: RSOStatus(currentStatus: RSOStatusType.newOrder),
+      status: const RSOStatus(currentStatus: RSOStatusType.newOrder),
       paymentStatus: PaymentStatus.notPaid,
       deviceLocation: DeviceLocation.client,
       createdAt: DateTime.now(),
@@ -89,7 +89,7 @@ class RSOrdersService {
     if (order.status.offerCreatedDetails!.afterDiagnostic) {
       RSOStatus newStatus = order.status.copyWith(
         currentStatus: RSOStatusType.declinedOffer,
-        declinedOfferDetails: RSOrderDeclinedOfferDetails(afterDiagnostic: true),
+        declinedOfferDetails: const RSOrderDeclinedOfferDetails(afterDiagnostic: true),
       );
 
       RSOrder newOrder = order.copyWith(
@@ -101,8 +101,8 @@ class RSOrdersService {
     } else {
       RSOStatus newStatus = order.status.copyWith(
         currentStatus: RSOStatusType.workFinished,
-        declinedOfferDetails: RSOrderDeclinedOfferDetails(afterDiagnostic: false),
-        workFinishedDetails: RSOrderWorkFinishedDetails(
+        declinedOfferDetails: const RSOrderDeclinedOfferDetails(afterDiagnostic: false),
+        workFinishedDetails: const RSOrderWorkFinishedDetails(
           finishedAfter: FinishedAfterType.offer,
           paymentRequired: false,
           signRequested: false,
@@ -127,7 +127,7 @@ class RSOrdersService {
 
       RSOStatus newStatus = order.status.copyWith(
         currentStatus: RSOStatusType.workFinished,
-        workFinishedDetails: RSOrderWorkFinishedDetails(
+        workFinishedDetails: const RSOrderWorkFinishedDetails(
           finishedAfter: FinishedAfterType.offer,
           paymentRequired: false,
           signRequested: false,
