@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/issue_provider.dart';
+import 'package:serv_expert_webclient/data/providers/repair_service/category_provider.dart';
+import 'package:serv_expert_webclient/data/providers/repair_service/issue_provider.dart';
 import 'package:serv_expert_webclient/app/widgets/pattern_lock.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';

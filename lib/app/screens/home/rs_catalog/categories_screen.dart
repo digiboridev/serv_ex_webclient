@@ -1,10 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/categories_provider.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/category_provider.dart';
+import 'package:serv_expert_webclient/data/providers/repair_service/categories_provider.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
@@ -13,24 +11,24 @@ import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class RSSubCategoriesScreen extends ConsumerStatefulWidget {
-  const RSSubCategoriesScreen({super.key, @queryParam required this.categoryId});
-  final String? categoryId;
-
+class RSCategoriesScreen extends ConsumerStatefulWidget {
+  const RSCategoriesScreen({
+    super.key,
+  });
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _RSSubCategoriesScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RSCategoriesScreenState();
 }
 
-class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
+class _RSCategoriesScreenState extends ConsumerState<RSCategoriesScreen> {
   onCategoryTap(RSCategory category) {
-    context.router.navigate(RSIssuesScreenRoute(categoryId: category.id));
+    context.router.navigate(RSSubCategoriesScreenRoute(categoryId: category.id));
   }
 
   @override
   Widget build(BuildContext context) {
     MediaQuery.of(context);
 
-    AsyncValue<List<RSCategory>> categories = ref.watch(rsCategoriesProvider(widget.categoryId));
+    AsyncValue<List<RSCategory>> categories = ref.watch(rsCategoriesProvider(null));
 
     return FillableScrollableWrapper(
       child: Container(
@@ -38,7 +36,9 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
         child: Column(
           children: [
             SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
-            cetegoryName(),
+            const Headline(
+              text: 'CATEGORY',
+            ),
             SizedBox(height: whenLayout(mobile: 32.ms, tablet: 48.ts)),
             Expanded(
               child: categories.when(
@@ -51,24 +51,6 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget cetegoryName() {
-    return Consumer(
-      builder: (context, ref, child) {
-        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(widget.categoryId!));
-
-        return FadeIn(
-          child: Headline(
-            text: selectedCategoryData.when(
-              data: (category) => category.name,
-              loading: () => '',
-              error: (error, stackTrace) => 'Error',
-            ),
-          ),
-        );
-      },
     );
   }
 

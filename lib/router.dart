@@ -1,20 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:serv_expert_webclient/app/providers/repair_service/order_provider.dart';
+import 'package:serv_expert_webclient/data/providers/repair_service/order_provider.dart';
 import 'package:serv_expert_webclient/app/screens/companies/companies_screen.dart';
 import 'package:serv_expert_webclient/app/screens/home/home_wrapper.dart';
-import 'package:serv_expert_webclient/app/screens/home/services_screen.dart';
-import 'package:serv_expert_webclient/app/screens/order/order_password_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_catalog/services_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_ordering/order_password_screen.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/cancel_page.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/loader.dart';
 import 'package:serv_expert_webclient/app/screens/order_screen/view_page.dart';
 import 'package:serv_expert_webclient/app/screens/orders/orders_screen.dart';
-import 'package:serv_expert_webclient/app/screens/order/order_details_screen.dart';
-import 'package:serv_expert_webclient/app/screens/order/order_has_password_screen.dart';
-import 'package:serv_expert_webclient/app/screens/order/order_password_type_screen.dart';
-import 'package:serv_expert_webclient/app/screens/order/order_submitted_screen.dart';
-import 'package:serv_expert_webclient/app/screens/order/order_waranty_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_ordering/order_details_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_ordering/order_has_password_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_ordering/order_password_type_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_ordering/order_submitted_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_ordering/order_waranty_screen.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/status.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
@@ -33,9 +33,9 @@ import 'package:serv_expert_webclient/auth/pages/success.dart';
 import 'package:serv_expert_webclient/auth/pages/company_members.dart';
 import 'package:serv_expert_webclient/app/screens/contributor_select_screen.dart';
 import 'package:serv_expert_webclient/app/screens/profile/profile_screen.dart';
-import 'package:serv_expert_webclient/app/screens/home/repair_service/breaking_types_screen.dart';
-import 'package:serv_expert_webclient/app/screens/home/repair_service/categories_screen.dart';
-import 'package:serv_expert_webclient/app/screens/home/repair_service/subcategories_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_catalog/breaking_types_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_catalog/categories_screen.dart';
+import 'package:serv_expert_webclient/app/screens/home/rs_catalog/subcategories_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route,Screen',

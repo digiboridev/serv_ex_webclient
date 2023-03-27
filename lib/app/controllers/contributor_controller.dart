@@ -8,16 +8,25 @@ import 'package:serv_expert_webclient/app/app_providers.dart';
 
 abstract class ContributorState {}
 
+/// [CSUnassigned] is a state of [ContributorState] that means that currently selected contributor is not assigned.
 class CSUnassigned extends ContributorState {
   @override
   String toString() => 'CSUnassigned';
 }
 
+/// [CSAssigned] is a state of [ContributorState] that means that currently selected contributor is assigned.
+/// - [name] is a name of the contributor
+/// - [id] is an id of the contributor
 abstract class CSAssigned extends ContributorState {
   String get name;
   String get id;
 }
 
+/// [CSAssignedAsCompany] is a state of [ContributorState] that means that currently selected contributor is a company.
+/// - [company] is a company that is currently selected as contributor
+/// - [name] is a name of the company
+/// - [id] is an id of the company
+///
 class CSAssignedAsCompany extends CSAssigned with EquatableMixin {
   final Company company;
   CSAssignedAsCompany(this.company);
@@ -35,6 +44,10 @@ class CSAssignedAsCompany extends CSAssigned with EquatableMixin {
   String get id => company.id;
 }
 
+/// [CSAssignedAsAppUser] is a state of [ContributorState] that means that currently selected contributor is a personal user.
+/// - [appUser] is a personal user that is currently selected as contributor
+/// - [name] is a name of the personal user
+/// - [id] is an id of the personal user
 class CSAssignedAsAppUser extends CSAssigned with EquatableMixin {
   final AppUser appUser;
   CSAssignedAsAppUser(this.appUser);
@@ -52,6 +65,13 @@ class CSAssignedAsAppUser extends CSAssigned with EquatableMixin {
   String get id => appUser.id;
 }
 
+/// Controller that manages state of what company or personal user is currently selected as contributor for the app
+///
+/// It is used to determine what data to show in the app and control access to some features or beahviors
+/// - [setAppUserContributor] sets the contributor as a personal user
+/// - [setCompanyContributor] sets the contributor as a company
+/// - [clearContributor] clears the contributor
+/// - [fetchState] fetches the state of the controller from the storage
 class ContributorController extends StateNotifier<ContributorState> {
   ContributorController({required AutoDisposeStateNotifierProviderRef ref})
       : _ref = ref,
