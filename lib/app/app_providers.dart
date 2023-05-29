@@ -14,7 +14,7 @@ final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) {
 
   if (!authService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
 
-  String appUserId = authService.uid!;
+  String appUserId = authService.userId!;
 
   return userRepository.appUserStream(userId: appUserId);
 });
@@ -25,7 +25,7 @@ final companiesStreamProvider = StreamProvider.autoDispose<List<Company>>((ref) 
 
   if (!authService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
 
-  String appUserId = authService.uid!;
+  String appUserId = authService.userId!;
 
   return companiesRepository.companiesByMemberIdStream(memberId: appUserId);
 });

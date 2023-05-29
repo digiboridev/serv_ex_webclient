@@ -29,6 +29,7 @@ dependencies:
   flutter_svg: ^2.0.0+1
   transparent_image: ^2.0.1
   hand_signature: ^3.0.1
+  dio: ^5.1.2
 
 
 dev_dependencies:

@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/core/log.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_contact.dart';
-import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
@@ -23,12 +22,6 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
   final CompaniesRepository _companiesRepository;
 
   Future updateState() async {
-    // state = ASSsmsSent(phone: '123123123');
-    // state = ASSAppUserDetails(phone: '', firstName: '', lastName: '', email: '');
-    // state = ASSAppUserContacts();
-    // state = ASSCompanyCreate();
-    // state = ASSCompanyMembers(membersIds: [], companyId: 'companyId');
-    // return;
     log('ASC updateState begin, current state: $state');
 
     bool authorized = _authService.authorized;
@@ -38,20 +31,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     if (!authorized) {
       state = const ASSUnauthorized();
     } else {
-      try {
-        await _userRepository.appUser(userId: _authService.uid!, forceNetwork: true);
-        state = const ASSAuthorized();
-      } on UnexistedResource {
-        state = ASSAppUserDetails(
-          phone: _authService.phoneNumber,
-          email: _authService.email,
-          firstName: _authService.displayName?.split(' ').first,
-          lastName: _authService.displayName?.split(' ').last,
-        );
-      } catch (e) {
-        log(e);
-        state = const ASSDataError();
-      }
+      state = ASSAuthorized();
     }
 
     log('ASC updateState end, current state: $state');
@@ -66,29 +46,9 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     state = const ASSUnauthorized(busy: true);
     try {
-      await _authService.signInWithPhoneNumberWeb(phone);
+      await _authService.signInWithPhoneNumber(phone);
       log('signInWithPhone($phone) sent sms');
-
       state = ASSsmsSent(phone: phone);
-    } catch (e) {
-      log(e);
-      state = ASSUnauthorized(error: e.toString());
-    }
-  }
-
-  signinWithCustomJWT({required String login, required String password}) async {
-    AuthScreenState currentState = state;
-    if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
-    if (currentState.busy) throw Exception('Controller is busy');
-
-    log('signinWithLP()');
-
-    state = const ASSUnauthorized(busy: true);
-
-    try {
-      await _authService.signInWithCustomJWT(login: login, password: password);
-      log('signinWithLP() signed in');
-      await updateState();
     } catch (e) {
       log(e);
       state = ASSUnauthorized(error: e.toString());
@@ -122,7 +82,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     state = currentState.copyWith(busy: true, error: '');
     try {
-      await _authService.confirmPhoneNumberWeb(smsCode);
+      await _authService.confirmPhoneNumber(smsCode);
       log('confirmSmsCode($smsCode) confirmed');
 
       await updateState();

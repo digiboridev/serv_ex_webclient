@@ -4,6 +4,7 @@ import 'package:serv_expert_webclient/data/reposiotories/companies_repository.da
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/issues_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
+import 'package:serv_expert_webclient/services/api_client.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/services/rs_orders_service.dart';
 
@@ -35,7 +36,7 @@ final rsOrdersRepositoryProvider = Provider<RSOrdersRepository>((ref) {
 //
 
 final authServiceProvider = Provider<AuthService>((ref) {
-  return FireAuthServiceImpl();
+  return AuthServiceHttpImpl(apiClient: ApiClient());
 });
 
 final rsOrdersServiceProvider = Provider<RSOrdersService>((ref) {
