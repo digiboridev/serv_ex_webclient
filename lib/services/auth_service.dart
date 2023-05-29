@@ -121,6 +121,10 @@ class AuthServiceHttpImpl extends AuthService {
   @override
   Future confirmPhoneNumber(String smsCode) async {
     var res = await apiClient.post('auth/verify-code', data: {'token': _phoneToken, 'code': smsCode});
+    if (res['status'] == 'success') {
+      await _authDataRepository.saveAuthData(AuthData.fromMap(res['data']));
+    }
+    if (res['status'] == 'registration_required') {}
     debugPrint(res.toString());
   }
 
