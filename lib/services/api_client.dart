@@ -11,26 +11,26 @@ class ApiClient {
   }
   late final Dio _dio;
 
-  Future<Map<String, dynamic>> get(String path, {Map<String, dynamic>? headers}) async {
+  Future<R> get<R>(String path, {Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters}) async {
     try {
-      Response r = await _dio.post(path, options: Options(headers: headers ?? _headers));
-      return r.data;
+      var r = await _dio.post(path, queryParameters: queryParameters, options: Options(headers: headers ?? _headers));
+      return r.data as R;
     } on DioError catch (e) {
       throw _mapError(e);
     }
   }
 
-  Future<Map<String, dynamic>> post(String path, {Map<String, dynamic>? data, Map<String, dynamic>? headers}) async {
+  Future<R> post<R, D>(String path, {D? data, Map<String, dynamic>? headers}) async {
     try {
-      Response r = await _dio.post(path, data: data, options: Options(headers: headers ?? _headers));
-      return r.data;
+      var r = await _dio.post(path, data: data, options: Options(headers: headers ?? _headers));
+      return r.data as R;
     } on DioError catch (e) {
       throw _mapError(e);
     }
   }
 
   Map<String, dynamic> get _headers {
-    AuthData? authData = AuthDataRepository().getAuthData();
+    AuthData? authData = AuthDataRepository().authData;
     if (authData == null) {
       return {};
     }
@@ -84,7 +84,7 @@ class RefreshTokenInterceptor extends Interceptor {
     if (err.response?.statusCode == 401 && err.response?.data == 'jwt expired') {
       debugPrint('jwt expired');
 
-      AuthData? authData = AuthDataRepository().getAuthData();
+      AuthData? authData = AuthDataRepository().authData;
 
       if (authData != null) {
         debugPrint('refreshing token');

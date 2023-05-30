@@ -8,15 +8,16 @@ import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 
-final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) {
-  AuthService authService = ref.read(authServiceProvider);
+final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) async* {
   UserRepository userRepository = ref.read(userRepositoryProvider);
 
-  if (!authService.authorized) throw const Unauthorized('You have to be authorized to get this resource');
-
-  String appUserId = authService.userId!;
-
-  return userRepository.appUserStream(userId: appUserId);
+  // Just pooling
+  // TODO - socket or graphql subscription
+  while (true) {
+    await Future.delayed(Duration(seconds: 5));
+    AppUser appUser = await userRepository.appUser();
+    yield appUser;
+  }
 });
 
 final companiesStreamProvider = StreamProvider.autoDispose<List<Company>>((ref) {

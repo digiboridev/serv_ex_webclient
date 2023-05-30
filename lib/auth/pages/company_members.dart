@@ -15,7 +15,7 @@ import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 final userDataProvider = FutureProvider.autoDispose.family<AppUser, String>((ref, appUserId) async {
   UserRepository userRepository = ref.read(userRepositoryProvider);
-  return userRepository.appUser(userId: appUserId);
+  return userRepository.appUser();
 });
 
 class AuthCompanyMembers extends ConsumerStatefulWidget {

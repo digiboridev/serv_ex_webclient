@@ -13,7 +13,7 @@ import 'package:serv_expert_webclient/services/rs_orders_service.dart';
 //
 
 final userRepositoryProvider = Provider<UserRepository>((ref) {
-  return UserRepositoryImpl();
+  return UserRepositoryHttpImpl();
 });
 final companiesRepositoryProvider = Provider<CompaniesRepository>((ref) {
   return CompaniesRepositoryImpl();

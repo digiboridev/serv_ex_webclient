@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/services/api_client.dart';
 import 'package:serv_expert_webclient/services/auth_data_repository.dart';
@@ -25,62 +23,16 @@ abstract class AuthService {
   Future signInWithPhoneNumber(String phoneNumber);
 
   /// Confirm phone number for web
-  Future confirmPhoneNumber(String smsCode);
+  Future<String?> confirmPhoneNumber(String smsCode);
 
   /// Sign in with Google
   Future signInWithGoogle();
 
+  /// Submit registration data
+  Future<String?> submitRegistrationData({required String phone, required String firstName, required String lastName, required String email});
+
   /// Sign out
   Future<void> signOut();
-}
-
-class FireAuthServiceImpl implements AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  @override
-  bool get authorized => _auth.currentUser != null;
-
-  @override
-  String? get userId => _auth.currentUser?.uid;
-
-  @override
-  String? get email => _auth.currentUser?.email;
-
-  @override
-  String? get phoneNumber => _auth.currentUser?.phoneNumber;
-
-  @override
-  String? get displayName => _auth.currentUser?.displayName;
-
-  ConfirmationResult? _phoneConfirmationResult;
-
-  @override
-  Future signInWithPhoneNumber(String phoneNumber) async {
-    _phoneConfirmationResult = await _auth.signInWithPhoneNumber(phoneNumber);
-  }
-
-  @override
-  Future confirmPhoneNumber(String smsCode) async {
-    if (_phoneConfirmationResult is ConfirmationResult) {
-      UserCredential credential = await _phoneConfirmationResult!.confirm(smsCode);
-      return credential;
-    } else {
-      throw Exception('Phone confirmation result is null, please call signInWithPhoneNumberWeb first');
-    }
-  }
-
-  @override
-  Future signInWithGoogle() async {
-    GoogleAuthProvider googleProvider = GoogleAuthProvider();
-    // googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    // googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
-    return await FirebaseAuth.instance.signInWithPopup(googleProvider);
-  }
-
-  @override
-  Future<void> signOut() async {
-    return await _auth.signOut();
-  }
 }
 
 class AuthServiceHttpImpl extends AuthService {
@@ -90,10 +42,10 @@ class AuthServiceHttpImpl extends AuthService {
   final AuthDataRepository _authDataRepository = AuthDataRepository();
 
   @override
-  bool get authorized => _authDataRepository.getAuthData() != null;
+  bool get authorized => _authDataRepository.authData != null;
 
   @override
-  String? get userId => _authDataRepository.getAuthData()?.userId;
+  String? get userId => _authDataRepository.authData?.userId;
 
   @override
   String? get displayName => 'asd';
@@ -109,27 +61,56 @@ class AuthServiceHttpImpl extends AuthService {
     throw UnimplementedError();
   }
 
+  /// Token uses for phone code confirmation
   String? _phoneToken;
+
+  /// Token uses for multistep registration flow
+  String? _registrationToken;
 
   @override
   Future signInWithPhoneNumber(String phoneNumber) async {
     var res = await apiClient.post('auth/phone-signin', data: {'phoneNumber': phoneNumber});
     debugPrint(res.toString());
+
     _phoneToken = res['token'];
   }
 
   @override
-  Future confirmPhoneNumber(String smsCode) async {
+  Future<String?> confirmPhoneNumber(String smsCode) async {
+    assert(_phoneToken != null);
+
     var res = await apiClient.post('auth/verify-code', data: {'token': _phoneToken, 'code': smsCode});
-    if (res['status'] == 'success') {
-      await _authDataRepository.saveAuthData(AuthData.fromMap(res['data']));
-    }
-    if (res['status'] == 'registration_required') {}
     debugPrint(res.toString());
+
+    if (res['status'] == 'authorized') {
+      await _authDataRepository.saveAuthData(AuthData.fromMap(res));
+      return 'authorized';
+    }
+
+    if (res['status'] == 'registration_required') {
+      _registrationToken = res['registrationToken'];
+      return 'registration_required';
+    }
+
+    return null;
+  }
+
+  @override
+  Future<String?> submitRegistrationData({required String phone, required String firstName, required String lastName, required String email}) async {
+    assert(_registrationToken != null);
+
+    var res = await apiClient
+        .post('auth/register', data: {'registrationToken': _registrationToken, 'phone': phone, 'firstName': firstName, 'lastName': lastName, 'email': email});
+
+    if (res['status'] == 'authorized') {
+      await _authDataRepository.saveAuthData(AuthData.fromMap(res));
+      return 'authorized';
+    }
+    return null;
   }
 
   @override
   Future<void> signOut() async {
-    _authDataRepository.deleteAuthData();
+    await _authDataRepository.deleteAuthData();
   }
 }

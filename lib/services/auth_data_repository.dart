@@ -6,7 +6,7 @@ class AuthDataRepository {
   AuthDataRepository();
   final GetStorage _storage = GetStorage();
 
-  AuthData? getAuthData() {
+  AuthData? get authData {
     final Map<String, dynamic>? authDataMap = _storage.read<Map<String, dynamic>>('authData');
     if (authDataMap == null) return null;
     return AuthData.fromMap(authDataMap);

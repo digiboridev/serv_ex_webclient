@@ -82,10 +82,15 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     state = currentState.copyWith(busy: true, error: '');
     try {
-      await _authService.confirmPhoneNumber(smsCode);
+      String? result = await _authService.confirmPhoneNumber(smsCode);
       log('confirmSmsCode($smsCode) confirmed');
 
-      await updateState();
+      if (result == 'authorized') {
+        state = const ASSAuthorized();
+      }
+      if (result == 'registration_required') {
+        state = ASSAppUserDetails(phone: currentState.phone, firstName: null, lastName: null, email: null);
+      }
     } catch (e) {
       log(e);
       state = currentState.copyWith(busy: false, error: e.toString());
@@ -102,10 +107,12 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     state = currentState.copyWith(busy: true, error: '');
 
     try {
-      await _userRepository.submitUserdetails(firstName: firstName, lastName: lastName, email: email, phone: phone);
+      String? result = await _authService.submitRegistrationData(phone: phone, firstName: firstName, lastName: lastName, email: email);
       log('submitAppUserDetails($firstName, $lastName, $email, $phone) submitted');
 
-      state = const ASSAppUserContacts();
+      if (result == 'authorized') {
+        state = const ASSAppUserContacts();
+      }
     } catch (e) {
       log(e);
       state = currentState.copyWith(busy: false, error: e.toString());
@@ -123,7 +130,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
 
     try {
       if (contacts.isNotEmpty) {
-        await _userRepository.submitUserContacts(contacts: contacts);
+        await _userRepository.updateUserContacts(contacts: contacts);
         log('submitAppUserContacts($contacts) submitted');
       }
       state = const ASSCompanyCreate();

@@ -8,7 +8,6 @@ import 'package:serv_expert_webclient/data/models/company/company.dart';
 abstract class CompaniesRepository {
   Future<Company> createCompany({required String publicId, required String name, required String email});
   Future updateCompanyMembers({required String companyId, required List<String> membersIds});
-  Future<Company> companyById({required String id, bool forceNetwork = false});
   Future<List<Company>> companiesByMemberId({required String memberId, bool forceNetwork = false});
   Stream<List<Company>> companiesByMemberIdStream({required String memberId});
 }

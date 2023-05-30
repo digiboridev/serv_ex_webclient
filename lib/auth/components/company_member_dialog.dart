@@ -7,7 +7,7 @@ import 'package:serv_expert_webclient/utils/validators.dart';
 
 final userByEmailOrPhoneProvider = FutureProvider.autoDispose.family<AppUser, String>((ref, searchString) async {
   UserRepository userRepository = ref.read(userRepositoryProvider);
-  return userRepository.findAppUserByEmailOrPhone(searchString);
+  return userRepository.findAppUserByEmailOrPhone(emailOrPhone: searchString);
 });
 
 class AddMemberDialog extends ConsumerStatefulWidget {
