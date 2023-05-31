@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/services/auth_data_repository.dart';
@@ -7,34 +8,27 @@ import 'package:serv_expert_webclient/services/auth_data_repository.dart';
 class ApiClient {
   ApiClient() {
     _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/'));
-    _dio.interceptors.add(RefreshTokenInterceptor(_dio));
+    _dio.interceptors.add(AuthInterceptor());
+    _dio.interceptors.add(RetryInterceptor(dio: _dio));
   }
   late final Dio _dio;
 
-  Future<R> get<R>(String path, {Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters}) async {
+  Future<R> get<R>(String path, {Map<String, dynamic>? queryParameters}) async {
     try {
-      var r = await _dio.post(path, queryParameters: queryParameters, options: Options(headers: headers ?? _headers));
+      var r = await _dio.get(path, queryParameters: queryParameters);
       return r.data as R;
     } on DioError catch (e) {
       throw _mapError(e);
     }
   }
 
-  Future<R> post<R, D>(String path, {D? data, Map<String, dynamic>? headers}) async {
+  Future<R> post<R, D>(String path, {D? data, Map<String, dynamic>? queryParameters}) async {
     try {
-      var r = await _dio.post(path, data: data, options: Options(headers: headers ?? _headers));
+      var r = await _dio.post(path, data: data, queryParameters: queryParameters);
       return r.data as R;
     } on DioError catch (e) {
       throw _mapError(e);
     }
-  }
-
-  Map<String, dynamic> get _headers {
-    AuthData? authData = AuthDataRepository().authData;
-    if (authData == null) {
-      return {};
-    }
-    return {'authorization': 'Bearer ${authData.accessToken}'};
   }
 
   Exception _mapError(DioError e) {
@@ -75,35 +69,49 @@ class ApiClient {
   }
 }
 
-class RefreshTokenInterceptor extends Interceptor {
-  RefreshTokenInterceptor(this._dio);
-  final Dio _dio;
+class AuthInterceptor extends QueuedInterceptor {
+  final _authDataRepository = AuthDataRepository();
 
+  // Add authorization header to every request if token is available
   @override
-  Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
+  onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    AuthData? authData = _authDataRepository.authData;
+    if (authData != null) {
+      options.headers['authorization'] = 'Bearer ${authData.accessToken}';
+    }
+    handler.next(options);
+  }
+
+  // Refresh token if it is expired
+  @override
+  onError(DioError err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401 && err.response?.data == 'jwt expired') {
       debugPrint('jwt expired');
 
-      AuthData? authData = AuthDataRepository().authData;
+      AuthData? authData = _authDataRepository.authData;
 
       if (authData != null) {
         debugPrint('refreshing token');
 
-        var r = await _dio.post('auth/refresh-token', data: {'grant_type': 'refresh_token', 'refresh_token': authData.refreshToken});
+        Dio tokendio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/'));
+
+        var r = await tokendio.post('auth/refresh-token', data: {'grant_type': 'refresh_token', 'refresh_token': authData.refreshToken});
 
         if (r.statusCode == 200) {
           AuthData authData = AuthData.fromMap(r.data);
-          await AuthDataRepository().saveAuthData(authData);
+          await _authDataRepository.saveAuthData(authData);
           debugPrint('token refreshed');
 
-          return handler.resolve(
-            await _dio.request(
-              err.requestOptions.path,
-              data: err.requestOptions.data,
-              queryParameters: err.requestOptions.queryParameters,
-              options: Options(headers: {'authorization': 'Bearer ${authData.accessToken}'}, method: err.requestOptions.method),
-            ),
+          var reRequest = await tokendio.request(
+            err.requestOptions.path,
+            data: err.requestOptions.data,
+            queryParameters: err.requestOptions.queryParameters,
+            options: Options(headers: {'authorization': 'Bearer ${authData.accessToken}'}, method: err.requestOptions.method),
           );
+          return handler.resolve(reRequest);
+        } else {
+          debugPrint('refresh token failed');
+          await _authDataRepository.deleteAuthData();
         }
       }
     }

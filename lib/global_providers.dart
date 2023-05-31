@@ -4,19 +4,26 @@ import 'package:serv_expert_webclient/data/reposiotories/companies_repository.da
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/issues_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/users_repository.dart';
 import 'package:serv_expert_webclient/services/api_client.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/services/rs_orders_service.dart';
 
+ApiClient apiClient = ApiClient();
+
 //
 // -- Repositories
 //
-
 final userRepositoryProvider = Provider<UserRepository>((ref) {
-  return UserRepositoryHttpImpl();
+  return UserRepositoryHttpImpl(apiClient: apiClient);
 });
+
+final usersRepositoryProvider = Provider<UsersRepository>((ref) {
+  return UsersRepositoryHttpImpl(apiClient: apiClient);
+});
+
 final companiesRepositoryProvider = Provider<CompaniesRepository>((ref) {
-  return CompaniesRepositoryImpl();
+  return CompaniesRepositoryImpl(apiClient: apiClient);
 });
 
 final rsCategoriesRepositoryProvider = Provider<RSCategoriesRepository>((ref) {
@@ -36,7 +43,7 @@ final rsOrdersRepositoryProvider = Provider<RSOrdersRepository>((ref) {
 //
 
 final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthServiceHttpImpl(apiClient: ApiClient());
+  return AuthServiceHttpImpl(apiClient: apiClient);
 });
 
 final rsOrdersServiceProvider = Provider<RSOrdersService>((ref) {

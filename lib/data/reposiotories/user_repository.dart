@@ -5,17 +5,17 @@ import 'package:serv_expert_webclient/data/models/user/user_contact.dart';
 import 'package:serv_expert_webclient/services/api_client.dart';
 
 abstract class UserRepository {
-  Future<AppUser> appUser();
+  Future<AppUser> me();
   Future<List<AppUserContact>> userContacts();
   Future<List<AppUserContact>> updateUserContacts({required List<NewContactDTO> contacts});
-  Future<AppUser> findAppUserByEmailOrPhone({required String emailOrPhone});
 }
 
 class UserRepositoryHttpImpl implements UserRepository {
-  final ApiClient _apiClient = ApiClient();
+  UserRepositoryHttpImpl({required ApiClient apiClient}) : _apiClient = apiClient;
+  final ApiClient _apiClient;
 
   @override
-  Future<AppUser> appUser() async {
+  Future<AppUser> me() async {
     final response = await _apiClient.get('/user/me');
     return AppUser.fromMap(response);
   }
@@ -30,11 +30,5 @@ class UserRepositoryHttpImpl implements UserRepository {
   Future<List<AppUserContact>> updateUserContacts({required List<NewContactDTO> contacts}) async {
     List response = await _apiClient.post('/user/update-contacts', data: contacts.map((e) => e.toMap()).toList());
     return response.map((e) => AppUserContact.fromMap(e)).toList();
-  }
-
-  @override
-  Future<AppUser> findAppUserByEmailOrPhone({required String emailOrPhone}) async {
-    final response = await _apiClient.get('/user/findByPhoneOrEmail', queryParameters: {'phoneOrEmail': emailOrPhone});
-    return AppUser.fromMap(response);
   }
 }

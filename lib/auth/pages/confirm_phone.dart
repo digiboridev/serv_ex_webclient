@@ -115,12 +115,15 @@ class _SmsSentSubpageState extends ConsumerState<AuthConfirmPhone> {
           borderRadius: BorderRadius.circular(whenLayout<double>(mobile: 8.ms, tablet: 12.ts)),
         ),
       ),
-      length: 6,
+      length: 4,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter some numbers';
+        }
+        if (value.length < 4) {
+          return 'Please enter 4 digits';
         }
         return null;
       },

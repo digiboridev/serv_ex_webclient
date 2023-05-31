@@ -9,6 +9,8 @@ class AppUser extends Equatable {
   final String phone;
   final String email;
   final DateTime createdAt;
+  final DateTime updatedAt;
+
   const AppUser({
     required this.id,
     required this.firstName,
@@ -16,6 +18,7 @@ class AppUser extends Equatable {
     required this.phone,
     required this.email,
     required this.createdAt,
+    required this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,7 +28,8 @@ class AppUser extends Equatable {
       'lastName': lastName,
       'phone': phone,
       'email': email,
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 
@@ -36,7 +40,8 @@ class AppUser extends Equatable {
       lastName: map['lastName'] as String,
       phone: map['phone'] as String,
       email: map['email'] as String,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      createdAt: DateTime.parse(map['createdAt']),
+      updatedAt: DateTime.parse(map['updatedAt']),
     );
   }
 
@@ -56,6 +61,7 @@ class AppUser extends Equatable {
       phone,
       email,
       createdAt,
+      updatedAt,
     ];
   }
 }

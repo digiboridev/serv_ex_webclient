@@ -30,6 +30,7 @@ dependencies:
   transparent_image: ^2.0.1
   hand_signature: ^3.0.1
   dio: ^5.1.2
+  dio_smart_retry: ^5.0.0
 
 
 dev_dependencies:
