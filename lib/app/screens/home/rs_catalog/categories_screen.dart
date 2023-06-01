@@ -28,7 +28,7 @@ class _RSCategoriesScreenState extends ConsumerState<RSCategoriesScreen> {
   Widget build(BuildContext context) {
     MediaQuery.of(context);
 
-    AsyncValue<List<RSCategory>> categories = ref.watch(rsCategoriesProvider(null));
+    AsyncValue<List<RSCategory>> categories = ref.watch(mainCategoriesProvider);
 
     return FillableScrollableWrapper(
       child: Container(

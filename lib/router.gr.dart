@@ -20,8 +20,8 @@ import 'app/screens/contributor_select_screen.dart' as _i11;
 import 'app/screens/home/home_wrapper.dart' as _i12;
 import 'app/screens/home/rs_catalog/breaking_types_screen.dart' as _i26;
 import 'app/screens/home/rs_catalog/categories_screen.dart' as _i24;
-import 'app/screens/home/rs_catalog/subcategories_screen.dart' as _i25;
 import 'app/screens/home/rs_catalog/services_screen.dart' as _i23;
+import 'app/screens/home/rs_catalog/subcategories_screen.dart' as _i25;
 import 'app/screens/home/rs_ordering/order_details_screen.dart' as _i17;
 import 'app/screens/home/rs_ordering/order_has_password_screen.dart' as _i19;
 import 'app/screens/home/rs_ordering/order_password_screen.dart' as _i21;
@@ -93,7 +93,8 @@ class AppRouter extends _i29.RootStackRouter {
       );
     },
     AsAppUserDetails.name: (routeData) {
-      final args = routeData.argsAs<AsAppUserDetailsArgs>(orElse: () => const AsAppUserDetailsArgs());
+      final args = routeData.argsAs<AsAppUserDetailsArgs>(
+          orElse: () => const AsAppUserDetailsArgs());
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.AuthAppUserDetails(
@@ -175,7 +176,9 @@ class AppRouter extends _i29.RootStackRouter {
     },
     OrderScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<OrderScreenArgs>(orElse: () => OrderScreenArgs(orderId: pathParams.getString('orderId')));
+      final args = routeData.argsAs<OrderScreenArgs>(
+          orElse: () =>
+              OrderScreenArgs(orderId: pathParams.getString('orderId')));
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i16.OrderScreenLoader(
@@ -253,9 +256,10 @@ class AppRouter extends _i29.RootStackRouter {
       );
     },
     RSSubCategoriesScreenRoute.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args =
-          routeData.argsAs<RSSubCategoriesScreenRouteArgs>(orElse: () => RSSubCategoriesScreenRouteArgs(categoryId: queryParams.optString('categoryId')));
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<RSSubCategoriesScreenRouteArgs>(
+          orElse: () => RSSubCategoriesScreenRouteArgs(
+              categoryId: pathParams.getString('categoryId')));
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i25.RSSubCategoriesScreen(
@@ -265,8 +269,10 @@ class AppRouter extends _i29.RootStackRouter {
       );
     },
     RSIssuesScreenRoute.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RSIssuesScreenRouteArgs>(orElse: () => RSIssuesScreenRouteArgs(categoryId: queryParams.optString('categoryId')));
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<RSIssuesScreenRouteArgs>(
+          orElse: () => RSIssuesScreenRouteArgs(
+              categoryId: pathParams.getString('categoryId')));
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i26.RSIssuesScreen(
@@ -277,7 +283,8 @@ class AppRouter extends _i29.RootStackRouter {
     },
     OrderScreenViewPageRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<OrderScreenViewPageRouteArgs>(orElse: () => const OrderScreenViewPageRouteArgs());
+      final args = routeData.argsAs<OrderScreenViewPageRouteArgs>(
+          orElse: () => const OrderScreenViewPageRouteArgs());
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i27.OrderScreenViewPage(
@@ -288,7 +295,8 @@ class AppRouter extends _i29.RootStackRouter {
     },
     OrderCancellPageRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<OrderCancellPageRouteArgs>(orElse: () => const OrderCancellPageRouteArgs());
+      final args = routeData.argsAs<OrderCancellPageRouteArgs>(
+          orElse: () => const OrderCancellPageRouteArgs());
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i28.OrderCancellPage(
@@ -397,12 +405,12 @@ class AppRouter extends _i29.RootStackRouter {
                 ),
                 _i29.RouteConfig(
                   RSSubCategoriesScreenRoute.name,
-                  path: 'rs_subcategories',
+                  path: 'rs_subcategories/:categoryId',
                   parent: Home.name,
                 ),
                 _i29.RouteConfig(
                   RSIssuesScreenRoute.name,
-                  path: 'rs_issues',
+                  path: 'rs_issues/:categoryId',
                   parent: Home.name,
                 ),
               ],
@@ -831,7 +839,8 @@ class OrderScreenArgs {
 
 /// generated route for
 /// [_i17.RSOrderDetailsScreen]
-class RSOrderDetailsScreenRoute extends _i29.PageRouteInfo<RSOrderDetailsScreenRouteArgs> {
+class RSOrderDetailsScreenRoute
+    extends _i29.PageRouteInfo<RSOrderDetailsScreenRouteArgs> {
   RSOrderDetailsScreenRoute({
     required _i32.RSNewOrderDTO newOrder,
     _i30.Key? key,
@@ -865,7 +874,8 @@ class RSOrderDetailsScreenRouteArgs {
 
 /// generated route for
 /// [_i18.RSOrderWarantyScreen]
-class RSOrderWarantyScreenRoute extends _i29.PageRouteInfo<RSOrderWarantyScreenRouteArgs> {
+class RSOrderWarantyScreenRoute
+    extends _i29.PageRouteInfo<RSOrderWarantyScreenRouteArgs> {
   RSOrderWarantyScreenRoute({
     required _i32.RSNewOrderDTO newOrder,
     _i30.Key? key,
@@ -899,7 +909,8 @@ class RSOrderWarantyScreenRouteArgs {
 
 /// generated route for
 /// [_i19.RSOrderHasPasswordScreen]
-class RSOrderHasPasswordScreenRoute extends _i29.PageRouteInfo<RSOrderHasPasswordScreenRouteArgs> {
+class RSOrderHasPasswordScreenRoute
+    extends _i29.PageRouteInfo<RSOrderHasPasswordScreenRouteArgs> {
   RSOrderHasPasswordScreenRoute({
     required _i32.RSNewOrderDTO newOrder,
     _i30.Key? key,
@@ -933,7 +944,8 @@ class RSOrderHasPasswordScreenRouteArgs {
 
 /// generated route for
 /// [_i20.RSOrderPasswordTypeScreen]
-class RSOrderPasswordTypeScreenRoute extends _i29.PageRouteInfo<RSOrderPasswordTypeScreenRouteArgs> {
+class RSOrderPasswordTypeScreenRoute
+    extends _i29.PageRouteInfo<RSOrderPasswordTypeScreenRouteArgs> {
   RSOrderPasswordTypeScreenRoute({
     required _i32.RSNewOrderDTO newOrder,
     _i30.Key? key,
@@ -967,7 +979,8 @@ class RSOrderPasswordTypeScreenRouteArgs {
 
 /// generated route for
 /// [_i21.RSOrderPasswordScreen]
-class RSOrderPasswordScreenRoute extends _i29.PageRouteInfo<RSOrderPasswordScreenRouteArgs> {
+class RSOrderPasswordScreenRoute
+    extends _i29.PageRouteInfo<RSOrderPasswordScreenRouteArgs> {
   RSOrderPasswordScreenRoute({
     required _i32.RSNewOrderDTO newOrder,
     _i30.Key? key,
@@ -1037,18 +1050,19 @@ class RSCategoriesScreenRoute extends _i29.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i25.RSSubCategoriesScreen]
-class RSSubCategoriesScreenRoute extends _i29.PageRouteInfo<RSSubCategoriesScreenRouteArgs> {
+class RSSubCategoriesScreenRoute
+    extends _i29.PageRouteInfo<RSSubCategoriesScreenRouteArgs> {
   RSSubCategoriesScreenRoute({
     _i30.Key? key,
-    required String? categoryId,
+    required String categoryId,
   }) : super(
           RSSubCategoriesScreenRoute.name,
-          path: 'rs_subcategories',
+          path: 'rs_subcategories/:categoryId',
           args: RSSubCategoriesScreenRouteArgs(
             key: key,
             categoryId: categoryId,
           ),
-          rawQueryParams: {'categoryId': categoryId},
+          rawPathParams: {'categoryId': categoryId},
         );
 
   static const String name = 'RSSubCategoriesScreenRoute';
@@ -1062,7 +1076,7 @@ class RSSubCategoriesScreenRouteArgs {
 
   final _i30.Key? key;
 
-  final String? categoryId;
+  final String categoryId;
 
   @override
   String toString() {
@@ -1075,15 +1089,15 @@ class RSSubCategoriesScreenRouteArgs {
 class RSIssuesScreenRoute extends _i29.PageRouteInfo<RSIssuesScreenRouteArgs> {
   RSIssuesScreenRoute({
     _i30.Key? key,
-    required String? categoryId,
+    required String categoryId,
   }) : super(
           RSIssuesScreenRoute.name,
-          path: 'rs_issues',
+          path: 'rs_issues/:categoryId',
           args: RSIssuesScreenRouteArgs(
             key: key,
             categoryId: categoryId,
           ),
-          rawQueryParams: {'categoryId': categoryId},
+          rawPathParams: {'categoryId': categoryId},
         );
 
   static const String name = 'RSIssuesScreenRoute';
@@ -1097,7 +1111,7 @@ class RSIssuesScreenRouteArgs {
 
   final _i30.Key? key;
 
-  final String? categoryId;
+  final String categoryId;
 
   @override
   String toString() {
@@ -1107,7 +1121,8 @@ class RSIssuesScreenRouteArgs {
 
 /// generated route for
 /// [_i27.OrderScreenViewPage]
-class OrderScreenViewPageRoute extends _i29.PageRouteInfo<OrderScreenViewPageRouteArgs> {
+class OrderScreenViewPageRoute
+    extends _i29.PageRouteInfo<OrderScreenViewPageRouteArgs> {
   OrderScreenViewPageRoute({_i30.Key? key})
       : super(
           OrderScreenViewPageRoute.name,
@@ -1131,7 +1146,8 @@ class OrderScreenViewPageRouteArgs {
 
 /// generated route for
 /// [_i28.OrderCancellPage]
-class OrderCancellPageRoute extends _i29.PageRouteInfo<OrderCancellPageRouteArgs> {
+class OrderCancellPageRoute
+    extends _i29.PageRouteInfo<OrderCancellPageRouteArgs> {
   OrderCancellPageRoute({_i30.Key? key})
       : super(
           OrderCancellPageRoute.name,

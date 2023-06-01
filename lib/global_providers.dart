@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:serv_expert_webclient/data/reposiotories/repair_service/catalog_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/issues_repository.dart';
-import 'package:serv_expert_webclient/data/reposiotories/repair_service/categories_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/users_repository.dart';
 import 'package:serv_expert_webclient/services/api_client.dart';
@@ -23,11 +23,11 @@ final usersRepositoryProvider = Provider<UsersRepository>((ref) {
 });
 
 final companiesRepositoryProvider = Provider<CompaniesRepository>((ref) {
-  return CompaniesRepositoryImpl(apiClient: apiClient);
+  return CompaniesRepositoryHttpImpl(apiClient: apiClient);
 });
 
-final rsCategoriesRepositoryProvider = Provider<RSCategoriesRepository>((ref) {
-  return RSCategoriesRepositoryImpl();
+final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
+  return CatalogRepositoryHttpImpl(apiClient: apiClient);
 });
 
 final rsIssuesRepositoryProvider = Provider<RSIssuesRepository>((ref) {

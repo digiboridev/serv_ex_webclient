@@ -14,8 +14,8 @@ import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class RSSubCategoriesScreen extends ConsumerStatefulWidget {
-  const RSSubCategoriesScreen({super.key, @queryParam required this.categoryId});
-  final String? categoryId;
+  const RSSubCategoriesScreen({super.key, @PathParam('categoryId') required this.categoryId});
+  final String categoryId;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RSSubCategoriesScreenState();
@@ -30,7 +30,7 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
   Widget build(BuildContext context) {
     MediaQuery.of(context);
 
-    AsyncValue<List<RSCategory>> categories = ref.watch(rsCategoriesProvider(widget.categoryId));
+    AsyncValue<List<RSCategory>> categories = ref.watch(subCategoriesProvider(widget.categoryId));
 
     return FillableScrollableWrapper(
       child: Container(
@@ -57,7 +57,7 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
   Widget cetegoryName() {
     return Consumer(
       builder: (context, ref, child) {
-        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(widget.categoryId!));
+        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(widget.categoryId));
 
         return FadeIn(
           child: Headline(

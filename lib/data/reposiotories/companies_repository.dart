@@ -8,8 +8,8 @@ abstract class CompaniesRepository {
   Future updateCompanyMembers({required String companyId, required List<String> membersIds});
 }
 
-class CompaniesRepositoryImpl implements CompaniesRepository {
-  CompaniesRepositoryImpl({required ApiClient apiClient}) : _apiClient = apiClient;
+class CompaniesRepositoryHttpImpl implements CompaniesRepository {
+  CompaniesRepositoryHttpImpl({required ApiClient apiClient}) : _apiClient = apiClient;
   final ApiClient _apiClient;
 
   @override

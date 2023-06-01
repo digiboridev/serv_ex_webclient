@@ -13,13 +13,13 @@ class UsersRepositoryHttpImpl implements UsersRepository {
 
   @override
   Future<AppUser> userById(String appUserId) async {
-    final response = await _apiClient.get('/users/findById', queryParameters: {'userId': appUserId});
+    final response = await _apiClient.get('/users/$appUserId');
     return AppUser.fromMap(response);
   }
 
   @override
   Future<AppUser> userByEmailOrPhone({required String emailOrPhone}) async {
-    final response = await _apiClient.get('/users/findByPhoneOrEmail', queryParameters: {'phoneOrEmail': emailOrPhone});
+    final response = await _apiClient.get('/users/findByPhoneOrEmail/$emailOrPhone');
     return AppUser.fromMap(response);
   }
 }

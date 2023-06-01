@@ -18,9 +18,9 @@ import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
 class RSIssuesScreen extends ConsumerWidget {
-  const RSIssuesScreen({super.key, @queryParam required this.categoryId});
+  const RSIssuesScreen({super.key, @PathParam('categoryId') required this.categoryId});
 
-  final String? categoryId;
+  final String categoryId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,12 +40,12 @@ class RSIssuesScreen extends ConsumerWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  AsyncValue<List<RSIssue>> issues = ref.watch(rsIssuesProvider(categoryId!));
+                  AsyncValue<List<RSIssue>> issues = ref.watch(rsIssuesProvider(categoryId));
                   return issues.when(
                     data: (issues) {
                       return FadeIn(
                         child: IssueSelection(
-                          categoryId: categoryId!,
+                          categoryId: categoryId,
                           issues: issues,
                         ),
                       );
@@ -68,7 +68,7 @@ class RSIssuesScreen extends ConsumerWidget {
   Consumer categoryName() {
     return Consumer(
       builder: (context, ref, child) {
-        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(categoryId!));
+        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(categoryId));
 
         return FadeIn(
           child: Text(

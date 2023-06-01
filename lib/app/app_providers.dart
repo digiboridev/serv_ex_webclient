@@ -12,9 +12,9 @@ final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) a
   // Just pooling
   // TODO - socket or graphql subscription
   while (true) {
-    await Future.delayed(Duration(seconds: 5));
     AppUser appUser = await userRepository.me();
     yield appUser;
+    await Future.delayed(Duration(seconds: 5));
   }
 });
 
@@ -24,9 +24,9 @@ final companiesStreamProvider = StreamProvider.autoDispose<List<Company>>((ref) 
   // Just pooling
   // TODO - socket or graphql subscription
   while (true) {
-    await Future.delayed(Duration(seconds: 5));
     List<Company> companies = await companiesRepository.userCompanies();
     yield companies;
+    await Future.delayed(Duration(seconds: 5));
   }
 });
 
