@@ -4,7 +4,7 @@ import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/catalog_repository.dart';
 import 'package:serv_expert_webclient/global_providers.dart';
 
-final rsCategoryProvider = FutureProvider.autoDispose.family<RSCategory, String>((ref, categoryId) async {
+final categoryProvider = FutureProvider.autoDispose.family<Category, String>((ref, categoryId) async {
   CatalogRepository repository = ref.read(catalogRepositoryProvider);
   return repository.categoryById(categoryId: categoryId);
 });

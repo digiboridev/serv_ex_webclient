@@ -50,7 +50,7 @@ class OrderDetailsInfo extends StatelessWidget {
           ),
           Consumer(
             builder: (context, ref, child) {
-              AsyncValue<RSCategory> categoryData = ref.watch(rsCategoryProvider(order.details.categoryId));
+              AsyncValue<Category> categoryData = ref.watch(categoryProvider(order.details.categoryId));
               return categoryData.when(
                 data: (category) => Text(
                   category.name,
@@ -61,7 +61,7 @@ class OrderDetailsInfo extends StatelessWidget {
                 ),
                 loading: () => const SizedBox(),
                 error: (error, stack) => GestureDetector(
-                  onTap: () => ref.refresh(rsCategoryProvider(order.details.categoryId)),
+                  onTap: () => ref.refresh(categoryProvider(order.details.categoryId)),
                   child: Text(
                     'Error: $error',
                     style: const TextStyle(

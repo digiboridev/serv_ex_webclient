@@ -2,9 +2,9 @@ import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/services/api_client.dart';
 
 abstract class CatalogRepository {
-  Future<RSCategory> categoryById({required String categoryId});
-  Future<List<RSCategory>> mainCategories();
-  Future<List<RSCategory>> subCategories({required String parentId});
+  Future<Category> categoryById({required String categoryId});
+  Future<List<Category>> mainCategories();
+  Future<List<Category>> subCategories({required String parentId});
 }
 
 class CatalogRepositoryHttpImpl implements CatalogRepository {
@@ -12,20 +12,20 @@ class CatalogRepositoryHttpImpl implements CatalogRepository {
   ApiClient _apiClient;
 
   @override
-  Future<RSCategory> categoryById({required String categoryId}) async {
+  Future<Category> categoryById({required String categoryId}) async {
     final response = await _apiClient.get('/catalog/category/$categoryId');
-    return RSCategory.fromMap(response);
+    return Category.fromMap(response);
   }
 
   @override
-  Future<List<RSCategory>> mainCategories() async {
+  Future<List<Category>> mainCategories() async {
     final response = await _apiClient.get('/catalog/category');
-    return (response as List).map((e) => RSCategory.fromMap(e)).toList();
+    return (response as List).map((e) => Category.fromMap(e)).toList();
   }
 
   @override
-  Future<List<RSCategory>> subCategories({String? parentId}) async {
+  Future<List<Category>> subCategories({String? parentId}) async {
     final response = await _apiClient.get('/catalog/category/$parentId/children');
-    return (response as List).map((e) => RSCategory.fromMap(e)).toList();
+    return (response as List).map((e) => Category.fromMap(e)).toList();
   }
 }

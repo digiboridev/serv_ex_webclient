@@ -68,7 +68,7 @@ class RSIssuesScreen extends ConsumerWidget {
   Consumer categoryName() {
     return Consumer(
       builder: (context, ref, child) {
-        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(categoryId));
+        AsyncValue<Category> selectedCategoryData = ref.watch(categoryProvider(categoryId));
 
         return FadeIn(
           child: Text(

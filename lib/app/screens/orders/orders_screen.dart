@@ -114,7 +114,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
             ),
             Consumer(
               builder: (context, ref, child) {
-                AsyncValue<RSCategory> categoryData = ref.watch(rsCategoryProvider(order.details.categoryId));
+                AsyncValue<Category> categoryData = ref.watch(categoryProvider(order.details.categoryId));
 
                 return Row(
                   children: [

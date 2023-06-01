@@ -22,7 +22,7 @@ class RSSubCategoriesScreen extends ConsumerStatefulWidget {
 }
 
 class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
-  onCategoryTap(RSCategory category) {
+  onCategoryTap(Category category) {
     context.router.navigate(RSIssuesScreenRoute(categoryId: category.id));
   }
 
@@ -30,7 +30,7 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
   Widget build(BuildContext context) {
     MediaQuery.of(context);
 
-    AsyncValue<List<RSCategory>> categories = ref.watch(subCategoriesProvider(widget.categoryId));
+    AsyncValue<List<Category>> categories = ref.watch(subCategoriesProvider(widget.categoryId));
 
     return FillableScrollableWrapper(
       child: Container(
@@ -57,7 +57,7 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
   Widget cetegoryName() {
     return Consumer(
       builder: (context, ref, child) {
-        AsyncValue<RSCategory> selectedCategoryData = ref.watch(rsCategoryProvider(widget.categoryId));
+        AsyncValue<Category> selectedCategoryData = ref.watch(categoryProvider(widget.categoryId));
 
         return FadeIn(
           child: Headline(
@@ -72,7 +72,7 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
     );
   }
 
-  Widget content(List<RSCategory> categories) {
+  Widget content(List<Category> categories) {
     return Wrap(
       spacing: whenLayout(mobile: 8.ms, tablet: 16.ts),
       runSpacing: whenLayout(mobile: 8.ms, tablet: 16.ts),
@@ -80,7 +80,7 @@ class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
     );
   }
 
-  Widget categoryTile(RSCategory category) {
+  Widget categoryTile(Category category) {
     return Container(
       width: whenLayout(mobile: 160.ms, tablet: 300.ts),
       clipBehavior: Clip.antiAlias,

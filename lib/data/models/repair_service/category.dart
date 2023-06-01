@@ -1,27 +1,27 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
-class RSCategory extends Equatable {
+class Category extends Equatable {
   final String id;
   final String name;
   final String imageUri;
 
   /// If null, then this is a top-level category else it is a subcategory of the parent category
   final String? parentId;
-  const RSCategory({
+  const Category({
     required this.id,
     required this.name,
     required this.imageUri,
     this.parentId,
   });
 
-  RSCategory copyWith({
+  Category copyWith({
     String? id,
     String? name,
     String? imageUri,
     String? parentId,
   }) {
-    return RSCategory(
+    return Category(
       id: id ?? this.id,
       name: name ?? this.name,
       imageUri: imageUri ?? this.imageUri,
@@ -38,8 +38,8 @@ class RSCategory extends Equatable {
     };
   }
 
-  factory RSCategory.fromMap(Map<String, dynamic> map) {
-    return RSCategory(
+  factory Category.fromMap(Map<String, dynamic> map) {
+    return Category(
       id: map['id'] as String,
       name: map['name'] as String,
       imageUri: map['imageUri'] == null
@@ -51,7 +51,7 @@ class RSCategory extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory RSCategory.fromJson(String source) => RSCategory.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Category.fromJson(String source) => Category.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

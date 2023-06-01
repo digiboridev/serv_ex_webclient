@@ -20,53 +20,53 @@
 //     RSCategoriesRepository catrep = ref.read(rsCategoriesRepositoryProvider);
 //     RSIssuesRepository brrep = ref.read(rsIssuesRepositoryProvider);
 
-//     // List<RSCategory> cats = [
-//     //   RSCategory(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
-//     //   RSCategory(global: false, id: rep.generateId(), name: 'Laptop', type: RSCType.category),
-//     //   RSCategory(global: false, id: rep.generateId(), name: 'PC', type: RSCType.category),
-//     //   RSCategory(global: false, id: rep.generateId(), name: 'TV', type: RSCType.category),
-//     //   RSCategory(global: false, id: rep.generateId(), name: 'Gaming console', type: RSCType.category),
-//     //   RSCategory(global: false, id: rep.generateId(), name: 'Other', type: RSCType.category),
+//     // List<Category> cats = [
+//     //   Category(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
+//     //   Category(global: false, id: rep.generateId(), name: 'Laptop', type: RSCType.category),
+//     //   Category(global: false, id: rep.generateId(), name: 'PC', type: RSCType.category),
+//     //   Category(global: false, id: rep.generateId(), name: 'TV', type: RSCType.category),
+//     //   Category(global: false, id: rep.generateId(), name: 'Gaming console', type: RSCType.category),
+//     //   Category(global: false, id: rep.generateId(), name: 'Other', type: RSCType.category),
 //     // ];
 
-//     // List<RSCategory> cats = [
+//     // List<Category> cats = [
 //     //   // phone subcats
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'Android device', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'IOS device', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'Drawing tablets', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'eReader', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'Other device', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'Android device', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'IOS device', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'Drawing tablets', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'eReader', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'CsUHBDbcBkOw7BZB7pEt', name: 'Other device', type: RSCType.subcategory),
 //     //   // laptop subcats
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Apple laptop', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Office laptop', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Gaming laptop', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Chromebook', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Transformer', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Other', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Apple laptop', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Office laptop', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Gaming laptop', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Chromebook', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Transformer', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'DnEEQEBTZBHx1tv2jABP', name: 'Other', type: RSCType.subcategory),
 
 //     //   // PC subcats
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Apple PC', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Office PC', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Gaming PC', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'AIO', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Other', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Apple PC', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Office PC', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Gaming PC', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'AIO', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'my0rrtWzXCVmCGt7GNzY', name: 'Other', type: RSCType.subcategory),
 
 //     //   // TV subcats
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'LCD', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'LED', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'OLED', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'Plasma', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'Other', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'LCD', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'LED', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'OLED', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'Plasma', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'E3Z7mvp0KCmBr2PbhTVT', name: 'Other', type: RSCType.subcategory),
 
 //     //   // Gaming console subcats
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Playstation', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Xbox', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Nintendo', type: RSCType.subcategory),
-//     //   RSCategory(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Other', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Playstation', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Xbox', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Nintendo', type: RSCType.subcategory),
+//     //   Category(global: false, id: rep.generateId(), parentId: 'obH0Kq9PGqxYJM7vzKqz', name: 'Other', type: RSCType.subcategory),
 
 //     // ];
 
-//     // for (RSCategory cat in cats) {
+//     // for (Category cat in cats) {
 //     //   await rep.setCategory(cat);
 //     // }
 
