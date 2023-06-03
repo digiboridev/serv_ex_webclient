@@ -7,25 +7,29 @@ class Category extends Equatable {
   final String imageUri;
 
   /// If null, then this is a top-level category else it is a subcategory of the parent category
-  final String? parentId;
+  final String? parent;
+  final List<String> issues;
   const Category({
     required this.id,
     required this.name,
     required this.imageUri,
-    this.parentId,
+    this.parent,
+    this.issues = const [],
   });
 
   Category copyWith({
     String? id,
     String? name,
     String? imageUri,
-    String? parentId,
+    String? parent,
+    List<String>? issues,
   }) {
     return Category(
       id: id ?? this.id,
       name: name ?? this.name,
       imageUri: imageUri ?? this.imageUri,
-      parentId: parentId ?? this.parentId,
+      parent: parent ?? this.parent,
+      issues: issues ?? this.issues,
     );
   }
 
@@ -34,7 +38,8 @@ class Category extends Equatable {
       'id': id,
       'name': name,
       'imageUri': imageUri,
-      'parentId': parentId,
+      'parent': parent,
+      'issues': issues,
     };
   }
 
@@ -45,7 +50,8 @@ class Category extends Equatable {
       imageUri: map['imageUri'] == null
           ? 'https://firebasestorage.googleapis.com/v0/b/serv-expert.appspot.com/o/rs_categories%2Fmonitor.png?alt=media&token=e0d5d2da-5701-46f3-bbfb-83a7a5aa622f'
           : map['imageUri'] as String,
-      parentId: map['parentId'] != null ? map['parentId'] as String : null,
+      parent: map['parent'] != null ? map['parent'] as String : null,
+      issues: List<String>.from(map['issues']),
     );
   }
 
@@ -57,5 +63,5 @@ class Category extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [id, name, parentId ?? 0];
+  List<Object> get props => [id, name, parent ?? 0, issues];
 }

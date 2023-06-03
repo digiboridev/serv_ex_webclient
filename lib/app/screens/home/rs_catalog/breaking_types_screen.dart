@@ -183,7 +183,7 @@ class _IssueSelectionState extends ConsumerState<IssueSelection> {
               }
             },
           ),
-          Text(issue.name),
+          Tooltip(message: issue.description, child: Text(issue.title)),
         ],
       ),
     );

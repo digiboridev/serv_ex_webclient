@@ -88,11 +88,14 @@ class OrderDetailsInfo extends StatelessWidget {
                 AsyncValue<RSIssue> issueData = ref.watch(rsIssueProvider(issueId));
 
                 return issueData.when(
-                  data: (issue) => Text(
-                    issue.name,
-                    style: const TextStyle(
-                      color: AppColors.black,
-                      fontSize: 22,
+                  data: (issue) => Tooltip(
+                    message: issue.description,
+                    child: Text(
+                      issue.title,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontSize: 22,
+                      ),
                     ),
                   ),
                   loading: () => const SizedBox(),

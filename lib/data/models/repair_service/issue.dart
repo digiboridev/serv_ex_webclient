@@ -1,42 +1,44 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class RSIssue extends Equatable {
   final String id;
-  final String name;
-  final String categoryId;
+  final String title;
+  final String description;
+
   const RSIssue({
     required this.id,
-    required this.name,
-    required this.categoryId,
+    required this.title,
+    required this.description,
   });
 
   RSIssue copyWith({
     String? id,
-    String? name,
-    String? categoryId,
+    String? title,
+    String? description,
   }) {
     return RSIssue(
       id: id ?? this.id,
-      name: name ?? this.name,
-      categoryId: categoryId ?? this.categoryId,
+      title: title ?? this.title,
+      description: description ?? this.description,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name': name,
-      'categoryId': categoryId,
+      'title': title,
+      'description': description,
     };
   }
 
   factory RSIssue.fromMap(Map<String, dynamic> map) {
     return RSIssue(
       id: map['id'] as String,
-      name: map['name'] as String,
-      categoryId: map['categoryId'] as String,
+      title: map['title'] as String,
+      description: map['description'] as String,
     );
   }
 
@@ -48,5 +50,5 @@ class RSIssue extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [id, name, categoryId];
+  List<Object> get props => [id, title, description];
 }
