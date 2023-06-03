@@ -85,7 +85,7 @@ class OrderDetailsInfo extends StatelessWidget {
           ...order.details.issueIds.map((issueId) {
             return Consumer(
               builder: (context, ref, child) {
-                AsyncValue<RSIssue> issueData = ref.watch(rsIssueProvider(issueId));
+                AsyncValue<Issue> issueData = ref.watch(issueProvider(issueId));
 
                 return issueData.when(
                   data: (issue) => Tooltip(
@@ -100,7 +100,7 @@ class OrderDetailsInfo extends StatelessWidget {
                   ),
                   loading: () => const SizedBox(),
                   error: (error, stack) => GestureDetector(
-                    onTap: () => ref.refresh(rsIssueProvider(issueId)),
+                    onTap: () => ref.refresh(issueProvider(issueId)),
                     child: Text(
                       'Error: $error',
                       style: const TextStyle(

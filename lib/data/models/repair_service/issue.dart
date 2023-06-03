@@ -3,23 +3,23 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class RSIssue extends Equatable {
+class Issue extends Equatable {
   final String id;
   final String title;
   final String description;
 
-  const RSIssue({
+  const Issue({
     required this.id,
     required this.title,
     required this.description,
   });
 
-  RSIssue copyWith({
+  Issue copyWith({
     String? id,
     String? title,
     String? description,
   }) {
-    return RSIssue(
+    return Issue(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
@@ -34,8 +34,8 @@ class RSIssue extends Equatable {
     };
   }
 
-  factory RSIssue.fromMap(Map<String, dynamic> map) {
-    return RSIssue(
+  factory Issue.fromMap(Map<String, dynamic> map) {
+    return Issue(
       id: map['id'] as String,
       title: map['title'] as String,
       description: map['description'] as String,
@@ -44,7 +44,7 @@ class RSIssue extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory RSIssue.fromJson(String source) => RSIssue.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Issue.fromJson(String source) => Issue.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

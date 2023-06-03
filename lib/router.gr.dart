@@ -249,33 +249,33 @@ class AppRouter extends _i29.RootStackRouter {
         child: const _i23.ServicesScreen(),
       );
     },
-    RSCategoriesScreenRoute.name: (routeData) {
+    CategoriesScreenRoute.name: (routeData) {
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i24.RSCategoriesScreen(),
+        child: const _i24.CategoriesScreen(),
       );
     },
-    RSSubCategoriesScreenRoute.name: (routeData) {
+    SubCategoriesScreenRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<RSSubCategoriesScreenRouteArgs>(
-          orElse: () => RSSubCategoriesScreenRouteArgs(
+      final args = routeData.argsAs<SubCategoriesScreenRouteArgs>(
+          orElse: () => SubCategoriesScreenRouteArgs(
               categoryId: pathParams.getString('categoryId')));
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i25.RSSubCategoriesScreen(
+        child: _i25.SubCategoriesScreen(
           key: args.key,
           categoryId: args.categoryId,
         ),
       );
     },
-    RSIssuesScreenRoute.name: (routeData) {
+    IssuesScreenRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<RSIssuesScreenRouteArgs>(
-          orElse: () => RSIssuesScreenRouteArgs(
+      final args = routeData.argsAs<IssuesScreenRouteArgs>(
+          orElse: () => IssuesScreenRouteArgs(
               categoryId: pathParams.getString('categoryId')));
       return _i29.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i26.RSIssuesScreen(
+        child: _i26.IssuesScreen(
           key: args.key,
           categoryId: args.categoryId,
         ),
@@ -399,18 +399,18 @@ class AppRouter extends _i29.RootStackRouter {
                   parent: Home.name,
                 ),
                 _i29.RouteConfig(
-                  RSCategoriesScreenRoute.name,
-                  path: 'rs_categories',
+                  CategoriesScreenRoute.name,
+                  path: 'categories',
                   parent: Home.name,
                 ),
                 _i29.RouteConfig(
-                  RSSubCategoriesScreenRoute.name,
-                  path: 'rs_subcategories/:categoryId',
+                  SubCategoriesScreenRoute.name,
+                  path: 'subcategories/:categoryId',
                   parent: Home.name,
                 ),
                 _i29.RouteConfig(
-                  RSIssuesScreenRoute.name,
-                  path: 'rs_issues/:categoryId',
+                  IssuesScreenRoute.name,
+                  path: 'issues/:categoryId',
                   parent: Home.name,
                 ),
               ],
@@ -1037,39 +1037,39 @@ class ServicesScreenRoute extends _i29.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i24.RSCategoriesScreen]
-class RSCategoriesScreenRoute extends _i29.PageRouteInfo<void> {
-  const RSCategoriesScreenRoute()
+/// [_i24.CategoriesScreen]
+class CategoriesScreenRoute extends _i29.PageRouteInfo<void> {
+  const CategoriesScreenRoute()
       : super(
-          RSCategoriesScreenRoute.name,
-          path: 'rs_categories',
+          CategoriesScreenRoute.name,
+          path: 'categories',
         );
 
-  static const String name = 'RSCategoriesScreenRoute';
+  static const String name = 'CategoriesScreenRoute';
 }
 
 /// generated route for
-/// [_i25.RSSubCategoriesScreen]
-class RSSubCategoriesScreenRoute
-    extends _i29.PageRouteInfo<RSSubCategoriesScreenRouteArgs> {
-  RSSubCategoriesScreenRoute({
+/// [_i25.SubCategoriesScreen]
+class SubCategoriesScreenRoute
+    extends _i29.PageRouteInfo<SubCategoriesScreenRouteArgs> {
+  SubCategoriesScreenRoute({
     _i30.Key? key,
     required String categoryId,
   }) : super(
-          RSSubCategoriesScreenRoute.name,
-          path: 'rs_subcategories/:categoryId',
-          args: RSSubCategoriesScreenRouteArgs(
+          SubCategoriesScreenRoute.name,
+          path: 'subcategories/:categoryId',
+          args: SubCategoriesScreenRouteArgs(
             key: key,
             categoryId: categoryId,
           ),
           rawPathParams: {'categoryId': categoryId},
         );
 
-  static const String name = 'RSSubCategoriesScreenRoute';
+  static const String name = 'SubCategoriesScreenRoute';
 }
 
-class RSSubCategoriesScreenRouteArgs {
-  const RSSubCategoriesScreenRouteArgs({
+class SubCategoriesScreenRouteArgs {
+  const SubCategoriesScreenRouteArgs({
     this.key,
     required this.categoryId,
   });
@@ -1080,31 +1080,31 @@ class RSSubCategoriesScreenRouteArgs {
 
   @override
   String toString() {
-    return 'RSSubCategoriesScreenRouteArgs{key: $key, categoryId: $categoryId}';
+    return 'SubCategoriesScreenRouteArgs{key: $key, categoryId: $categoryId}';
   }
 }
 
 /// generated route for
-/// [_i26.RSIssuesScreen]
-class RSIssuesScreenRoute extends _i29.PageRouteInfo<RSIssuesScreenRouteArgs> {
-  RSIssuesScreenRoute({
+/// [_i26.IssuesScreen]
+class IssuesScreenRoute extends _i29.PageRouteInfo<IssuesScreenRouteArgs> {
+  IssuesScreenRoute({
     _i30.Key? key,
     required String categoryId,
   }) : super(
-          RSIssuesScreenRoute.name,
-          path: 'rs_issues/:categoryId',
-          args: RSIssuesScreenRouteArgs(
+          IssuesScreenRoute.name,
+          path: 'issues/:categoryId',
+          args: IssuesScreenRouteArgs(
             key: key,
             categoryId: categoryId,
           ),
           rawPathParams: {'categoryId': categoryId},
         );
 
-  static const String name = 'RSIssuesScreenRoute';
+  static const String name = 'IssuesScreenRoute';
 }
 
-class RSIssuesScreenRouteArgs {
-  const RSIssuesScreenRouteArgs({
+class IssuesScreenRouteArgs {
+  const IssuesScreenRouteArgs({
     this.key,
     required this.categoryId,
   });
@@ -1115,7 +1115,7 @@ class RSIssuesScreenRouteArgs {
 
   @override
   String toString() {
-    return 'RSIssuesScreenRouteArgs{key: $key, categoryId: $categoryId}';
+    return 'IssuesScreenRouteArgs{key: $key, categoryId: $categoryId}';
   }
 }
 

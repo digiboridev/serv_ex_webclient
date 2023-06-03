@@ -17,8 +17,8 @@ import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
 import 'package:serv_expert_webclient/widgets/min_spacer.dart';
 import 'package:serv_expert_webclient/widgets/regular_button.dart';
 
-class RSIssuesScreen extends ConsumerWidget {
-  const RSIssuesScreen({super.key, @PathParam('categoryId') required this.categoryId});
+class IssuesScreen extends ConsumerWidget {
+  const IssuesScreen({super.key, @PathParam('categoryId') required this.categoryId});
 
   final String categoryId;
 
@@ -40,7 +40,7 @@ class RSIssuesScreen extends ConsumerWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  AsyncValue<List<RSIssue>> issues = ref.watch(rsIssuesProvider(categoryId));
+                  AsyncValue<List<Issue>> issues = ref.watch(issuesProvider(categoryId));
                   return issues.when(
                     data: (issues) {
                       return FadeIn(
@@ -89,7 +89,7 @@ class RSIssuesScreen extends ConsumerWidget {
 
 class IssueSelection extends ConsumerStatefulWidget {
   const IssueSelection({required this.issues, required this.categoryId, super.key});
-  final List<RSIssue> issues;
+  final List<Issue> issues;
   final String categoryId;
 
   @override
@@ -97,8 +97,8 @@ class IssueSelection extends ConsumerStatefulWidget {
 }
 
 class _IssueSelectionState extends ConsumerState<IssueSelection> {
-  late final List<RSIssue> issues;
-  List<RSIssue> selectedIssues = [];
+  late final List<Issue> issues;
+  List<Issue> selectedIssues = [];
 
   @override
   void initState() {
@@ -151,7 +151,7 @@ class _IssueSelectionState extends ConsumerState<IssueSelection> {
     );
   }
 
-  Widget issueTile(RSIssue issue) {
+  Widget issueTile(Issue issue) {
     return Container(
       width: 600,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

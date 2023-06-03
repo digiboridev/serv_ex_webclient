@@ -13,17 +13,17 @@ import 'package:serv_expert_webclient/router.gr.dart';
 import 'package:serv_expert_webclient/widgets/headline.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class RSSubCategoriesScreen extends ConsumerStatefulWidget {
-  const RSSubCategoriesScreen({super.key, @PathParam('categoryId') required this.categoryId});
+class SubCategoriesScreen extends ConsumerStatefulWidget {
+  const SubCategoriesScreen({super.key, @PathParam('categoryId') required this.categoryId});
   final String categoryId;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _RSSubCategoriesScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SubCategoriesScreenState();
 }
 
-class _RSSubCategoriesScreenState extends ConsumerState<RSSubCategoriesScreen> {
+class _SubCategoriesScreenState extends ConsumerState<SubCategoriesScreen> {
   onCategoryTap(Category category) {
-    context.router.navigate(RSIssuesScreenRoute(categoryId: category.id));
+    context.router.navigate(IssuesScreenRoute(categoryId: category.id));
   }
 
   @override

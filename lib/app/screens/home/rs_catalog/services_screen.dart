@@ -62,11 +62,11 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            context.router.navigate(const RSCategoriesScreenRoute());
+            context.router.navigate(const CategoriesScreenRoute());
           },
           child: Center(
             child: Text(
-              'SERVICES',
+              'REPAIR',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),
@@ -97,14 +97,14 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
 
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Orders screen is not implemented yet'),
+                content: Text('Shop is not implemented yet'),
                 duration: Duration(seconds: 2),
               ),
             );
           },
           child: Center(
             child: Text(
-              'TOVARS',
+              'SHOP',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: whenLayout(mobile: 16.ms, tablet: 24.ts),

@@ -17,8 +17,8 @@
 //   const SB({super.key});
 
 //   void test(WidgetRef ref) async {
-//     RSCategoriesRepository catrep = ref.read(rsCategoriesRepositoryProvider);
-//     RSIssuesRepository brrep = ref.read(rsIssuesRepositoryProvider);
+//     CategoriesRepository catrep = ref.read(rsCategoriesRepositoryProvider);
+//     IssuesRepository brrep = ref.read(rsIssuesRepositoryProvider);
 
 //     // List<Category> cats = [
 //     //   Category(global: false, id: rep.generateId(), name: 'Phone/Tablet', type: RSCType.category),
@@ -73,16 +73,16 @@
 //     // log(cats.map((e) => e.id));
 
 //     // ios device breakings
-//     // List<RSIssue> asd = [
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Apple ID recovery', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: '3.5mm jack is missing', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     // List<Issue> asd = [
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Apple ID recovery', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: '3.5mm jack is missing', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: '9xQZLlZWjMhHdgHzePsq'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: '9xQZLlZWjMhHdgHzePsq'),
 //     // ];
 
 //     // asd.forEach((element) async {
@@ -90,14 +90,14 @@
 //     // });
 
 //     // android device breakings
-//     // List<RSIssue> asd = [
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     // List<Issue> asd = [
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Speakers isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Camera isnt working', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'RF signal problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'sR47gCR4uAnUS6asbloF'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'sR47gCR4uAnUS6asbloF'),
 //     // ];
 
 //     // asd.forEach((element) async {
@@ -105,11 +105,11 @@
 //     // });
 
 //     // ereader device breakings
-//     // List<RSIssue> asd = [
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+//     // List<Issue> asd = [
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'LNSnZrch0IYLaIYA5kMt'),
 //     // ];
 
 //     // asd.forEach((element) async {
@@ -117,13 +117,13 @@
 //     // });
 
 //     // drawing device breakings
-//     // List<RSIssue> asd = [
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Sensor isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Stylus dont recogrizing', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+//     // List<Issue> asd = [
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Display isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Sensor isnt working', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Stylus dont recogrizing', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Battery or charging problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'SeKOQSMEian7mVKmFGMz'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'SeKOQSMEian7mVKmFGMz'),
 //     // ];
 
 //     // asd.forEach((element) async {
@@ -131,10 +131,10 @@
 //     // });
 
 //     // other phone tablet device breakings
-//     // List<RSIssue> asd = [
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Hardware problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
-//     //   RSIssue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+//     // List<Issue> asd = [
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Hardware problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Software problems', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
+//     //   Issue(id: rep2.generateId('ldcj3mU7kWGJpQh6hgMM'), name: 'Other', categoryId: 'IjtNtisxhfXLxgXcJPD4'),
 //     // ];
 
 //     // var cats = await catrep.vendorCategories('ldcj3mU7kWGJpQh6hgMM');

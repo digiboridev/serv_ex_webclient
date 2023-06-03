@@ -6,8 +6,8 @@ abstract class CatalogRepository {
   Future<Category> categoryById({required String categoryId});
   Future<List<Category>> mainCategories();
   Future<List<Category>> subCategories({required String parentId});
-  Future<List<RSIssue>> issuesByCategory({required String categoryId});
-  Future<RSIssue> issueById({required String issueId});
+  Future<List<Issue>> issuesByCategory({required String categoryId});
+  Future<Issue> issueById({required String issueId});
 }
 
 class CatalogRepositoryHttpImpl implements CatalogRepository {
@@ -33,14 +33,14 @@ class CatalogRepositoryHttpImpl implements CatalogRepository {
   }
 
   @override
-  Future<List<RSIssue>> issuesByCategory({required String categoryId}) async {
+  Future<List<Issue>> issuesByCategory({required String categoryId}) async {
     final response = await _apiClient.get('/catalog/category/$categoryId/issues');
-    return (response as List).map((e) => RSIssue.fromMap(e)).toList();
+    return (response as List).map((e) => Issue.fromMap(e)).toList();
   }
 
   @override
-  Future<RSIssue> issueById({required String issueId}) async {
+  Future<Issue> issueById({required String issueId}) async {
     final response = await _apiClient.get('/catalog/issue/$issueId');
-    return RSIssue.fromMap(response);
+    return Issue.fromMap(response);
   }
 }

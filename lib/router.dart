@@ -70,9 +70,9 @@ import 'package:serv_expert_webclient/app/screens/home/rs_catalog/subcategories_
           children: [
             RedirectRoute(path: '', redirectTo: 'services'),
             AutoRoute(path: 'services', page: ServicesScreen),
-            AutoRoute(path: 'rs_categories', page: RSCategoriesScreen),
-            AutoRoute(path: 'rs_subcategories/:categoryId', page: RSSubCategoriesScreen),
-            AutoRoute(path: 'rs_issues/:categoryId', page: RSIssuesScreen),
+            AutoRoute(path: 'categories', page: CategoriesScreen),
+            AutoRoute(path: 'subcategories/:categoryId', page: SubCategoriesScreen),
+            AutoRoute(path: 'issues/:categoryId', page: IssuesScreen),
           ],
         ),
         AutoRoute(path: 'profile', page: ProfileScreen, guards: [ContributorGuard]),
