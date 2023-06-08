@@ -79,8 +79,8 @@ class RSOrder extends Equatable {
       status: RSOStatus.fromMap(map['status'] as Map<String, dynamic>),
       paymentStatus: PaymentStatus.values.byName(map['paymentStatus'] as String),
       deviceLocation: DeviceLocation.values.byName(map['deviceLocation'] as String),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
+      createdAt: DateTime.parse(map['createdAt'] as String),
+      updatedAt: DateTime.parse(map['updatedAt'] as String),
     );
   }
 

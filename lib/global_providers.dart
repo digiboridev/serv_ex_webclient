@@ -30,7 +30,7 @@ final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
 });
 
 final rsOrdersRepositoryProvider = Provider<RSOrdersRepository>((ref) {
-  return RSOrdersRepositoryImpl();
+  return RSOrdersRepositoryHttpImpl(apiClient: apiClient);
 });
 
 //

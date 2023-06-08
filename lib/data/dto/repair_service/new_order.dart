@@ -56,12 +56,12 @@ class RSNewOrderDTO {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'customerInfo': customerInfo?.toMap(),
-      'category': categoryId,
-      'issues': issueIds,
+      'categoryId': categoryId,
+      'issueIds': issueIds,
       'description': description,
       'deviceWet': deviceWet,
       'wetDescription': wetDescription,
-      'accesoriesIncluded': accesoriesIncluded,
+      'accesoriesIncluded': false,
       'accesoriesDescription': accesoriesDescription,
       'hasWaranty': hasWaranty,
       'hasPassword': hasPassword,

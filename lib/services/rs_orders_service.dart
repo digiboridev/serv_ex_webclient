@@ -21,28 +21,7 @@ class RSOrdersService {
   Future createOrder({required RSNewOrderDTO order}) async {
     if (order.validate() == false) throw Exception('Invalid order');
 
-    RSOrder newOrder = RSOrder(
-      id: _ordersRepository.generateId(),
-      customerInfo: order.customerInfo!,
-      details: RSOrderDetails(
-        categoryId: order.categoryId!,
-        issueIds: order.issueIds!,
-        description: order.description!,
-        deviceWet: order.deviceWet!,
-        wetDescription: order.wetDescription!,
-        accesoriesIncluded: order.accesoriesIncluded!,
-        accesoriesDescription: order.accesoriesDescription!,
-        hasWaranty: order.hasWaranty!,
-        password: order.password,
-      ),
-      status: const RSOStatus(currentStatus: RSOStatusType.newOrder),
-      paymentStatus: PaymentStatus.notPaid,
-      deviceLocation: DeviceLocation.client,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-
-    await _ordersRepository.setOrder(newOrder);
+    await _ordersRepository.createOrder(order);
   }
 
   Future cancelOrder({required String orderId, required RSOCancellDetails details}) async {
@@ -59,7 +38,7 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    await _ordersRepository.setOrder(newOrder);
+    // await _ordersRepository.setOrder(newOrder);
   }
 
   Future confirmOffer({required String orderId, required List<RepairPart> parts}) async {
@@ -79,7 +58,7 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    await _ordersRepository.setOrder(newOrder);
+    // await _ordersRepository.setOrder(newOrder);
   }
 
   Future declineOffer({required String orderId}) async {
@@ -97,7 +76,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      await _ordersRepository.setOrder(newOrder);
+      // await _ordersRepository.setOrder(newOrder);
     } else {
       RSOStatus newStatus = order.status.copyWith(
         currentStatus: RSOStatusType.workFinished,
@@ -114,7 +93,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      await _ordersRepository.setOrder(newOrder);
+      // await _ordersRepository.setOrder(newOrder);
     }
   }
 
@@ -140,7 +119,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      await _ordersRepository.setOrder(newOrder);
+      // await _ordersRepository.setOrder(newOrder);
     } else if (order.status.currentStatus == RSOStatusType.workFinished) {
       RSOrderWorkFinishedDetails workFinishedDetails = order.status.workFinishedDetails!;
       if (!workFinishedDetails.paymentRequired || (workFinishedDetails.finishedAfter != FinishedAfterType.diagnistic)) throw Exception('Invalid order state');
@@ -150,7 +129,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      await _ordersRepository.setOrder(newOrder);
+      // await _ordersRepository.setOrder(newOrder);
     } else {
       throw Exception('Invalid order status');
     }
@@ -165,7 +144,7 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    await _ordersRepository.setOrder(newOrder);
+    // await _ordersRepository.setOrder(newOrder);
   }
 
   Future sendSignature({required String orderId, required RSOrderSign signnature}) async {
@@ -184,6 +163,6 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    await _ordersRepository.setOrder(newOrder);
+    // await _ordersRepository.setOrder(newOrder);
   }
 }

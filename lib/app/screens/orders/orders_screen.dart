@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
+import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 import 'package:serv_expert_webclient/data/providers/repair_service/category_provider.dart';
 import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
@@ -12,11 +13,20 @@ import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_r
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 
-final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) {
+final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) async* {
   ContributorState contributorState = ref.watch(contributorControllerProvider);
   RSOrdersRepository ordersRepository = ref.read(rsOrdersRepositoryProvider);
   if (contributorState is CSAssigned) {
-    return ordersRepository.ordersByCustomerIdStream(id: contributorState.id, descending: true);
+    var customerInfo = RSOrderCustomerInfo(
+      customerType: contributorState is CSAssignedAsCompany ? RSOrderCustomerType.company : RSOrderCustomerType.personal,
+      customerId: contributorState.id,
+    );
+
+    while (true) {
+      List<RSOrder> orders = await ordersRepository.ordersByCustomer(customerInfo: customerInfo);
+      yield orders;
+      await Future.delayed(Duration(seconds: 5));
+    }
   } else {
     throw Exception('You have to be assigned to get this resource');
   }
