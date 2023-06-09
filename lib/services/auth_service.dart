@@ -45,7 +45,7 @@ class AuthServiceHttpImpl extends AuthService {
   bool get authorized => _authDataRepository.authData != null;
 
   @override
-  String? get userId => _authDataRepository.authData?.userId;
+  String? get userId => _authDataRepository.authData?.entityId;
 
   @override
   String? get displayName => 'asd';
@@ -69,7 +69,7 @@ class AuthServiceHttpImpl extends AuthService {
 
   @override
   Future signInWithPhoneNumber(String phoneNumber) async {
-    var res = await apiClient.post('auth/phone-signin', data: {'phoneNumber': phoneNumber});
+    var res = await apiClient.post('auth/client/phone-signin', data: {'phoneNumber': phoneNumber});
     debugPrint(res.toString());
 
     _phoneToken = res['token'];
@@ -79,11 +79,13 @@ class AuthServiceHttpImpl extends AuthService {
   Future<String?> confirmPhoneNumber(String smsCode) async {
     assert(_phoneToken != null);
 
-    var res = await apiClient.post('auth/verify-code', data: {'token': _phoneToken, 'code': smsCode});
+    var res = await apiClient.post('auth/client/verify-code', data: {'token': _phoneToken, 'code': smsCode});
     debugPrint(res.toString());
 
     if (res['status'] == 'authorized') {
-      await _authDataRepository.saveAuthData(AuthData.fromMap(res));
+      await _authDataRepository.setAuthData(AuthData.fromMap(res['authData']));
+      await _authDataRepository.setAccessToken(res['accessToken']);
+      await _authDataRepository.setRefreshToken(res['refreshToken']);
       return 'authorized';
     }
 
@@ -99,11 +101,13 @@ class AuthServiceHttpImpl extends AuthService {
   Future<String?> submitRegistrationData({required String phone, required String firstName, required String lastName, required String email}) async {
     assert(_registrationToken != null);
 
-    var res = await apiClient
-        .post('auth/register', data: {'registrationToken': _registrationToken, 'phone': phone, 'firstName': firstName, 'lastName': lastName, 'email': email});
+    var res = await apiClient.post('auth/client/register',
+        data: {'registrationToken': _registrationToken, 'phone': phone, 'firstName': firstName, 'lastName': lastName, 'email': email});
 
     if (res['status'] == 'authorized') {
-      await _authDataRepository.saveAuthData(AuthData.fromMap(res));
+      await _authDataRepository.setAuthData(AuthData.fromMap(res['authData']));
+      await _authDataRepository.setAccessToken(res['accessToken']);
+      await _authDataRepository.setRefreshToken(res['refreshToken']);
       return 'authorized';
     }
     return null;
@@ -111,6 +115,6 @@ class AuthServiceHttpImpl extends AuthService {
 
   @override
   Future<void> signOut() async {
-    await _authDataRepository.deleteAuthData();
+    await _authDataRepository.drop();
   }
 }

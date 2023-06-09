@@ -2,13 +2,14 @@
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/services/auth_data_repository.dart';
 
 class ApiClient {
   ApiClient() {
     _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/'));
-    _dio.interceptors.add(AuthInterceptor());
+    _dio.interceptors.add(AuthInterceptor(dio: _dio));
     _dio.interceptors.add(RetryInterceptor(dio: _dio));
   }
   late final Dio _dio;
@@ -70,51 +71,65 @@ class ApiClient {
 }
 
 class AuthInterceptor extends QueuedInterceptor {
+  AuthInterceptor({required Dio dio}) : _dio = dio;
+  final Dio _dio;
   final _authDataRepository = AuthDataRepository();
 
-  // Add authorization header to every request if token is available
   @override
   onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    AuthData? authData = _authDataRepository.authData;
-    if (authData != null) {
-      options.headers['authorization'] = 'Bearer ${authData.accessToken}';
+    String? accessToken = _authDataRepository.accessToken;
+    String? refreshToken = _authDataRepository.refreshToken;
+
+    if (accessToken == null && refreshToken != null) {
+      try {
+        accessToken = await refreshAccessToken(refreshToken);
+      } catch (_) {}
     }
+
+    if (accessToken != null) {
+      options.headers['authorization'] = 'Bearer $accessToken';
+    }
+
     handler.next(options);
   }
 
-  // Refresh token if it is expired
   @override
   onError(DioError err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401 && err.response?.data == 'jwt expired') {
       debugPrint('jwt expired');
 
-      AuthData? authData = _authDataRepository.authData;
-
-      if (authData != null) {
-        debugPrint('refreshing token');
-
-        Dio tokendio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/'));
-
-        var r = await tokendio.post('auth/refresh-token', data: {'grant_type': 'refresh_token', 'refresh_token': authData.refreshToken});
-
-        if (r.statusCode == 200) {
-          AuthData authData = AuthData.fromMap(r.data);
-          await _authDataRepository.saveAuthData(authData);
-          debugPrint('token refreshed');
-
-          var reRequest = await tokendio.request(
-            err.requestOptions.path,
-            data: err.requestOptions.data,
-            queryParameters: err.requestOptions.queryParameters,
-            options: Options(headers: {'authorization': 'Bearer ${authData.accessToken}'}, method: err.requestOptions.method),
-          );
+      String? refreshToken = _authDataRepository.refreshToken;
+      if (refreshToken != null) {
+        String? act = await refreshAccessToken(refreshToken);
+        if (act != null) {
+          var reRequest = await Dio(BaseOptions(baseUrl: 'http://localhost:3000/')).fetch(err.requestOptions..headers['authorization'] = 'Bearer $act');
           return handler.resolve(reRequest);
-        } else {
-          debugPrint('refresh token failed');
-          await _authDataRepository.deleteAuthData();
         }
       }
     }
     return handler.next(err);
+  }
+
+  Future<String?> refreshAccessToken(String refreshToken) async {
+    debugPrint('refreshing token');
+
+    try {
+      var r = await Dio(BaseOptions(baseUrl: 'http://localhost:3000/'))
+          .post<Map<String, dynamic>>('auth/refresh-token', data: {'grant_type': 'refresh_token', 'refresh_token': refreshToken});
+
+      if (r.data != null) {
+        await _authDataRepository.setAccessToken(r.data!['accessToken']);
+        await _authDataRepository.setRefreshToken(r.data!['refreshToken']);
+        await _authDataRepository.setAuthData(AuthData.fromMap(r.data!['authData']));
+        debugPrint('token refreshed');
+        return r.data!['accessToken'];
+      }
+    } catch (e) {
+      debugPrint('refresh token failed');
+      debugPrint(e.toString());
+      await _authDataRepository.drop();
+    }
+
+    return null;
   }
 }

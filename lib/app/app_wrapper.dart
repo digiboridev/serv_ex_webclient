@@ -21,7 +21,7 @@ class AppWrapper extends ConsumerWidget {
 
     // If user is not found or deleted, sign out and redirect to auth screen
     ref.listen(currentAppUserStreamProvider, (p, n) {
-      if (n.error is UnexistedResource) {
+      if (n.error is Unauthorized) {
         ref.read(authServiceProvider).signOut();
         context.router.replaceAll([const AuthScreenRoute()]);
       }
