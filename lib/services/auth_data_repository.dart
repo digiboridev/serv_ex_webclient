@@ -1,11 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthDataRepository {
-  AuthDataRepository() {
+  factory AuthDataRepository() => instance;
+  static final AuthDataRepository instance = AuthDataRepository._();
+  AuthDataRepository._() {
     init();
   }
 
