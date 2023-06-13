@@ -20,25 +20,11 @@ class RSOrdersService {
 
   Future createOrder({required RSNewOrderDTO order}) async {
     if (order.validate() == false) throw Exception('Invalid order');
-
     await _ordersRepository.createOrder(order);
   }
 
   Future cancelOrder({required String orderId, required RSOCancellDetails details}) async {
-    RSOrder order = await _ordersRepository.orderById(id: orderId);
-    if (order.status.currentStatus == RSOStatusType.canceled) throw Exception('Order already canceled');
-
-    RSOStatus newStatus = order.status.copyWith(
-      currentStatus: RSOStatusType.canceled,
-      cancellDetails: details,
-    );
-
-    RSOrder newOrder = order.copyWith(
-      status: newStatus,
-      updatedAt: DateTime.now(),
-    );
-
-    // await _ordersRepository.setOrder(newOrder);
+    await _ordersRepository.cancellOrder(id: orderId, details: details);
   }
 
   Future confirmOffer({required String orderId, required List<RepairPart> parts}) async {

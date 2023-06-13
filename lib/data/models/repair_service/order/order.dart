@@ -11,7 +11,7 @@ enum PaymentStatus {
 }
 
 enum DeviceLocation {
-  client,
+  customer,
   laboratory,
 }
 

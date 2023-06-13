@@ -139,7 +139,7 @@ class _OrderScreenViewPageState extends ConsumerState<OrderScreenViewPage> {
         spacing: 8,
         runSpacing: 8,
         children: [
-          if (order.deviceLocation == DeviceLocation.client) const StatusTile(text: 'At Client', active: false),
+          if (order.deviceLocation == DeviceLocation.customer) const StatusTile(text: 'At Customer', active: false),
           if (order.deviceLocation == DeviceLocation.laboratory) const StatusTile(text: 'At laboratory', active: false),
           if (order.paymentStatus == PaymentStatus.paid) const StatusTile(text: 'Paid', active: false),
           if (order.paymentStatus == PaymentStatus.notPaid) const StatusTile(text: 'Paid\'nt', active: false),
