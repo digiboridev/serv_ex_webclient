@@ -6,6 +6,7 @@ import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
 
+// TODO rename to Customer
 abstract class ContributorState {}
 
 /// [CSUnassigned] is a state of [ContributorState] that means that currently selected contributor is not assigned.

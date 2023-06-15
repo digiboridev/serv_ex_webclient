@@ -14,7 +14,7 @@ import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/router.gr.dart';
 
 final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) async* {
-  ContributorState contributorState = ref.watch(contributorControllerProvider);
+  ContributorState contributorState = ref.watch(contributorControllerProvider.select((value) => value));
   RSOrdersRepository ordersRepository = ref.read(rsOrdersRepositoryProvider);
   if (contributorState is CSAssigned) {
     var customerInfo = RSOrderCustomerInfo(
@@ -22,11 +22,13 @@ final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) asy
       customerId: contributorState.id,
     );
 
-    while (true) {
-      List<RSOrder> orders = await ordersRepository.ordersByCustomer(customerInfo: customerInfo);
-      yield orders;
-      await Future.delayed(Duration(seconds: 5));
-    }
+    yield* ordersRepository.ordersByCustomerStream(customerInfo: customerInfo);
+
+    // while (true) {
+    //   List<RSOrder> orders = await ordersRepository.ordersByCustomer(customerInfo: customerInfo);
+    //   yield orders;
+    //   await Future.delayed(Duration(seconds: 50));
+    // }
   } else {
     throw Exception('You have to be assigned to get this resource');
   }

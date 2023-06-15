@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
@@ -9,6 +10,7 @@ abstract class RSOrdersRepository {
   Future<RSOrder> createOrder(RSNewOrderDTO order);
   Future<RSOrder> orderById({required String id, bool forceNetwork = false});
   Future<List<RSOrder>> ordersByCustomer({required RSOrderCustomerInfo customerInfo});
+  Stream<List<RSOrder>> ordersByCustomerStream({required RSOrderCustomerInfo customerInfo});
   Future<RSOrder> cancellOrder({required String id, required RSOCancellDetails details});
 }
 
@@ -32,6 +34,24 @@ class RSOrdersRepositoryHttpImpl implements RSOrdersRepository {
   Future<List<RSOrder>> ordersByCustomer({required RSOrderCustomerInfo customerInfo}) async {
     List response = await _apiClient.get('/orders/', queryParameters: customerInfo.toMap());
     return response.map((e) => RSOrder.fromMap(e)).toList();
+  }
+
+  @override
+  Stream<List<RSOrder>> ordersByCustomerStream({required RSOrderCustomerInfo customerInfo}) async* {
+    List<RSOrder> orders = await ordersByCustomer(customerInfo: customerInfo);
+    yield orders;
+    debugPrint('Orders stream initial');
+
+    while (true) {
+      try {
+        List response = await _apiClient.get('/orders/updates', queryParameters: customerInfo.toMap());
+        orders = response.map((e) => RSOrder.fromMap(e)).toList();
+        debugPrint('Orders stream update');
+      } catch (e) {
+        debugPrint('Orders stream error: $e');
+      }
+      yield orders;
+    }
   }
 
   @override
