@@ -8,7 +8,8 @@ import 'package:serv_expert_webclient/services/api_client.dart';
 
 abstract class RSOrdersRepository {
   Future<RSOrder> createOrder(RSNewOrderDTO order);
-  Future<RSOrder> orderById({required String id, bool forceNetwork = false});
+  Future<RSOrder> order({required String id});
+  Stream<RSOrder> orderStream({required String id});
   Future<List<RSOrder>> ordersByCustomer({required RSOrderCustomerInfo customerInfo});
   Stream<List<RSOrder>> ordersByCustomerStream({required RSOrderCustomerInfo customerInfo});
   Future<RSOrder> cancellOrder({required String id, required RSOCancellDetails details});
@@ -25,9 +26,47 @@ class RSOrdersRepositoryHttpImpl implements RSOrdersRepository {
   }
 
   @override
-  Future<RSOrder> orderById({required String id, bool forceNetwork = false}) async {
+  Future<RSOrder> order({required String id}) async {
     Map<String, dynamic> response = await _apiClient.get('/orders/$id');
     return RSOrder.fromMap(response);
+  }
+
+  Stream<RSOrder> orderUpdatesLP({required String id}) async* {
+    while (true) {
+      Map<String, dynamic> response = await _apiClient.get('/orders/$id');
+      RSOrder updatedOrder = RSOrder.fromMap(response);
+      yield updatedOrder;
+    }
+  }
+
+  Stream<RSOrder> orderUpdatesSSE({required String id}) async* {
+    var events = _apiClient.sse('/orders/$id/updates_sse').handleError((e) {
+      debugPrint('Order sse: error $e');
+    });
+
+    await for (var event in events) {
+      debugPrint('Order sse: event');
+      RSOrder updatedOrder = RSOrder.fromMap(event);
+      yield updatedOrder;
+    }
+  }
+
+  @override
+  Stream<RSOrder> orderStream({required String id}) async* {
+    RSOrder order = await this.order(id: id);
+    yield order;
+    debugPrint('Order stream: initial data loaded');
+
+    while (true) {
+      debugPrint('Order stream: connect');
+      var updates = orderUpdatesSSE(id: id);
+      await for (var updatedOrder in updates) {
+        order = updatedOrder;
+        yield order;
+      }
+      debugPrint('Order stream: disconnected');
+      await Future.delayed(Duration(seconds: 3)); // Reconnect timeout
+    }
   }
 
   @override
@@ -36,7 +75,7 @@ class RSOrdersRepositoryHttpImpl implements RSOrdersRepository {
     return response.map((e) => RSOrder.fromMap(e)).toList();
   }
 
-  Stream<RSOrder> ordersUpdatesLongPooling({required RSOrderCustomerInfo customerInfo}) async* {
+  Stream<RSOrder> ordersUpdatesLP({required RSOrderCustomerInfo customerInfo}) async* {
     while (true) {
       Map<String, dynamic> response = await _apiClient.get('/orders/updates_lp', queryParameters: customerInfo.toMap());
       RSOrder updatedOrder = RSOrder.fromMap(response);

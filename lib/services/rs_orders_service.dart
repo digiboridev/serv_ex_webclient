@@ -27,7 +27,7 @@ class RSOrdersService {
   }
 
   Future confirmOffer({required String orderId, required List<RepairPart> parts}) async {
-    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    RSOrder order = await _ordersRepository.order(id: orderId);
     if (order.status.currentStatus != RSOStatusType.offerCreated) throw Exception('Invalid order status');
 
     RSOStatus newStatus = order.status.copyWith(
@@ -47,7 +47,7 @@ class RSOrdersService {
   }
 
   Future declineOffer({required String orderId}) async {
-    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    RSOrder order = await _ordersRepository.order(id: orderId);
     if (order.status.currentStatus != RSOStatusType.offerCreated) throw Exception('Invalid order status');
 
     if (order.status.offerCreatedDetails!.afterDiagnostic) {
@@ -83,7 +83,7 @@ class RSOrdersService {
   }
 
   Future payForDiagnostic({required String orderId}) async {
-    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    RSOrder order = await _ordersRepository.order(id: orderId);
 
     if (order.status.currentStatus == RSOStatusType.declinedOffer) {
       RSOrderDeclinedOfferDetails declinedOfferDetails = order.status.declinedOfferDetails!;
@@ -121,7 +121,7 @@ class RSOrdersService {
   }
 
   Future payForOffer({required String orderId}) async {
-    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    RSOrder order = await _ordersRepository.order(id: orderId);
     if (order.status.confirmedOfferDetails == null) throw Exception('Invalid order state');
 
     RSOrder newOrder = order.copyWith(
@@ -133,7 +133,7 @@ class RSOrdersService {
   }
 
   Future sendSignature({required String orderId, required RSOrderSign signnature}) async {
-    RSOrder order = await _ordersRepository.orderById(id: orderId);
+    RSOrder order = await _ordersRepository.order(id: orderId);
     if (order.status.currentStatus != RSOStatusType.workFinished) throw Exception('Invalid order state');
     if (order.status.workFinishedDetails!.signRequested == false) throw Exception('Invalid order state');
 

@@ -23,12 +23,6 @@ final ordersStreamProvider = StreamProvider.autoDispose<List<RSOrder>>((ref) asy
     );
 
     yield* ordersRepository.ordersByCustomerStream(customerInfo: customerInfo);
-
-    // while (true) {
-    //   List<RSOrder> orders = await ordersRepository.ordersByCustomer(customerInfo: customerInfo);
-    //   yield orders;
-    //   await Future.delayed(Duration(seconds: 50));
-    // }
   } else {
     throw Exception('You have to be assigned to get this resource');
   }
