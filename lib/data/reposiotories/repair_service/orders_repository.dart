@@ -36,21 +36,47 @@ class RSOrdersRepositoryHttpImpl implements RSOrdersRepository {
     return response.map((e) => RSOrder.fromMap(e)).toList();
   }
 
+  Stream<RSOrder> ordersUpdatesLongPooling({required RSOrderCustomerInfo customerInfo}) async* {
+    while (true) {
+      Map<String, dynamic> response = await _apiClient.get('/orders/updates_lp', queryParameters: customerInfo.toMap());
+      RSOrder updatedOrder = RSOrder.fromMap(response);
+      yield updatedOrder;
+    }
+  }
+
+  Stream<RSOrder> ordersUpdatesSSE({required RSOrderCustomerInfo customerInfo}) async* {
+    var events = _apiClient.sse('/orders/updates_sse', queryParameters: customerInfo.toMap()).handleError((e) {
+      debugPrint('Orders sse: error $e');
+    });
+
+    await for (var event in events) {
+      debugPrint('Orders sse: event');
+      RSOrder updatedOrder = RSOrder.fromMap(event);
+      yield updatedOrder;
+    }
+  }
+
   @override
   Stream<List<RSOrder>> ordersByCustomerStream({required RSOrderCustomerInfo customerInfo}) async* {
     List<RSOrder> orders = await ordersByCustomer(customerInfo: customerInfo);
     yield orders;
-    debugPrint('Orders stream initial');
+    debugPrint('Orders stream: initial data loaded');
 
     while (true) {
-      try {
-        List response = await _apiClient.get('/orders/updates', queryParameters: customerInfo.toMap());
-        orders = response.map((e) => RSOrder.fromMap(e)).toList();
-        debugPrint('Orders stream update');
-      } catch (e) {
-        debugPrint('Orders stream error: $e');
+      debugPrint('Orders stream: connect');
+      var updates = ordersUpdatesSSE(customerInfo: customerInfo);
+      await for (var updatedOrder in updates) {
+        if (orders.map((e) => e.id).contains(updatedOrder.id)) {
+          // Replace existing order with updated one
+          orders[orders.indexWhere((element) => element.id == updatedOrder.id)] = updatedOrder;
+        } else {
+          // Add new order to the beginning of the list
+          orders.insert(0, updatedOrder);
+        }
+        yield orders;
       }
-      yield orders;
+      debugPrint('Orders stream: disconnected');
+      await Future.delayed(Duration(seconds: 3)); // Reconnect timeout
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
 import 'package:serv_expert_webclient/services/auth_data_repository.dart';
+import 'package:serv_expert_webclient/utils/sse_connection.dart';
 
 class ApiClient {
   ApiClient() : _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/')) {
@@ -19,7 +20,7 @@ class ApiClient {
     try {
       var r = await _dio.get(path, queryParameters: queryParameters, options: Options(headers: _headers));
       return r.data as R;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       // Refresh access token if it's expired
       if (e.response?.statusCode == 401 && _authDataRepository.refreshToken != null) {
         String? newAccessToken = await _refreshAccessTokenRace(_authDataRepository.refreshToken!);
@@ -35,7 +36,7 @@ class ApiClient {
     try {
       var r = await _dio.post(path, data: data, queryParameters: queryParameters, options: Options(headers: _headers));
       return r.data as R;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       // Refresh access token if it's expired
       if (e.response?.statusCode == 401 && _authDataRepository.refreshToken != null) {
         String? newAccessToken = await _refreshAccessTokenRace(_authDataRepository.refreshToken!);
@@ -47,45 +48,49 @@ class ApiClient {
     }
   }
 
-  Map<String, dynamic> get _headers => {'Content-Type': 'application/json', 'authorization': 'Bearer ${_authDataRepository.accessToken}'};
+  Stream<Map<String, dynamic>> sse(String path, {Map<String, dynamic>? queryParameters}) {
+    return SSEConnection.connect(url: 'http://localhost:3000$path?${queryParameters?.entries.map((e) => '${e.key}=${e.value}').join('&')}', headers: _headers);
+  }
+
+  Map<String, String> get _headers {
+    if (_authDataRepository.accessToken != null) {
+      return {'authorization': 'Bearer ${_authDataRepository.accessToken}'};
+    } else {
+      return {};
+    }
+  }
 
   /// Map DioError to domain exceptions
-  Exception _mapError(DioError e) {
-    // Connection errors
-    if (e.type == DioErrorType.connectionError ||
-        e.type == DioErrorType.receiveTimeout ||
-        e.type == DioErrorType.sendTimeout ||
-        e.type == DioErrorType.connectionTimeout) {
-      return ConnectionError(e.message ?? 'Connection error');
-    }
-
-    // Known server errors
+  Exception _mapError(DioException e) {
     var response = e.response;
-    if (response != null) {
-      // Parse error message
-      String message;
-      if (response.data is Map && response.data.containsKey('message')) {
-        message = response.data['message'];
-      } else {
-        message = response.data.toString();
-      }
-      // Map status code to exception
-      switch (response.statusCode) {
-        case 400:
-          return InvalidArgument(message);
-        case 401:
-          return Unauthorized(message);
-        case 403:
-          return PermissionDenied(message);
-        case 404:
-          return UnexistedResource(message);
-        case 500:
-          return ServerError(message);
-      }
+    // Return connection error if if the request can't reach to the HTTP server
+    if (response == null) return ConnectionError(e.message ?? 'Connection error');
+
+    // Parse error message
+    String message;
+    if (response.data is Map && response.data.containsKey('message')) {
+      message = response.data['message'];
+    } else if (response.data is String) {
+      message = response.data;
+    } else {
+      message = response.data?.toString() ?? 'Unknown error';
     }
 
-    // Unknown error
-    return UnknownException(e.message ?? 'Unknown error');
+    // Map status code to exception
+    switch (response.statusCode) {
+      case 400:
+        return InvalidArgument(message);
+      case 401:
+        return Unauthorized(message);
+      case 403:
+        return PermissionDenied(message);
+      case 404:
+        return UnexistedResource(message);
+      case 500:
+        return ServerError(message);
+      default:
+        return UnknownException(message);
+    }
   }
 
   /// Wrapper for refreshAccessToken that prevents multiple simultaneous calls

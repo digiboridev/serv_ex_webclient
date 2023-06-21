@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
-import 'package:serv_expert_webclient/data/models/repair_service/order/details.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/sign.dart';

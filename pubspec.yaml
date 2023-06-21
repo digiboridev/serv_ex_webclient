@@ -29,8 +29,10 @@ dependencies:
   flutter_svg: ^2.0.0+1
   transparent_image: ^2.0.1
   hand_signature: ^3.0.1
-  dio: ^5.1.2
+  dio: ^5.2.1
   dio_smart_retry: ^5.0.0
+  universal_html: ^2.2.1
+  http: ^0.13.6
 
 
 dev_dependencies:
