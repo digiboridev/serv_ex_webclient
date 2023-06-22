@@ -59,11 +59,7 @@ class RSOrdersRepositoryHttpImpl implements RSOrdersRepository {
 
     while (true) {
       debugPrint('Order stream: connect');
-      var updates = orderUpdatesSSE(id: id);
-      await for (var updatedOrder in updates) {
-        order = updatedOrder;
-        yield order;
-      }
+      yield* orderUpdatesSSE(id: id);
       debugPrint('Order stream: disconnected');
       await Future.delayed(Duration(seconds: 3)); // Reconnect timeout
     }
@@ -107,7 +103,7 @@ class RSOrdersRepositoryHttpImpl implements RSOrdersRepository {
       await for (var updatedOrder in updates) {
         if (orders.map((e) => e.id).contains(updatedOrder.id)) {
           // Replace existing order with updated one
-          orders[orders.indexWhere((element) => element.id == updatedOrder.id)] = updatedOrder;
+          orders[orders.indexWhere((order) => order.id == updatedOrder.id)] = updatedOrder;
         } else {
           // Add new order to the beginning of the list
           orders.insert(0, updatedOrder);

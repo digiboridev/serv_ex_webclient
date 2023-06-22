@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/user/app_user.dart';
@@ -27,21 +28,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   test() async {
-    var acces = AuthDataRepository().accessToken;
-    SSEConnection.connect(
-      url: 'http://localhost:3000/orders/customer_orders_updates_sse',
-      headers: {'authorization': 'Bearer $acces'},
-    ).listen(
-      (event) {
-        debugPrint('Event: $event');
-      },
-      onError: (e) {
-        debugPrint('Error: $e');
-      },
-      onDone: () {
-        debugPrint('Done:');
-      },
-    );
+    // _googleSignIn.
+    // var acces = AuthDataRepository().accessToken;
+    // SSEConnection.connect(
+    //   url: 'http://localhost:3000/orders/customer_orders_updates_sse',
+    //   headers: {'authorization': 'Bearer $acces'},
+    // ).listen(
+    //   (event) {
+    //     debugPrint('Event: $event');
+    //   },
+    //   onError: (e) {
+    //     debugPrint('Error: $e');
+    //   },
+    //   onDone: () {
+    //     debugPrint('Done:');
+    //   },
+    // );
   }
 
   @override
