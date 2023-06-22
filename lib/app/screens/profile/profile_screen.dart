@@ -1,16 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:serv_expert_webclient/app/widgets/sidebar.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/data/models/user/app_user.dart';
 import 'package:serv_expert_webclient/app/app_providers.dart';
-import 'package:serv_expert_webclient/services/auth_data_repository.dart';
-import 'package:serv_expert_webclient/utils/sse_connection.dart';
 import 'package:serv_expert_webclient/widgets/fillable_scrollable_wrapper.dart';
-import 'package:universal_html/html.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
