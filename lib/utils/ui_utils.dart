@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:serv_expert_webclient/main.dart';
 
-bool disableScale = true;
+bool _disableScale = true;
 
-/// Design screen constants
-const double _mobileDesignWidth = 375;
-const double _tabletDesignWidth = 1194;
+double _mobileDesignWidth = 375;
+double _tabletDesignWidth = 1194;
+// Dont forget to add MediaQuery.of(context) to widgets that use this shortcuts
+// for rebuild on device rotation or window resize on web
+double get _actualWidth => MediaQuery.of(navigatorKey.currentContext!).size.width;
 
 /// Get multiplier based on difference between design screen width and actual device width
-/// Use it to scale any size to design reference by multiply on that value like SizedBox(width: 100 * mobileDesignScale)
-double get mobileDesignScale {
-  double deviceWidth = MediaQuery.of(navigatorKey.currentContext!).size.width;
-  return deviceWidth / _mobileDesignWidth;
-}
-
-double get tabletDesignScale {
-  double deviceWidth = MediaQuery.of(navigatorKey.currentContext!).size.width;
-  return deviceWidth / _tabletDesignWidth;
-}
+/// Uses to scale any size to design reference by multiply on that value
+double get _mobileDesignScale => _actualWidth / _mobileDesignWidth;
+double get _tabletDesignScale => _actualWidth / _tabletDesignWidth;
 
 /// Extension to access multiplied size from any number
 extension DesignScaleExt on num {
-  double get ms => this * (disableScale ? 1 : mobileDesignScale);
-  double get ts => this * (disableScale ? 1 : tabletDesignScale);
+  double get ms => this * (_disableScale ? 1 : _mobileDesignScale);
+  double get ts => this * (_disableScale ? 1 : _tabletDesignScale);
 }
 
 /// Breakpoints shortcuts
-bool get isMobile => MediaQuery.of(navigatorKey.currentContext!).size.width < 600;
-bool get isTablet => MediaQuery.of(navigatorKey.currentContext!).size.width >= 600;
+bool get isMobile => _actualWidth < 600;
+bool get isTablet => _actualWidth >= 600;
 
 /// Shortcut for set any argument based on device size type
 T whenLayout<T>({required T mobile, required T tablet}) {
@@ -37,7 +32,3 @@ T whenLayout<T>({required T mobile, required T tablet}) {
     return tablet;
   }
 }
-
-
-// Dont forget to add MediaQuery.of(context) to widgets that use this shortcuts
-// for rebuild on device rotation or window resize

@@ -26,7 +26,7 @@ abstract class AuthService {
   Future<String?> confirmPhoneNumber(String smsCode);
 
   /// Sign in with Google
-  Future signInWithGoogle();
+  Future<String?> signInWithGoogle({required String code});
 
   /// Submit registration data
   Future<String?> submitRegistrationData({required String phone, required String firstName, required String lastName, required String email});
@@ -57,8 +57,21 @@ class AuthServiceHttpImpl extends AuthService {
   String? get phoneNumber => 'qwe';
 
   @override
-  Future signInWithGoogle() {
-    throw UnimplementedError();
+  Future<String?> signInWithGoogle({required String code}) async {
+    var res = await apiClient.post('auth/client/google-signin', data: {'code': code});
+    if (res['status'] == 'authorized') {
+      await _authDataRepository.setAuthData(AuthData.fromMap(res['authData']));
+      await _authDataRepository.setAccessToken(res['accessToken']);
+      await _authDataRepository.setRefreshToken(res['refreshToken']);
+      return 'authorized';
+    }
+
+    if (res['status'] == 'registration_required') {
+      _registrationToken = res['registrationToken'];
+      return 'registration_required';
+    }
+
+    return null;
   }
 
   /// Token uses for phone code confirmation

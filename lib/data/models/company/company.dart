@@ -7,13 +7,13 @@ class Company extends Equatable {
   final String publicId;
   final String name;
   final String email;
-  final List<String> membersIds;
+  // final List<String> membersIds;
   const Company({
     required this.id,
     required this.publicId,
     required this.name,
     required this.email,
-    required this.membersIds,
+    // required this.membersIds,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,7 +22,7 @@ class Company extends Equatable {
       'publicId': publicId,
       'name': name,
       'email': email,
-      'membersIds': membersIds,
+      // 'membersIds': membersIds,
     };
   }
 
@@ -32,7 +32,7 @@ class Company extends Equatable {
       publicId: map['publicId'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      membersIds: List<String>.from((map['membersIds'])),
+      // membersIds: List<String>.from((map['membersIds'])),
     );
   }
 
@@ -50,7 +50,7 @@ class Company extends Equatable {
       publicId,
       name,
       email,
-      membersIds,
+      // membersIds,
     ];
   }
 }

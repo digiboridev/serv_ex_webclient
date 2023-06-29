@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:serv_expert_webclient/auth/auth_screen.dart';
 import 'package:serv_expert_webclient/core/app_colors.dart';
 import 'package:serv_expert_webclient/utils/ui_utils.dart';
@@ -31,8 +32,27 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
     }
   }
 
-  onSignInWithGoogle() {
-    ref.read(authScreenControllerProvider.notifier).signInWithGoogle();
+  onSignInWithGoogle() async {
+    const googleClientId = '837488464728-2pa13rg6na7arm85sj15i0052ep4mi21.apps.googleusercontent.com';
+
+    final url = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
+      'response_type': 'code',
+      'client_id': googleClientId,
+      'redirect_uri': 'http://localhost:50723/auth.html',
+      'scope': 'email profile',
+    });
+
+    final result = await FlutterWebAuth2.authenticate(url: url.toString(), callbackUrlScheme: 'test');
+
+    debugPrint('result: $result');
+
+    final code = Uri.parse(result).queryParameters['code'];
+
+    debugPrint('code: $code');
+
+    if (code != null) {
+      ref.read(authScreenControllerProvider.notifier).signInWithGoogle(code: code);
+    }
   }
 
   @override
@@ -59,7 +79,7 @@ class _AuthSubpageState extends ConsumerState<AuthSignIn> {
         children: [
           MinSpacer(flex: whenLayout<int>(mobile: 2, tablet: 1), minHeight: 32),
           const Headline(text: 'LOG IN'),
-          SizedBox(height: whenLayout<double>(mobile: 84.ms, tablet: 72.ts)),
+          SizedBox(height: whenLayout(mobile: 84.ms, tablet: 72.ts)),
           SizedBox(width: whenLayout<double>(mobile: 345.ms, tablet: 546.ts), child: phoneField()),
           SizedBox(height: whenLayout<double>(mobile: 32.ms, tablet: 32.ts)),
           SizedBox(

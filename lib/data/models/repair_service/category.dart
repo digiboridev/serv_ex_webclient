@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class Category extends Equatable {
@@ -10,13 +9,11 @@ class Category extends Equatable {
 
   /// If null, then this is a top-level category else it is a subcategory of the parent category
   final String? parentId;
-  final List<String> issuesIds;
   const Category({
     required this.id,
     required this.name,
     required this.imageUri,
     this.parentId,
-    this.issuesIds = const [],
   });
 
   Category copyWith({
@@ -24,14 +21,12 @@ class Category extends Equatable {
     String? name,
     String? imageUri,
     String? parentId,
-    List<String>? issuesIds,
   }) {
     return Category(
       id: id ?? this.id,
       name: name ?? this.name,
       imageUri: imageUri ?? this.imageUri,
       parentId: parentId ?? this.parentId,
-      issuesIds: issuesIds ?? this.issuesIds,
     );
   }
 
@@ -41,7 +36,6 @@ class Category extends Equatable {
       'name': name,
       'imageUri': imageUri,
       'parentId': parentId,
-      'issuesIds': issuesIds,
     };
   }
 
@@ -53,9 +47,6 @@ class Category extends Equatable {
           ? 'https://firebasestorage.googleapis.com/v0/b/serv-expert.appspot.com/o/rs_categories%2Fmonitor.png?alt=media&token=e0d5d2da-5701-46f3-bbfb-83a7a5aa622f'
           : map['imageUri'] as String,
       parentId: map['parentId'] != null ? map['parentId'] as String : null,
-      issuesIds: List<String>.from(
-        (map['issuesIds']),
-      ),
     );
   }
 
@@ -73,7 +64,6 @@ class Category extends Equatable {
       name,
       imageUri,
       parentId ?? 0,
-      issuesIds,
     ];
   }
 }

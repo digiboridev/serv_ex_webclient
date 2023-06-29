@@ -83,21 +83,21 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
             ],
           ),
           // members
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Members:'),
-              const SizedBox(
-                width: 4,
-              ),
-              company.membersIds.isNotEmpty
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: company.membersIds.map((member) => Text(member)).toList(),
-                    )
-                  : const Text('No members'),
-            ],
-          ),
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     const Text('Members:'),
+          //     const SizedBox(
+          //       width: 4,
+          //     ),
+          //     company.membersIds.isNotEmpty
+          //         ? Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: company.membersIds.map((member) => Text(member)).toList(),
+          //           )
+          //         : const Text('No members'),
+          //   ],
+          // ),
         ],
       ),
     );

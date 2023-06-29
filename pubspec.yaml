@@ -19,6 +19,7 @@ dependencies:
   # cloud_functions: ^4.0.7
   # firebase_messaging: ^14.2.1
   
+  intl: ^0.18.1
   flutter_riverpod: ^2.1.1
   auto_route: ^5.0.4
   equatable: ^2.0.5
@@ -31,7 +32,7 @@ dependencies:
   dio: ^5.2.1
   dio_smart_retry: ^5.0.0
   universal_html: ^2.2.1
-  intl: ^0.18.1
+  flutter_web_auth_2: ^2.1.4
 
 
 dev_dependencies:

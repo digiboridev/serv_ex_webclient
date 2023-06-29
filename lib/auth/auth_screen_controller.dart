@@ -55,18 +55,24 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     }
   }
 
-  signInWithGoogle() async {
+  signInWithGoogle({required String code}) async {
     AuthScreenState currentState = state;
     if (currentState is! ASSUnauthorized) throw Exception('Wrong state');
     if (currentState.busy) throw Exception('Controller is busy');
 
-    log('signInWithGoogle()');
+    log('signInWithGoogle($code)');
 
     state = const ASSUnauthorized(busy: true);
     try {
-      await _authService.signInWithGoogle();
-      log('signInWithGoogle() signed in');
-      await updateState();
+      String? result = await _authService.signInWithGoogle(code: code);
+      log('signInWithGoogle($code) result: $result');
+
+      if (result == 'authorized') {
+        state = const ASSAuthorized();
+      }
+      if (result == 'registration_required') {
+        state = ASSAppUserDetails(phone: null, firstName: null, lastName: null, email: null);
+      }
     } catch (e) {
       log(e);
       state = ASSUnauthorized(error: e.toString());
@@ -152,7 +158,7 @@ class AuthScreenController extends StateNotifier<AuthScreenState> {
     try {
       Company company = await _companiesRepository.createCompany(publicId: publicId, name: companyName, email: companyEmail);
       log('submitCompanyCreate($publicId, $companyName, $companyEmail) submitted');
-      state = ASSCompanyMembers(companyId: company.id, membersIds: company.membersIds);
+      state = ASSCompanyMembers(companyId: company.id, membersIds: []);
     } catch (e) {
       log(e);
       state = currentState.copyWith(busy: false, error: e.toString());
