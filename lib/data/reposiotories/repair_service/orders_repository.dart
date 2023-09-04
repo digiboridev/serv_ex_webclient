@@ -4,7 +4,7 @@ import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/customer_info.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/cancelled.dart';
-import 'package:serv_expert_webclient/services/api_client.dart';
+import 'package:serv_expert_webclient/data/api_client.dart';
 
 abstract class RSOrdersRepository {
   Future<RSOrder> createOrder(RSNewOrderDTO order);

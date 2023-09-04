@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:serv_expert_webclient/data/models/company/company.dart';
-import 'package:serv_expert_webclient/services/api_client.dart';
+import 'package:serv_expert_webclient/data/api_client.dart';
 
 abstract class CompaniesRepository {
   Future<List<Company>> userCompanies();

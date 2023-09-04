@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:serv_expert_webclient/services/api_client.dart';
-import 'package:serv_expert_webclient/services/auth_data_repository.dart';
+import 'package:serv_expert_webclient/data/api_client.dart';
+import 'package:serv_expert_webclient/data/reposiotories/auth_data_repository.dart';
 
 abstract class AuthService {
   /// Returns true if user is authorized
@@ -114,8 +114,10 @@ class AuthServiceHttpImpl extends AuthService {
   Future<String?> submitRegistrationData({required String phone, required String firstName, required String lastName, required String email}) async {
     assert(_registrationToken != null);
 
-    var res = await apiClient.post('auth/client/register',
-        data: {'registrationToken': _registrationToken, 'phone': phone, 'firstName': firstName, 'lastName': lastName, 'email': email});
+    var res = await apiClient.post(
+      'auth/client/register',
+      data: {'registrationToken': _registrationToken, 'phone': phone, 'firstName': firstName, 'lastName': lastName, 'email': email},
+    );
 
     if (res['status'] == 'authorized') {
       await _authDataRepository.setAuthData(AuthData.fromMap(res['authData']));

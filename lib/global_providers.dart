@@ -4,7 +4,7 @@ import 'package:serv_expert_webclient/data/reposiotories/user_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/companies_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 import 'package:serv_expert_webclient/data/reposiotories/users_repository.dart';
-import 'package:serv_expert_webclient/services/api_client.dart';
+import 'package:serv_expert_webclient/data/api_client.dart';
 import 'package:serv_expert_webclient/services/auth_service.dart';
 import 'package:serv_expert_webclient/services/rs_orders_service.dart';
 

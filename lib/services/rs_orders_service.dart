@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_local_variable
 import 'package:serv_expert_webclient/data/dto/repair_service/new_order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/order.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/order/repair_part.dart';
@@ -10,7 +10,6 @@ import 'package:serv_expert_webclient/data/models/repair_service/order/status_de
 import 'package:serv_expert_webclient/data/models/repair_service/order/status_details/work_finished.dart';
 import 'package:serv_expert_webclient/data/reposiotories/repair_service/orders_repository.dart';
 
-// TODO move to backend
 class RSOrdersService {
   final RSOrdersRepository _ordersRepository;
   RSOrdersService({
@@ -43,7 +42,7 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    // await _ordersRepository.setOrder(newOrder);
+    throw Exception('Unimplemented');
   }
 
   Future declineOffer({required String orderId}) async {
@@ -61,7 +60,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      // await _ordersRepository.setOrder(newOrder);
+      throw Exception('Unimplemented');
     } else {
       RSOStatus newStatus = order.status.copyWith(
         currentStatus: RSOStatusType.workFinished,
@@ -78,7 +77,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      // await _ordersRepository.setOrder(newOrder);
+      throw Exception('Unimplemented');
     }
   }
 
@@ -104,7 +103,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      // await _ordersRepository.setOrder(newOrder);
+      throw Exception('Unimplemented');
     } else if (order.status.currentStatus == RSOStatusType.workFinished) {
       RSOrderWorkFinishedDetails workFinishedDetails = order.status.workFinishedDetails!;
       if (!workFinishedDetails.paymentRequired || (workFinishedDetails.finishedAfter != FinishedAfterType.diagnistic)) throw Exception('Invalid order state');
@@ -114,7 +113,7 @@ class RSOrdersService {
         updatedAt: DateTime.now(),
       );
 
-      // await _ordersRepository.setOrder(newOrder);
+      throw Exception('Unimplemented');
     } else {
       throw Exception('Invalid order status');
     }
@@ -129,7 +128,7 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    // await _ordersRepository.setOrder(newOrder);
+    throw Exception('Unimplemented');
   }
 
   Future sendSignature({required String orderId, required RSOrderSign signnature}) async {
@@ -148,6 +147,6 @@ class RSOrdersService {
       updatedAt: DateTime.now(),
     );
 
-    // await _ordersRepository.setOrder(newOrder);
+    throw Exception('Unimplemented');
   }
 }

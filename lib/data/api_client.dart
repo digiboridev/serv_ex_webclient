@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serv_expert_webclient/data/exceptions.dart';
-import 'package:serv_expert_webclient/services/auth_data_repository.dart';
+import 'package:serv_expert_webclient/data/reposiotories/auth_data_repository.dart';
 import 'package:serv_expert_webclient/utils/sse_connection.dart';
 
 class ApiClient {
@@ -129,73 +129,3 @@ class ApiClient {
     return null;
   }
 }
-
-// class AuthInterceptor extends QueuedInterceptor {
-//   final _authDataRepository = AuthDataRepository();
-
-//   @override
-//   onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-//     String? accessToken = _authDataRepository.accessToken;
-//     String? refreshToken = _authDataRepository.refreshToken;
-
-//     if (accessToken == null && refreshToken != null) {
-//       try {
-//         accessToken = await refreshAccessToken(refreshToken);
-//       } catch (_) {}
-//     }
-
-//     if (accessToken != null) {
-//       options.headers['authorization'] = 'Bearer $accessToken';
-//     }
-
-//     handler.next(options);
-//   }
-
-//   @override
-//   onError(DioError err, ErrorInterceptorHandler handler) async {
-//     if (err.response?.statusCode == 401 && err.response?.data == 'jwt expired') {
-//       debugPrint('jwt expired');
-
-//       String? refreshToken = _authDataRepository.refreshToken;
-//       if (refreshToken != null) {
-//         String? newAccessToken = await refreshAccessToken(refreshToken);
-
-//         // Retry request with new access token
-//         if (newAccessToken != null) {
-//           try {
-//             var reRequest =
-//                 await Dio(BaseOptions(baseUrl: 'http://localhost:3000/')).fetch(err.requestOptions..headers['authorization'] = 'Bearer $newAccessToken');
-//             return handler.resolve(reRequest);
-//           } on DioError catch (e) {
-//             debugPrint(e.toString());
-//             return handler.reject(e);
-//           }
-//         }
-//       }
-//     }
-//     return handler.next(err);
-//   }
-
-//   Future<String?> refreshAccessToken(String refreshToken) async {
-//     debugPrint('refreshing token');
-
-//     try {
-//       var r = await Dio(BaseOptions(baseUrl: 'http://localhost:3000/'))
-//           .post<Map<String, dynamic>>('auth/refresh-token', data: {'grant_type': 'refresh_token', 'refresh_token': refreshToken});
-
-//       if (r.data != null) {
-//         await _authDataRepository.setAccessToken(r.data!['accessToken']);
-//         await _authDataRepository.setRefreshToken(r.data!['refreshToken']);
-//         await _authDataRepository.setAuthData(AuthData.fromMap(r.data!['authData']));
-//         debugPrint('token refreshed');
-//         return r.data!['accessToken'];
-//       }
-//     } catch (e) {
-//       debugPrint('refresh token failed');
-//       debugPrint(e.toString());
-//       await _authDataRepository.drop();
-//     }
-
-//     return null;
-//   }
-// }

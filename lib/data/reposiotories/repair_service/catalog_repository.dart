@@ -1,6 +1,6 @@
 import 'package:serv_expert_webclient/data/models/repair_service/category.dart';
 import 'package:serv_expert_webclient/data/models/repair_service/issue.dart';
-import 'package:serv_expert_webclient/services/api_client.dart';
+import 'package:serv_expert_webclient/data/api_client.dart';
 
 abstract class CatalogRepository {
   Future<Category> categoryById({required String categoryId});

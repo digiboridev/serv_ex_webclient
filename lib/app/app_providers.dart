@@ -6,11 +6,11 @@ import 'package:serv_expert_webclient/data/reposiotories/companies_repository.da
 import 'package:serv_expert_webclient/global_providers.dart';
 import 'package:serv_expert_webclient/app/controllers/contributor_controller.dart';
 
+// TODO replace pooling with event sourcing
+
 final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) async* {
   UserRepository userRepository = ref.read(userRepositoryProvider);
 
-  // Just pooling
-  // TODO - socket or graphql subscription
   while (true) {
     AppUser appUser = await userRepository.me();
     yield appUser;
@@ -21,8 +21,6 @@ final currentAppUserStreamProvider = StreamProvider.autoDispose<AppUser>((ref) a
 final companiesStreamProvider = StreamProvider.autoDispose<List<Company>>((ref) async* {
   CompaniesRepository companiesRepository = ref.read(companiesRepositoryProvider);
 
-  // Just pooling
-  // TODO - socket or graphql subscription
   while (true) {
     List<Company> companies = await companiesRepository.userCompanies();
     yield companies;
